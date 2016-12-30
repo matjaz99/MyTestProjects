@@ -16,20 +16,25 @@ public class BFMain {
 	
 	public static Blowfish blowfish = new Blowfish();
 	
-	public static String key = "j4R9qsH2kdE7oY10wF43a4BpME52dt4z";
+//	public static String key = "j4R9qsH2kdE7oY10wF43a4BpME52dt4z";
+	public static String key = "Gr47KYc2p5VsH17L"; // Java supports only 128-bit encryption (16 characters)
 	
 	public static void main(String[] args) {
-		if (args.length == 1) {
-			if (args[0].equalsIgnoreCase("showKey")) {
-				System.out.println("Encription key: " + key);
-			}
-		} else if (args.length == 2) {
-			doEncryption(args);
-		} else {
-			System.out.println("Usage:");
-			System.out.println("\tshowKey - display encryption key");
-			System.out.println("\t[encrypt | decrypt] <filename> - select encryption mechanism and file to crypt");
-		}
+//		if (args.length == 1) {
+//			if (args[0].equalsIgnoreCase("showKey")) {
+//				System.out.println("Encription key: " + key);
+//			}
+//		} else if (args.length == 2) {
+//			doEncryption(args);
+//		} else {
+//			System.out.println("Usage:");
+//			System.out.println("\tshowKey - display encryption key");
+//			System.out.println("\t[encrypt | decrypt] <filename> - select encryption mechanism and file to crypt");
+//		}
+		String s1 = encode("to je test string");
+		System.out.println(s1);
+		String s2 = decode(s1);
+		System.out.println(s2);
 	}
 	
 	
