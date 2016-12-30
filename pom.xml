@@ -11,6 +11,7 @@
 
 	<modules>
 		<module>blowfish</module>
+		<module>mysql</module>
 	</modules>
 
 	<properties>
