@@ -14,6 +14,7 @@
 		<module>mysql</module>
 
 		<module>javase</module>
+		<module>derby</module>
 	</modules>
 
 	<properties>
