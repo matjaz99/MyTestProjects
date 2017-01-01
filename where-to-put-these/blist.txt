@@ -1,0 +1,11 @@
+############################################
+#                                          #
+# DO NOT MODIFY CONTENTS OF THIS FILE!!    #
+#                                          #
+############################################
+Some dummy text.
+My bank account: 5431915480985465319709876542
+# This is comment - it is not encrypted!
+Matjaz Cerkvenik
+
+

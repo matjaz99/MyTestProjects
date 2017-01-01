@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<company>
+	<name>MyCompany</name>
+	<employees>
+		<employee>
+			<name>John</name>
+			<age>39</age>
+		</employee>
+		<employee>
+			<name>Lucy</name>
+			<age>22</age>
+		</employee>
+		<employee>
+			<name>Mark</name>
+			<age>18</age>
+		</employee>
+	</employees>
+</company>
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<company>
+	<name id="123">MyCompany</name>
+	<employees>
+		<employee id="2434567" type="permanent">
+			<name>John</name>
+			<age>39</age>
+			<boss param="true"/>
+		</employee>
+		<employee id="765432" type="student">
+			<name>Lucy</name>
+			<age>22</age>
+		</employee>
+		<employee>
+			<name>Mark</name>
+			<age>18</age>
+		</employee>
+	</employees>
+</company>

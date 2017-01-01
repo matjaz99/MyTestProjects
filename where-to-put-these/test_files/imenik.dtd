@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!ELEMENT imenik (oseba*)>
+<!ELEMENT oseba (ime, priimek, telefon, mobitel?)>
+<!ELEMENT ime (#PCDATA)>
+<!ELEMENT priimek (#PCDATA)>
+<!ELEMENT telefon (#PCDATA)>
+<!ELEMENT mobitel (#PCDATA)>
+
+<!ATTLIST oseba id CDATA #IMPLIED>

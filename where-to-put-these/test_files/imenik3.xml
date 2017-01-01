@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<imenik xmlns="http://iskratel.si/imenik" 
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://matjazcerkvenik.si/imenik imenik.xsd">
+		
+		<oseba>
+			<ime>Bostjan</ime>
+			<priimek>Sumak</priimek>
+			<telefon>111111111</telefon>
+			<mobitel>1234567891</mobitel>
+		</oseba>
+
+</imenik>

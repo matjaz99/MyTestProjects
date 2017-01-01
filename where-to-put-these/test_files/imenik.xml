@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<imenik>
+	<oseba id="1">
+		<ime>Bostjan</ime>
+		<priimek>Sumak</priimek>
+		<telefon>02 220 7378</telefon>
+		<mobitel>041 39 44 08</mobitel>
+	</oseba>
+	<oseba id="2">
+		<ime>Luka</ime>
+		<priimek>Pavlic</priimek>
+		<telefon>02 220 7377</telefon>
+	</oseba>
+	<oseba id="3">
+		<ime>Maja</ime>
+		<priimek>Pusnik</priimek>
+		<telefon>02 220 7379</telefon>
+		<mobitel>041393333</mobitel>
+	</oseba>
+</imenik>
