@@ -51,23 +51,23 @@ public class Discovery2Test {
 	        System.out.printf("Broadcast: %s%n", addr.getBroadcast());
 	        System.out.printf("Network Prefix: %s%n", addr.getNetworkPrefixLength());
 	        cidr = addr.getNetworkPrefixLength();
-	        System.out.printf("Subnet Mask: %s%n", long2ip(-1 <<(32 -cidr)));
-	         
-	        range = cidrToRange(ipAddr, cidr);
-	        if (range[0].endsWith(".0")){
-	            // make sure the gateway doesn't start with 0
-	            range[0] = long2ip(ip2long(range[0]) +1);
-	        }
-	        System.out.printf("Gateway: %s%n", range[0]);
-	        System.out.printf("Network Size: %s IPs%n", getNetworkSize(cidr));
-	         
-	        try {
-	            if (!range[0].startsWith("127.")){
-	                getIPList(range[0], cidr);
-	            }
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        }
+//	        System.out.printf("Subnet Mask: %s%n", long2ip(-1 <<(32 -cidr)));
+//	         
+//	        range = cidrToRange(ipAddr, cidr);
+//	        if (range[0].endsWith(".0")){
+//	            // make sure the gateway doesn't start with 0
+//	            range[0] = long2ip(ip2long(range[0]) +1);
+//	        }
+//	        System.out.printf("Gateway: %s%n", range[0]);
+//	        System.out.printf("Network Size: %s IPs%n", getNetworkSize(cidr));
+//	         
+//	        try {
+//	            if (!range[0].startsWith("127.")){
+//	                getIPList(range[0], cidr);
+//	            }
+//	        } catch (IOException e) {
+//	            e.printStackTrace();
+//	        }
 	    }
 	    System.out.printf("%n");
 	     
