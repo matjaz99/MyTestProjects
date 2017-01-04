@@ -1,4 +1,4 @@
-package si.matjazcerkvenik.test.blowfish;
+package si.matjazcerkvenik.test.javase.encryption.blowfish;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

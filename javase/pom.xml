@@ -7,6 +7,10 @@
   </parent>
   <artifactId>javase</artifactId>
   
+  <properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+  
   <build>
 		<plugins>
 
@@ -24,8 +28,72 @@
 			<plugin>
 				<inherited>true</inherited>
 				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.1.2</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			
+			<!-- <plugin> -->
+			<!-- <inherited>true</inherited> -->
+			<!-- <groupId>org.apache.maven.plugins</groupId> -->
+			<!-- <artifactId>maven-javadoc-plugin</artifactId> -->
+			<!-- <version>2.8</version> -->
+			<!-- <executions> -->
+			<!-- <execution> -->
+			<!-- <id>attach-javadocs</id> -->
+			<!-- <goals> -->
+			<!-- <goal>jar</goal> -->
+			<!-- </goals> -->
+			<!-- <configuration> -->
+			<!-- <tags> -->
+			<!-- <tag> -->
+			<!-- <name>history</name> -->
+			<!-- <placement>X</placement> -->
+			<!-- </tag> -->
+			<!-- </tags> -->
+			<!-- </configuration> -->
+			<!-- </execution> -->
+			<!-- </executions> -->
+			<!-- </plugin> -->
+			
+			<plugin>
+				<inherited>true</inherited>
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
 			</plugin>
+			
+<!-- 			<plugin> -->
+<!-- 				<inherited>true</inherited> -->
+<!-- 				<groupId>org.apache.maven.plugins</groupId> -->
+<!-- 				<artifactId>maven-jar-plugin</artifactId> -->
+<!-- 				<version>2.3.2</version> -->
+<!-- 				<configuration> -->
+<!-- 					<archive> -->
+<!-- 						<index>true</index> -->
+<!-- 						<manifest> -->
+<!-- 							<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries> -->
+<!-- 							<addDefaultImplementationEntries>true</addDefaultImplementationEntries> -->
+<!-- 						</manifest> -->
+<!-- 						<manifestEntries> -->
+<!-- 							<mode>development</mode> -->
+<!-- 							<url>${project.url}</url> -->
+<!-- 							<key>value</key> -->
+<!-- 							<SCM-url>${project.scm.url}</SCM-url> -->
+<!-- 							suppress MavenModelInspection -->
+<!-- 							<SCM-Revision>${buildNumber}</SCM-Revision> -->
+<!-- 							suppress MavenModelInspection -->
+<!-- 							<Build-Date>${buildDate}</Build-Date> -->
+<!-- 						</manifestEntries> -->
+<!-- 					</archive> -->
+<!-- 				</configuration> -->
+<!-- 			</plugin> -->
 
 		</plugins>
 	</build>

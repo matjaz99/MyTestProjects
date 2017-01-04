@@ -1,4 +1,4 @@
-package si.matjazcerkvenik.test.blowfish;
+package si.matjazcerkvenik.test.javase.encryption.blowfish;
 
 /* -- $Id: Blowfish.java,v 1.4 2001/06/28 10:45:43 nikhil Exp $ --
 

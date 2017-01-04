@@ -10,7 +10,7 @@
 	<description>MyTestProjects</description>
 
 	<modules>
-		<module>blowfish</module>
+		
 		<module>mysql</module>
 
 		<module>javase</module>
