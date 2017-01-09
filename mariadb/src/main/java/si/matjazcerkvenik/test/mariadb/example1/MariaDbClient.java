@@ -9,7 +9,7 @@ public class MariaDbClient {
 	
 	private Connection c = null;
 	
-	private String host = "192.168.1.106:3306";
+	private String host = "192.168.1.107:3306";
 	private String tableName = "nodes";
 	private String username = "admin";
 	private String password = "admin";
@@ -20,11 +20,11 @@ public class MariaDbClient {
 		
 		MariaDbClient dbc = new MariaDbClient();
 		dbc.loadDriver();
-		dbc.createTable();
+//		dbc.createTable(); // only first time
 		
 		long startTime = System.currentTimeMillis();
 		
-		int maxNum = 10;
+		int maxNum = 1000;
 		
 		while (i < maxNum) {
 			Node n = new Node(i, "Node #" + i, i, "EWSD", "nodehost-" + i);
@@ -48,7 +48,7 @@ public class MariaDbClient {
 //			DriverManager.getConnection("jdbc:mariadb://localhost:3306/DB?user=root&password=myPassword");
 			System.out.println("driver loaded");
 			c = DriverManager.getConnection(
-					"jdbc:mysql://" + host + "/test", username, password);
+					"jdbc:mariadb://" + host + "/test?user=" + username + "&password=" + password);
 			System.out.println("connected");
 		} catch (SQLException e) {
 			e.printStackTrace();
