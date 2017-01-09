@@ -1,30 +1,30 @@
-package si.matjazcerkvenik.test.mysql.speedTest;
+package si.matjazcerkvenik.test.mariadb.example1;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class DbClient {
+public class MariaDbClient {
 	
 	private Connection c = null;
 	
 	private String host = "192.168.1.106:3306";
 	private String tableName = "nodes";
-	private String username = "mysql";
-	private String password = "";
+	private String username = "admin";
+	private String password = "admin";
 	
 	public static int i = 0;
 	
 	public static void main(String[] args) {
 		
-		DbClient dbc = new DbClient();
+		MariaDbClient dbc = new MariaDbClient();
 		dbc.loadDriver();
-//		dbc.createTable();
+		dbc.createTable();
 		
 		long startTime = System.currentTimeMillis();
 		
-		int maxNum = 10000;
+		int maxNum = 10;
 		
 		while (i < maxNum) {
 			Node n = new Node(i, "Node #" + i, i, "EWSD", "nodehost-" + i);
@@ -44,7 +44,8 @@ public class DbClient {
 	public void loadDriver() {
 
 		try {
-			DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+			DriverManager.registerDriver(new org.mariadb.jdbc.Driver());
+//			DriverManager.getConnection("jdbc:mariadb://localhost:3306/DB?user=root&password=myPassword");
 			System.out.println("driver loaded");
 			c = DriverManager.getConnection(
 					"jdbc:mysql://" + host + "/test", username, password);

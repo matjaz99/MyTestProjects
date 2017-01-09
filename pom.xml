@@ -15,6 +15,7 @@
 
 		<module>javase</module>
 		<module>derby</module>
+		<module>mariadb</module>
 	</modules>
 
 	<properties>
