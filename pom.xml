@@ -16,6 +16,7 @@
 		<module>javase</module>
 		<module>derby</module>
 		<module>mariadb</module>
+		<module>influxdb</module>
 	</modules>
 
 	<properties>
