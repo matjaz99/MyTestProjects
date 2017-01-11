@@ -11,8 +11,8 @@ public class DbClient {
 	
 	private String host = "192.168.1.106:3306";
 	private String tableName = "nodes";
-	private String username = "mysql";
-	private String password = "";
+	private String username = "test";
+	private String password = "password";
 	
 	public static int i = 0;
 	
@@ -24,7 +24,7 @@ public class DbClient {
 		
 		long startTime = System.currentTimeMillis();
 		
-		int maxNum = 10000;
+		int maxNum = 1000;
 		
 		while (i < maxNum) {
 			Node n = new Node(i, "Node #" + i, i, "EWSD", "nodehost-" + i);

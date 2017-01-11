@@ -7,7 +7,6 @@
 		<version>1.0</version>
 	</parent>
 	<artifactId>mariadb</artifactId>
-	<name>MariaDB test</name>
 
 	<dependencies>
 		<!-- https://mvnrepository.com/artifact/org.mariadb.jdbc/mariadb-java-client -->
