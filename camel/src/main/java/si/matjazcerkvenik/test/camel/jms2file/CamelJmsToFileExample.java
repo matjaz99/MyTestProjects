@@ -49,7 +49,7 @@ public final class CamelJmsToFileExample {
         // START SNIPPET: e3
         context.addRoutes(new RouteBuilder() {
             public void configure() {
-                from("test-jms:queue:test.queue").to("file://test");
+                from("test-jms:queue:test.queue").to("file://camel-test");
             }
         });
         // END SNIPPET: e3
