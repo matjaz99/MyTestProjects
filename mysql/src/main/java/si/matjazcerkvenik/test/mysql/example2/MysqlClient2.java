@@ -8,31 +8,31 @@ import java.sql.SQLException;
 
 public class MysqlClient2 {
 	
-//	create table users (id varchar(64), username varchar(64), locked boolean, lastlogin BIGINT);
+//	create table users (id VARCHAR(64), username VARCHAR(64), password VARCHAR(64), locked BOOLEAN, lastlogin BIGINT, PRIMARY_KEY(id));
 	
 	private Connection c = null;
 	
 	private String host = "192.168.1.106:3306";
-	private String username = "test";
-	private String password = "password";
+	private String username = "mysql";
+	private String password = "";
 	
 	public static void main(String[] args) {
 		
 		MysqlClient2 mysql = new MysqlClient2();
 		mysql.loadDriver();
 		
-//		for (int i = 0; i < 10; i++) {
-//			User u = new User(""+i, "user" + i, true, System.currentTimeMillis());
-//			mysql.insertUser(u);
-//		}
+		for (int i = 0; i < 10; i++) {
+			User u = new User(""+i, "user" + i, "password" + i, true, System.currentTimeMillis());
+			mysql.insertUser(u);
+		}
 		
-//		mysql.getAllUsers();
+		mysql.getAllUsers();
 		
-//		mysql.getSingleUser1("user3");
+		mysql.getSingleUser1("user3");
 //		
-//		mysql.getSingleUser2("user2");
+		mysql.getSingleUser2("user2");
 		
-//		mysql.updateUser("3", "Micka", false);
+		mysql.updateUser("3", "Micka", false);
 		
 		mysql.deleteUser("6");
 		
@@ -68,11 +68,12 @@ public class MysqlClient2 {
 
 		try {
 			PreparedStatement ps = c
-					.prepareStatement("insert into users values (?, ?, ?, ?)");
+					.prepareStatement("insert into users values (?, ?, ?, ?, ?)");
 			ps.setString(1, u.getId());
 			ps.setString(2, u.getUsername());
-			ps.setBoolean(3, u.isLocked());
-			ps.setLong(4, u.getLastLogin());
+			ps.setString(3, u.getPassword());
+			ps.setBoolean(4, u.isLocked());
+			ps.setLong(5, u.getLastLogin());
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -92,8 +93,9 @@ public class MysqlClient2 {
 			while (rs.next()) {
 				System.out.println("Row: " + rs.getRow() + "\tID: "
 						+ rs.getString(1) + "\tUsername: " + rs.getString(2)
-						+ "\tLocked: " + rs.getBoolean(3) + "\tLast login: "
-						+ rs.getLong(4));
+						 + "\tPassword: " + rs.getString(3)
+						+ "\tLocked: " + rs.getBoolean(4) + "\tLast login: "
+						+ rs.getLong(5));
 			}
 			
 			rs.close();
@@ -112,7 +114,7 @@ public class MysqlClient2 {
 			rs = c.createStatement().executeQuery("SELECT * FROM users WHERE username='" + username + "';");
 			
 			if (rs.first()) {
-				User u = new User(rs.getString(1), rs.getString(2), rs.getBoolean(3), rs.getLong(4));
+				User u = new User(rs.getString(1), rs.getString(2), rs.getString(3), rs.getBoolean(4), rs.getLong(5));
 				System.out.println(u.toString());
 			}
 			
@@ -133,7 +135,7 @@ public class MysqlClient2 {
 			rs = c.createStatement().executeQuery("SELECT username, locked FROM users WHERE username='" + username + "';");
 			
 			if (rs.first()) {
-				User u = new User("-", rs.getString(1), rs.getBoolean(2), 0);
+				User u = new User("-", rs.getString(1), "-", rs.getBoolean(2), 0);
 				System.out.println(u.toString());
 			}
 			

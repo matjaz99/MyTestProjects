@@ -5,29 +5,29 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class DbClient {
+public class SpeedyDbClient {
 	
 	private Connection c = null;
 	
 	private String host = "192.168.1.106:3306";
 	private String tableName = "nodes";
-	private String username = "test";
-	private String password = "password";
+	private String username = "mysql";
+	private String password = "";
 	
 	public static int i = 0;
 	
 	public static void main(String[] args) {
 		
-		DbClient dbc = new DbClient();
+		SpeedyDbClient dbc = new SpeedyDbClient();
 		dbc.loadDriver();
 //		dbc.createTable();
 		
 		long startTime = System.currentTimeMillis();
 		
-		int maxNum = 1000;
+		int maxNum = 1000000;
 		
 		while (i < maxNum) {
-			Node n = new Node(i, "Node #" + i, i, "EWSD", "nodehost-" + i);
+			Node n = new Node(i, "Node #" + i, i, "EWSD", "hostname-" + i, System.currentTimeMillis());
 			dbc.insertNode(n);
 			i++;
 		}
@@ -59,7 +59,7 @@ public class DbClient {
 	public void createTable() {
 
 		String sql = "CREATE TABLE " + tableName
-				+ " (id INT, name VARCHAR(16), nodeId INT, productId VARCHAR(16), hostname VARCHAR(32))";
+				+ " (id INT, name VARCHAR(16), nodeId INT, productId VARCHAR(16), hostname VARCHAR(32), lastupdate BIGINT);";
 
 		try {
 			c.createStatement().execute(sql);
@@ -74,12 +74,13 @@ public class DbClient {
 
 		try {
 			PreparedStatement ps = c
-					.prepareStatement("insert into " + tableName + " values (?, ?, ?, ?, ?)");
+					.prepareStatement("insert into " + tableName + " values (?, ?, ?, ?, ?, ?)");
 			ps.setInt(1, n.getId());
 			ps.setString(2, n.getName());
 			ps.setInt(3, n.getNodeId());
 			ps.setString(4, n.getProductId());
 			ps.setString(5, n.getHostname());
+			ps.setLong(6, n.getLastupdate());
 			ps.executeUpdate();
 			
 			if (i % 100 == 0) {
