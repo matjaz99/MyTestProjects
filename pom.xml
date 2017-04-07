@@ -18,6 +18,7 @@
 		<module>mariadb</module>
 		<module>influxdb</module>
 		<module>camel</module>
+		<module>kafka</module>
 	</modules>
 
 	<properties>
