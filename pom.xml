@@ -19,6 +19,7 @@
 		<module>influxdb</module>
 		<module>camel</module>
 		<module>kafka</module>
+		<module>mytrayicon</module>
 	</modules>
 
 	<properties>
