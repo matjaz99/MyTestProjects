@@ -20,6 +20,7 @@
 		<module>camel</module>
 		<module>kafka</module>
 		<module>mytrayicon</module>
+		<module>mqtt</module>
 	</modules>
 
 	<properties>
