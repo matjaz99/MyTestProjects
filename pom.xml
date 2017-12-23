@@ -21,6 +21,7 @@
 		<module>kafka</module>
 		<module>mytrayicon</module>
 		<module>mqtt</module>
+		<module>restws</module>
 	</modules>
 
 	<properties>

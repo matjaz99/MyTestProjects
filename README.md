@@ -28,6 +28,9 @@ Storing data into MySQL
 ## mytrayicon
 Tray Icon (Swing)
 
+## restws
+REST web service and client
+
 
 ## Import jar into local repository:
 

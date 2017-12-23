@@ -23,7 +23,7 @@ public class MqttSubscribe implements MqttCallback {
 	static final String PASSWORD_MD5 = "password (MD5 sum of password)>";
 
 	// the following two flags control whether this example is a publisher, a subscriber or both
-	static final Boolean subscriber = true;
+	static final Boolean subscriber = false;
 	static final Boolean publisher = true;
 
 	/**
@@ -134,7 +134,7 @@ public class MqttSubscribe implements MqttCallback {
 					token = topic.publish(message);
 			    	// Wait until the message has been delivered to the broker
 					token.waitForCompletion();
-					Thread.sleep(new Random().nextInt(10));
+//					Thread.sleep(new Random().nextInt(2));
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
