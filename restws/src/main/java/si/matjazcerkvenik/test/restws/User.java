@@ -6,10 +6,10 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Response;
 
 /*
- * http://localhost:8080/restwebservice/rest/users/checkProfile/100
+ * http://localhost:8080/restwebservice/rest/users1/checkProfile/100
  */
 
-@Path("/users")
+@Path("/users1")
 public class User {
 	
 	@GET
