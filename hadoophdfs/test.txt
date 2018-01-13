@@ -1,0 +1,4 @@
+# To je testni file.
+
+ime=Janez
+priimek=Novak

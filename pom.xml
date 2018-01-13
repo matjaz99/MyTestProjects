@@ -22,6 +22,8 @@
 		<module>mytrayicon</module>
 		<module>mqtt</module>
 		<module>restws</module>
+		<module>springmvc</module>
+		<module>hadoophdfs</module>
 	</modules>
 
 	<properties>
