@@ -34,7 +34,7 @@ public class Hello {
 
 	// This method is called if XML is request
 	@GET
-	@Produces(MediaType.TEXT_XML)
+	@Produces({MediaType.TEXT_XML, MediaType.APPLICATION_XML})
 	public String sayXMLHello() {
 		return "<?xml version=\"1.0\"?>" + "<hello>Hello Jersey</hello>";
 	}
