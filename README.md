@@ -1,41 +1,48 @@
 # MyTestProjects
 
 
-## camel
+#### camel
 Apache Camel for copying files and FTP client
 
-## derby
+#### derby
 Storing data into Apache Derby DB
 
-## influxdb
+#### influxdb
 Storing time-series data into InfluxDB
 
-## javase
+#### javase
 Basics of Java SE
 
-## kafka
+#### kafka
 Kafka...
 
-## mariadb
+#### mariadb
 Storing data into Maria DB
 
-## mqtt
+#### mqtt
 MQTT publish and subscribe example
 
-## mysql
+#### mysql
 Storing data into MySQL
 
-## mytrayicon
+#### mytrayicon
 Tray Icon (Swing)
 
-## restws
+#### restws
 REST web service and client
+
+#### primefaces
+JSF with Primefaces
+
+[README](primefaces/README.md)
 
 
 ## Import jar into local repository:
 
-$ mvn install:install-file -Dfile=/Users/matjaz/Downloads/simple-logger-1.6.1.jar -DgroupId=si.matjazcerkvenik.simplelogger -DartifactId=simple-logger -Dversion=1.6.1 -Dpackaging=jar
 
+```
+$ mvn install:install-file -Dfile=/Users/matjaz/Downloads/simple-logger-1.6.1.jar -DgroupId=si.matjazcerkvenik.simplelogger -DartifactId=simple-logger -Dversion=1.6.1 -Dpackaging=jar
+```
 
 
 

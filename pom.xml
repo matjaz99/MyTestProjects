@@ -24,6 +24,7 @@
 		<module>restws</module>
 		<module>springmvc</module>
 		<module>hadoophdfs</module>
+		<module>primefaces</module>
 	</modules>
 
 	<properties>

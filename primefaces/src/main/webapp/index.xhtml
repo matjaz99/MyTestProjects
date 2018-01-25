@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Primefaces Test</title>
+</h:head>
+<h:body>
+
+	<h:outputText value="Primefaces Test" />
+	<p:button value="OK"></p:button>
+
+	<h:panelGrid columns="1" cellspacing="5" width="100%">
+		<h:dataTable value="#{libraryBean.books}" var="book" cellpadding="0"
+			cellspacing="0" width="100%">
+			<h:column>
+				<f:facet name="header">Id</f:facet>
+				<p:outputLabel value="#{book.id}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Title</f:facet>
+				<p:outputLabel value="#{book.title}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Author</f:facet>
+				<p:outputLabel value="#{book.author}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Available</f:facet>
+				<p:outputLabel value="#{book.available}" />
+			</h:column>
+		</h:dataTable>
+	</h:panelGrid>
+
+</h:body>
+</html>
+
+
