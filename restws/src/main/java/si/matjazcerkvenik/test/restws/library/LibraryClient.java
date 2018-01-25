@@ -22,9 +22,9 @@ public class LibraryClient {
 		LibraryClient client = new LibraryClient();
 		client.getAllBooks();
 		client.getCount();
-		client.createNewBook(1, "Ivan Cankar", "Na klancu", false);
-		client.createNewBook(2, "Primozh Trubar", "Katekizem", true);
-		client.createNewBook(3, "Fran Saleshki Finzhgar", "Pod svobodnim soncem", false);
+		client.createNewBook(1, "Na klancu", "Ivan Cankar", false);
+		client.createNewBook(2, "Katekizem", "Primozh Trubar", true);
+		client.createNewBook(3, "Pod svobodnim soncem", "Fran Saleshki Finzhgar", false);
 		client.getCountX();
 		client.getSingleBook(2);
 		client.deleteBook(1);
