@@ -9,12 +9,15 @@
 </h:head>
 <h:body>
 
-	<h:outputText value="Primefaces Test" />
-	<p:button value="OK"></p:button>
+	<p:outputLabel value="Primefaces Library Example" />
+	<hr/>
 
+	<p:button value="Add book" outcome="add-book.xhtml"></p:button>
+
+	<h:form id="booksForm">
 	<h:panelGrid columns="1" cellspacing="5" width="100%">
-		<h:dataTable value="#{libraryBean.books}" var="book" cellpadding="0"
-			cellspacing="0" width="100%">
+		<h:dataTable value="#{libraryBean.books}" var="book"
+			cellpadding="0" cellspacing="0" width="100%">
 			<h:column>
 				<f:facet name="header">Id</f:facet>
 				<p:outputLabel value="#{book.id}" />
@@ -31,8 +34,18 @@
 				<f:facet name="header">Available</f:facet>
 				<p:outputLabel value="#{book.available}" />
 			</h:column>
+			<h:column>
+				<f:facet name="header">Delete</f:facet>
+				<p:commandButton value="Delete"
+					actionListener="#{libraryBean.deleteBook(book)}"
+					update="booksForm">
+				</p:commandButton>
+			</h:column>
 		</h:dataTable>
+		<hr/>
+		<p:outputLabel value="There are #{libraryBean.librarySize} books in library" />
 	</h:panelGrid>
+	</h:form>
 
 </h:body>
 </html>

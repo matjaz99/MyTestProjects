@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Primefaces Test</title>
+</h:head>
+<h:body>
+
+	<p:outputLabel value="Add new book" />
+	<br/>
+	
+	<h:form>
+		<h:panelGrid columns="2" cellpadding="0" cellspacing="5" >
+			
+			<p:outputLabel value="Title" />
+			<p:inputText value="#{libraryBean.newTitle}" />
+			<p:outputLabel value="Author" />
+			<p:inputText value="#{libraryBean.newAuthor}" />
+			
+			<p:commandButton value="Add" action="#{libraryBean.createNewBook}" />
+			
+		</h:panelGrid>
+	</h:form>
+	
+
+
+</h:body>
+</html>
+
+

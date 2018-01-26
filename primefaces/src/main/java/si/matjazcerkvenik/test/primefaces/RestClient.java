@@ -25,9 +25,9 @@ public class RestClient {
 		RestClient client = new RestClient();
 		client.getAllBooks();
 		client.getCount();
-		client.createNewBook(1, "Ivan Cankar", "Na klancu", false);
-		client.createNewBook(2, "Primozh Trubar", "Katekizem", true);
-		client.createNewBook(3, "Fran Saleshki Finzhgar", "Pod svobodnim soncem", false);
+		client.createNewBook("Na klancu", "Ivan Cankar", false);
+		client.createNewBook("Katekizem", "Primozh Trubar", true);
+		client.createNewBook("Pod svobodnim soncem", "Fran Saleshki Finzhgar", false);
 		client.getCountX();
 		client.getSingleBook(2);
 		client.deleteBook(1);
@@ -66,10 +66,9 @@ public class RestClient {
 				"xml: " + service.path("library").path("" + id).accept(MediaType.APPLICATION_XML).get(String.class));
 	}
 
-	public void getCount() {
+	public int getCount() {
 		System.out.println("=== GET COUNT ===");
-		System.out.println(
-				"text: " + service.path("library").path("count").accept(MediaType.TEXT_PLAIN).get(String.class));
+		return Integer.parseInt(service.path("library").path("count").accept(MediaType.TEXT_PLAIN).get(String.class));
 	}
 
 	public void getCountX() {
@@ -78,9 +77,9 @@ public class RestClient {
 				"text: " + service.path("library").path("countx").accept(MediaType.TEXT_XML).get(String.class));
 	}
 
-	public void createNewBook(Integer id, String title, String author, boolean available) {
+	public void createNewBook(String title, String author, boolean available) {
 		System.out.println("=== CREATE NEW BOOK ===");
-		Book book = new Book(id, title, author, available);
+		Book book = new Book(title, author, available);
 		ClientResponse response = service.path("library").accept(MediaType.APPLICATION_XML).put(ClientResponse.class,
 				book);
 		// Return code should be 201 == created resource
