@@ -22,9 +22,9 @@ public class LibraryClient {
 		LibraryClient client = new LibraryClient();
 		client.getAllBooks();
 		client.getCount();
-		client.createNewBook(1, "Na klancu", "Ivan Cankar", false);
-		client.createNewBook(2, "Katekizem", "Primozh Trubar", true);
-		client.createNewBook(3, "Pod svobodnim soncem", "Fran Saleshki Finzhgar", false);
+		client.createNewBook("Na klancu", "Ivan Cankar", false);
+		client.createNewBook("Katekizem", "Primozh Trubar", true);
+		client.createNewBook("Pod svobodnim soncem", "Fran Saleshki Finzhgar", false);
 		client.getCountX();
 		client.getSingleBook(2);
 		client.deleteBook(1);
@@ -63,9 +63,9 @@ public class LibraryClient {
 				"text: " + service.path("library").path("countx").accept(MediaType.TEXT_XML).get(String.class));
 	}
 
-	public void createNewBook(Integer id, String title, String author, boolean available) {
+	public void createNewBook(String title, String author, boolean available) {
 		System.out.println("=== CREATE NEW BOOK ===");
-		Book book = new Book(id, title, author, available);
+		Book book = new Book(title, author, available);
 		ClientResponse response = service.path("library").accept(MediaType.APPLICATION_XML).put(ClientResponse.class,
 				book);
 		// Return code should be 201 == created resource

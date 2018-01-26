@@ -16,8 +16,7 @@ public class Book {
 	public Book() {
 	}
 
-	public Book(Integer id, String title, String author, boolean avail) {
-		this.id = id;
+	public Book(String title, String author, boolean avail) {
 		this.title = title;
 		this.author = author;
 		this.available = avail;

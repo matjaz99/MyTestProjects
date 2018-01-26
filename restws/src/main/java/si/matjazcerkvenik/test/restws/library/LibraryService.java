@@ -31,6 +31,8 @@ public class LibraryService {
 	private UriInfo uriInfo;
 
 	private static HashMap<Integer, Book> books = new HashMap<Integer, Book>();
+	
+	public static int lastBookId = 0;
 
 	/** Return the list of all books */
 	@GET
@@ -82,6 +84,7 @@ public class LibraryService {
 	public Response newBook(JAXBElement<Book> book) {
 
 		Book b = book.getValue();
+		b.setId(lastBookId++);
 
 		if (!books.containsKey(b.getId())) {
 			books.put(b.getId(), b);
