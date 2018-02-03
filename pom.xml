@@ -25,6 +25,7 @@
 		<module>springmvc</module>
 		<module>hadoophdfs</module>
 		<module>primefaces</module>
+		<module>springboot</module>
 	</modules>
 
 	<properties>
