@@ -24,10 +24,18 @@
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 			<version>1.5.9.RELEASE</version>
 		</dependency>
+		<!-- Not exactly required -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.springframework.boot</groupId> -->
+<!-- 			<artifactId>spring-boot-devtools</artifactId> -->
+<!-- 			<version>1.5.9.RELEASE</version> -->
+<!-- 			<optional>true</optional> -->
+<!-- 		</dependency> -->
 	</dependencies>
 
 	<build>
 		<plugins>
+			<!-- Create executable jar -->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>

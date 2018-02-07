@@ -1,19 +1,29 @@
 # Spring boot
 
+#### Hello example
+
 ~~Run main method in HelloExample~~
+
+Method hello() annotated with @ResponseBody will return plain html.
 
 Go to: http://localhost:8080/hello
 
+http://localhost:8080/hello?name=John
 
-Run main method in GreetingController
 
-Go to: http://localhost:8080/greeting
+#### Greeting example
 
-GET request opens a form:
+This example uses Thymeleaf for creating GUI.
+
+Run main method in GreetingController.
+
+Method greetingForm() is called when GET request is received. The method opens the form template.
+
+Open in web browser:
 
 http://localhost:8080/greeting
 
-POST request is used for submitting the data
+Method greeting() is called when POST request is received after submitting the data
 
 
 #### Maven

@@ -1,4 +1,4 @@
-package si.matjazcerkvenik.test.springboot;
+package si.matjazcerkvenik.test.springboot.thymeleaf;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -41,5 +41,8 @@ public class GreetingController {
 	public static void main(String[] args) {
         SpringApplication.run(GreetingController.class, args);
     }
+	
+	// to have both Thymeleaf and REST API:
+	// https://stackoverflow.com/questions/33004831/spring-mvc-thymeleaf-rest
 
 }

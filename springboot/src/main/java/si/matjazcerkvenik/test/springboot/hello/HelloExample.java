@@ -1,4 +1,4 @@
-package si.matjazcerkvenik.test.springboot;
+package si.matjazcerkvenik.test.springboot.hello;
 
 import javax.servlet.http.HttpServletRequest;
 
