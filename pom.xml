@@ -26,6 +26,9 @@
 		<module>hadoophdfs</module>
 		<module>primefaces</module>
 		<module>springboot</module>
+		<module>omp3p</module>
+		<module>spring-boot-rest-impl</module>
+		<module>spring-boot-rest-client</module>
 	</modules>
 
 	<properties>
