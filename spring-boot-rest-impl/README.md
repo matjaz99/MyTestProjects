@@ -1,11 +1,13 @@
-# Spring boot rest client-server example
+# Spring boot rest client-server example - Server side
+
+[see also](spring-boot-rest-client/README.md)
 
 Based on examples:
 
 http://g00glen00b.be/producing-rest-apis-with-spring/
 https://g00glen00b.be/consuming-rest-apis-with-spring/
 
-[see also](spring-boot-rest-client/README.md)
+This example uses HSQLDB database.
 
 Run main method in TaskController class.
 
@@ -40,7 +42,7 @@ with body:
 }
 ```
 
-#### Delete task (DELETE)
+#### Delete task (DELETE) 
 
 http://localhost:8080/api/tasks/1
 

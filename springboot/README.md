@@ -2,13 +2,16 @@
 
 #### Hello example
 
-~~Run main method in HelloExample~~
+Run main method in HelloExample
 
 Method hello() annotated with @ResponseBody will return plain html.
 
 Go to: http://localhost:8080/hello
 
 http://localhost:8080/hello?name=John
+
+Maven dependencies:
+- spring-boot-starter-web
 
 
 #### Greeting example
@@ -24,6 +27,10 @@ Open in web browser:
 http://localhost:8080/greeting
 
 Method greeting() is called when POST request is received after submitting the data
+
+Maven dependencies:
+- spring-boot-starter-web
+- spring-boot-starter-thymeleaf
 
 
 #### Maven
