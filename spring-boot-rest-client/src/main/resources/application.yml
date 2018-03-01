@@ -1,2 +1,4 @@
 resource:
   tasks: http://localhost:8080/api/tasks
+server:
+  port: 8081

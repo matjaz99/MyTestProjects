@@ -6,6 +6,8 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -23,6 +25,18 @@ public class TaskServiceImpl {
 	
 	public List<TaskDTO> findAll() {
 	    return Arrays.stream(restTemplate.getForObject(resource, TaskDTO[].class)).collect(Collectors.toList());
+	}
+	
+	public TaskDTO create(TaskDTO task) {
+	    return restTemplate.postForObject(resource, task, TaskDTO.class);
+	}
+	
+	public TaskDTO update(Long id, TaskDTO task) {
+	    return restTemplate.exchange(idResource, HttpMethod.PUT, new HttpEntity<>(task), TaskDTO.class, id).getBody();
+	}
+	
+	public void delete(Long id) {
+	    restTemplate.delete(idResource, id);
 	}
 	
 }

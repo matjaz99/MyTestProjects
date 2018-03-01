@@ -1,6 +1,6 @@
 # Spring boot rest client-server example - Server side
 
-[see also](spring-boot-rest-client/README.md)
+[see also](../spring-boot-rest-client/README.md)
 
 Based on examples:
 
