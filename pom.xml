@@ -28,6 +28,7 @@
 		<module>springboot</module>
 		<module>spring-boot-rest-impl</module>
 		<module>spring-boot-rest-client</module>
+		<module>ims-xml-generator</module>
 	</modules>
 
 	<properties>

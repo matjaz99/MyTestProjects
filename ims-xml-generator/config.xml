@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<generator>
+	<config>
+		<period>30</period>
+		<outputDirectory>generated</outputDirectory>
+		<fakeMeas>false</fakeMeas>
+	</config>
+	<node>
+		<elementType>S-CSCF</elementType>
+		<nodeName>Ljubljana</nodeName>
+		<nodeId>1001</nodeId>
+	</node>
+	<node>
+		<elementType>P-CSCF</elementType>
+		<nodeName>Kranj</nodeName>
+		<nodeId>1002</nodeId>
+	</node>
+	<node>
+		<elementType>I-CSCF</elementType>
+		<nodeName>Maribor</nodeName>
+		<nodeId>1003</nodeId>
+	</node>
+	<node>
+		<elementType>E-CSCF</elementType>
+		<nodeName>Hospital</nodeName>
+		<nodeId>1004</nodeId>
+	</node>
+	<node>
+		<elementType>TAS</elementType>
+		<nodeName>TAS</nodeName>
+		<nodeId>1005</nodeId>
+	</node>
+	<node>
+		<elementType>MGCF</elementType>
+		<nodeName>MGCF-1</nodeName>
+		<nodeId>1006</nodeId>
+	</node>
+	<node>
+		<elementType>BGCF</elementType>
+		<nodeName>BGCF-1</nodeName>
+		<nodeId>1007</nodeId>
+	</node>
+</generator>
