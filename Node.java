@@ -52,8 +52,6 @@ public class Node {
 		this.nodeId = nodeId;
 	}
 	
-	
-
 	public IMSNodeSimulator getImsNodeSim() {
 		return imsNodeSim;
 	}
@@ -105,6 +103,5 @@ public class Node {
 	public String toString() {
 		return "Node [elementType=" + elementType + ", nodeName=" + nodeName + ", nodeId=" + nodeId + "]";
 	}
-	
 
 }

@@ -16,6 +16,7 @@ Configuration of nodes consists of elementType, nodeName and nodeId. Many <nodes
 - includes all IMS standard measurements on BGCF, MGCF, I/S/P-CSCF, TAS and VM
 
 
+
 Monitoring HSS nodes
 
 PMON retrieves all kind of nodes from MNS with method getNeNodes.

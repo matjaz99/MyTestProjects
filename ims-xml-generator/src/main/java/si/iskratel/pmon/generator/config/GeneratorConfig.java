@@ -7,6 +7,7 @@ public class GeneratorConfig {
 	private int period = 900;
 	private String outputDirectory = "./generated";
 	private boolean useFakeMeasurements = false;
+	private InfluxDbConfig influxDbConfig = null;
 
 	public int getPeriod() {
 		return period;
@@ -33,6 +34,15 @@ public class GeneratorConfig {
 	@XmlElement(name="fakeMeas")
 	public void setUseFakeMeasurements(boolean useFakeMeasurements) {
 		this.useFakeMeasurements = useFakeMeasurements;
+	}
+
+	public InfluxDbConfig getInfluxDbConfig() {
+		return influxDbConfig;
+	}
+
+	@XmlElement(name="influxdb")
+	public void setInfluxDbConfig(InfluxDbConfig influxDbConfig) {
+		this.influxDbConfig = influxDbConfig;
 	}
 	
 }

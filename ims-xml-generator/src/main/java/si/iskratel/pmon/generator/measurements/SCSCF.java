@@ -5,11 +5,11 @@ import si.iskratel.pmon.generator.Start;
 public class SCSCF extends IMSNodeSimulator {
 	
 	private int UR_AttInitReg = 1000;
-//	private int UR_SuccInitReg = 900;
+	private int UR_SuccInitReg = 900;
 	private int UR_FailInitReg = 100;
 	
 	private int UR_AttReReg = 100;
-//	private int UR_SuccReReg = 80;
+	private int UR_SuccReReg = 80;
 	private int UR_FailReReg = 20;
 	
 	private int UR_AttDeRegUe = 200;
@@ -117,9 +117,10 @@ public class SCSCF extends IMSNodeSimulator {
 		
 		UR_AttInitReg = getNextValue(UR_AttInitReg, 300, 1000, 100);
 		UR_FailInitReg = getNextValue(UR_FailInitReg, 0, 300, 50);
+		UR_SuccInitReg = UR_AttInitReg - UR_FailInitReg;
 		
 		measurementsMap.put("UR.AttInitReg", UR_AttInitReg);
-		measurementsMap.put("UR.SuccInitReg", UR_AttInitReg - UR_FailInitReg);
+		measurementsMap.put("UR.SuccInitReg", UR_SuccInitReg);
 		measurementsMap.put("UR.FailInitReg", UR_FailInitReg);
 		
 	}
@@ -128,9 +129,10 @@ public class SCSCF extends IMSNodeSimulator {
 		
 		UR_AttReReg = getNextValue(UR_AttReReg, 200, 500, 30);
 		UR_FailReReg = getNextValue(UR_FailReReg, 0, 200, 10);
+		UR_SuccReReg = UR_AttReReg - UR_FailReReg;
 		
 		measurementsMap.put("UR.AttReReg", UR_AttReReg);
-		measurementsMap.put("UR.SuccReReg", UR_AttReReg - UR_FailReReg);
+		measurementsMap.put("UR.SuccReReg", UR_SuccReReg);
 		measurementsMap.put("UR.FailReReg", UR_FailReReg);
 		
 	}

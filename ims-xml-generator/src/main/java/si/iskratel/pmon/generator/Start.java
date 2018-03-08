@@ -8,6 +8,8 @@ import javax.xml.bind.Unmarshaller;
 
 import si.iskratel.pmon.generator.config.Generator;
 import si.iskratel.pmon.generator.config.Node;
+import si.iskratel.pmon.generator.influxdb.HttpClient;
+import si.iskratel.pmon.generator.xml.MeasCollecFile;
 
 public class Start implements Runnable {
 	
@@ -17,7 +19,7 @@ public class Start implements Runnable {
 		
 		System.out.println("\n\n");
 		System.out.println("+------------------------------+");
-		System.out.println("|   PMON - XML Generator 1.4   |");
+		System.out.println("|   PMON - XML Generator 2.0   |");
 		System.out.println("+------------------------------+\n\n");
 		
 		loadConfig();
@@ -35,7 +37,14 @@ public class Start implements Runnable {
 		while (true) {
 			
 			for (Node node: generator.getNodesList()) {
-				node.generateXml();
+				
+				MeasCollecFile mcf = node.generateXml();
+				
+				if (generator.getConfig().getInfluxDbConfig() != null
+						&& generator.getConfig().getInfluxDbConfig().isEnabled()) {
+					HttpClient.sendPost(mcf);
+				}
+				
 			}
 			
 			try {
