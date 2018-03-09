@@ -5,7 +5,7 @@
 		<outputDirectory>generated</outputDirectory>
 		<fakeMeas>false</fakeMeas>
 		<influxdb>
-			<enabled>true</enabled>
+			<enabled>false</enabled>
 			<url>http://192.168.1.115:8086/write?db=pmon</url>
 		</influxdb>
 	</config>

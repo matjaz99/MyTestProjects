@@ -10,17 +10,16 @@ Configuration is in config.xml file:
 
 Configuration of nodes consists of elementType, nodeName and nodeId. Many <nodes> elements can be added. Each node will simulate measurements according to type of element: BGCF, MGCF, I-CSCF, S-CSCF, P-CSCF, TAS and VM.
 
+Configuration of InfluxDB client consists of:
+- enabled - client is enabled if true
+- url - url to access database
 
 
 #### v1.4
 - includes all IMS standard measurements on BGCF, MGCF, I/S/P-CSCF, TAS and VM
 
+#### v2.0
+- added InfluxDB support (using http requests)
+- measurements are stored in InfluxDB (and displayed by Grafana)
 
 
-Monitoring HSS nodes
-
-PMON retrieves all kind of nodes from MNS with method getNeNodes.
-PMON should monitor only nodes with product category: IA, IE and IC.
-
-HSS nodes cannot be identified by product category, since their product category is AP, the same as many other Iskratel products.
-To overcome this problem, PMON should implement a possibility to manually add additional nodes under performance monitoring (by nodeId in MNS).
