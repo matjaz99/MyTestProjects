@@ -29,6 +29,8 @@
 		<module>spring-boot-rest-impl</module>
 		<module>spring-boot-rest-client</module>
 		<module>ims-xml-generator</module>
+		<module>utils4j</module>
+		<module>jlayer</module>
 	</modules>
 
 	<properties>
