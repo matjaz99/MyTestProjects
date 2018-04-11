@@ -121,6 +121,17 @@ public class Utils4j {
 	
 	
 	/**
+	 * Return true if file exists.
+	 * @param absolute path
+	 * @return true if exists
+	 */
+	public static boolean fileExists(String file) {
+		File f = new File(file);
+		return f.exists();
+	}
+	
+	
+	/**
 	 * Read file.
 	 * 
 	 * @param filepath
@@ -268,6 +279,57 @@ public class Utils4j {
 	}
 	
 	
+	public static String getSha1(String file) {
+		
+		if (!fileExists(file)) {
+			return "-1";
+		}
+		
+		FileInputStream fis;
+		StringBuffer sb;
+		
+		try {
+			MessageDigest md = MessageDigest.getInstance("SHA1");
+			fis = new FileInputStream(file);
+			byte[] dataBytes = new byte[1024];
+ 
+			int nread = 0; 
+ 
+			while ((nread = fis.read(dataBytes)) != -1) {
+			  md.update(dataBytes, 0, nread);
+			}
+ 
+			byte[] mdbytes = md.digest();
+ 
+			sb = new StringBuffer("");
+			//convert the byte to hex format
+			for (int i = 0; i < mdbytes.length; i++) {
+				sb.append(Integer.toString((mdbytes[i] & 0xff) + 0x100, 16).substring(1));
+			}
+			
+//			OContext.getInstance().getLogger().debug("Digester:getSha1(): file: " + file + " SHA1=" + sb.toString());
+			
+			fis.close();
+			
+			return sb.toString();
+			
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	    
+//	    System.out.println("Digest(in hex format):: " + sb.toString());
+	    
+	    return "0";
+		
+	}
+
+
+	
+	
 	
 	
 	
@@ -280,7 +342,7 @@ public class Utils4j {
 	
 	
 	/**
-	 * Return IP address of the server, where OpenMp3Player is running.
+	 * Return IP address of the local host (server).
 	 * @return ip
 	 */
 	public static String getLocalIp() {
@@ -291,6 +353,11 @@ public class Utils4j {
 		}
 		return "unknown host";
 	}
+	
+	
+	
+	
+	
 	
 	
 	
