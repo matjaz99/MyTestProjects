@@ -6,6 +6,8 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
+import si.iskratel.pmon.generator.cdr.CdrGenerator;
+import si.iskratel.pmon.generator.cdr.CdrSimple;
 import si.iskratel.pmon.generator.config.Generator;
 import si.iskratel.pmon.generator.config.Node;
 import si.iskratel.pmon.generator.influxdb.HttpClient;
@@ -33,6 +35,30 @@ public class Start implements Runnable {
 	public void run() {
 		
 		System.out.println("INFO: Running...");
+		
+		if (generator.getConfig().isGenerateJsonCdrSimple()) {
+			
+			int fileNumber = 0;
+			
+			for (int i = 3000000; i < 5000000; i++) {
+				CdrSimple cdr = CdrGenerator.generateCdrSimple();
+//				System.out.println(cdr.toString());
+				if (i % 100000 == 0) {
+					fileNumber++;
+				}
+				Util.appendToFile("cdr" + fileNumber + ".json", "{\"index\":{\"_id\":\""+i + "\"}}\n");
+				Util.appendToFile("cdr" + fileNumber + ".json", cdr.toJsonString() + "\n");
+				Util.pushTimeForward(Util.getRandom(0, 20000));
+				
+				if (i % 1000 == 0) {
+					System.out.println(i);
+				}
+				
+			}
+			
+			System.out.println("CDR generation done. Exiting.");
+			System.exit(0);
+		}
 
 		while (true) {
 			

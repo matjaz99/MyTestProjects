@@ -7,6 +7,7 @@ public class GeneratorConfig {
 	private int period = 900;
 	private String outputDirectory = "./generated";
 	private boolean useFakeMeasurements = false;
+	private boolean generateJsonCdrSimple = false;
 	private InfluxDbConfig influxDbConfig = null;
 
 	public int getPeriod() {
@@ -34,6 +35,15 @@ public class GeneratorConfig {
 	@XmlElement(name="fakeMeas")
 	public void setUseFakeMeasurements(boolean useFakeMeasurements) {
 		this.useFakeMeasurements = useFakeMeasurements;
+	}
+
+	public boolean isGenerateJsonCdrSimple() {
+		return generateJsonCdrSimple;
+	}
+
+	@XmlElement
+	public void setGenerateJsonCdrSimple(boolean generateJsonCdrSimple) {
+		this.generateJsonCdrSimple = generateJsonCdrSimple;
 	}
 
 	public InfluxDbConfig getInfluxDbConfig() {
