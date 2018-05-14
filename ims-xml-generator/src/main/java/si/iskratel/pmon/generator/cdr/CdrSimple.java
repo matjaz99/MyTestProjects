@@ -12,9 +12,11 @@ public class CdrSimple {
 	private String startTime;
 	private String endTime;
 	
-	private int call_release_cause;
+	private int callReleaseCause;
 	
 	private String trafficType;
+	
+	private String suppService;
 
 	public String getCallingPartyNumber() {
 		return callingPartyNumber;
@@ -56,12 +58,12 @@ public class CdrSimple {
 		this.endTime = endTime;
 	}
 
-	public int getCall_release_cause() {
-		return call_release_cause;
+	public int getCallReleaseCause() {
+		return callReleaseCause;
 	}
 
-	public void setCall_release_cause(int call_release_cause) {
-		this.call_release_cause = call_release_cause;
+	public void setCallReleaseCause(int callReleaseCause) {
+		this.callReleaseCause = callReleaseCause;
 	}
 
 	public String getTrafficType() {
@@ -72,17 +74,26 @@ public class CdrSimple {
 		this.trafficType = trafficType;
 	}
 
+	public String getSuppService() {
+		return suppService;
+	}
+
+	public void setSuppService(String suppService) {
+		this.suppService = suppService;
+	}
+
 	@Override
 	public String toString() {
 		return "CdrSimple [callingPartyNumber=" + callingPartyNumber + ", calledPartyNumber=" + calledPartyNumber
 				+ ", duration=" + duration + ", startTime=" + startTime + ", endTime=" + endTime
-				+ ", call_release_cause=" + call_release_cause + ", trafficType=" + trafficType + "]";
+				+ ", call_release_cause=" + callReleaseCause + ", trafficType=" + trafficType + "]";
 	}
 	
 	public String toJsonString() {
 		String s = "{'callingPartyNumber':'" + callingPartyNumber + "','calledPartyNumber':'" + calledPartyNumber
 				+ "','duration':" + duration + ",'startTime':'" + startTime + "','endTime':'" + endTime
-				+ "','call_release_cause':" + call_release_cause + ",'trafficType':'" + trafficType + "'}";
+				+ "','callReleaseCause':" + callReleaseCause + ",'trafficType':'"
+				+ trafficType + "','suppService':'" + suppService + "'}";
 		s = s.replace("'", "\"");
 		return s;
 	}

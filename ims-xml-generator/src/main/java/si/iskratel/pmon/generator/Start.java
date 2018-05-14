@@ -40,7 +40,7 @@ public class Start implements Runnable {
 			
 			int fileNumber = 0;
 			
-			for (int i = 3000000; i < 5000000; i++) {
+			for (int i = 0; i < 10000000; i++) {
 				CdrSimple cdr = CdrGenerator.generateCdrSimple();
 //				System.out.println(cdr.toString());
 				if (i % 100000 == 0) {
@@ -50,7 +50,7 @@ public class Start implements Runnable {
 				Util.appendToFile("cdr" + fileNumber + ".json", cdr.toJsonString() + "\n");
 				Util.pushTimeForward(Util.getRandom(0, 20000));
 				
-				if (i % 1000 == 0) {
+				if (i % 10000 == 0) {
 					System.out.println(i);
 				}
 				

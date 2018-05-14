@@ -11,10 +11,10 @@ public class CdrGenerator {
 		cdr.setCallingPartyNumber(PartyNumbers.getRandomA());
 		cdr.setCalledPartyNumber(PartyNumbers.getRandomB());
 		
-		cdr.setCall_release_cause(CallReleaseCause.getRandomCause());
+		cdr.setCallReleaseCause(CallReleaseCause.getRandomCause());
 		cdr.setTrafficType(TrafficType.getRandomTraficType());
 		
-		if (cdr.getCall_release_cause() == CallReleaseCause.NORMAL_CALL_CLEARING) {
+		if (cdr.getCallReleaseCause() == CallReleaseCause.NORMAL_CALL_CLEARING) {
 			cdr.setDuration(Duration.getRandomDuration());
 		} else {
 			cdr.setDuration(0);
@@ -22,6 +22,8 @@ public class CdrGenerator {
 		
 		cdr.setStartTime(Util.getRelativeDate());
 		cdr.setEndTime(Util.getRelativeDate(Util.relativeClock, cdr.getDuration() * 1000));
+		
+		cdr.setSuppService(SuppService.getRandomSuppService());
 		
 		return cdr;
 		
