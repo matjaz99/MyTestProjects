@@ -31,6 +31,7 @@
 		<module>ims-xml-generator</module>
 		<module>utils4j</module>
 		<module>jlayer</module>
+		<module>prometheus-client</module>
 	</modules>
 
 	<properties>

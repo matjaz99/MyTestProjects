@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Generator {
 	
 	private GeneratorConfig config;
-	private List<Node> nodesList;
+	private Inventory inventory;
 
 	public GeneratorConfig getConfig() {
 		return config;
@@ -20,13 +20,14 @@ public class Generator {
 		this.config = config;
 	}
 
-	public List<Node> getNodesList() {
-		return nodesList;
+	public Inventory getInventory() {
+		return inventory;
 	}
 
-	@XmlElement(name="node")
-	public void setNodesList(List<Node> node) {
-		this.nodesList = node;
+	@XmlElement(name="inventory")
+	public void setInventory(Inventory inventory) {
+		this.inventory = inventory;
 	}
+	
 	
 }

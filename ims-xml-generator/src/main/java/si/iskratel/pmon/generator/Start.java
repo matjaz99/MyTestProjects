@@ -62,14 +62,11 @@ public class Start implements Runnable {
 
 		while (true) {
 			
-			for (Node node: generator.getNodesList()) {
+			for (Node node: generator.getInventory().getNodesList()) {
 				
 				MeasCollecFile mcf = node.generateXml();
 				
-				if (generator.getConfig().getInfluxDbConfig() != null
-						&& generator.getConfig().getInfluxDbConfig().isEnabled()) {
-					HttpClient.sendPost(mcf);
-				}
+				writeToInflux(mcf);
 				
 			}
 			
@@ -98,8 +95,8 @@ public class Start implements Runnable {
 			generator = (Generator) jaxbUnmarshaller.unmarshal(file);
 			
 			System.out.println("INFO: Configuration loaded");
-			System.out.println("INFO: Simulating " + generator.getNodesList().size() + " nodes:");
-			for (Node n : generator.getNodesList()) {
+			System.out.println("INFO: Simulating " + generator.getInventory().getNodesList().size() + " nodes:");
+			for (Node n : generator.getInventory().getNodesList()) {
 				System.out.println("\t" + n.toString());
 			}
 
@@ -114,6 +111,15 @@ public class Start implements Runnable {
 			dir.mkdir();
 		}
 
+	}
+	
+	public static void writeToInflux(MeasCollecFile mcf) {
+		
+		if (generator.getConfig().getInfluxDbConfig() != null
+				&& generator.getConfig().getInfluxDbConfig().isEnabled()) {
+			HttpClient.sendPost(mcf);
+		}
+				
 	}
 
 }
