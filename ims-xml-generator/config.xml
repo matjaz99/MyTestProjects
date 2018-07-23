@@ -10,6 +10,11 @@
 			<enabled>false</enabled>
 			<url>http://192.168.1.115:8086/write?db=pmon</url>
 		</influxdb>
+		<prometheus>
+			<enabled>false</enabled>
+			<port>29992</port>
+			<path>/pmon/metrics</path>
+		</prometheus>
 	</config>
 	<inventory>
 		<node>
