@@ -7,8 +7,9 @@ public class GeneratorConfig {
 	private int period = 900;
 	private String outputDirectory = "./generated";
 	private boolean useFakeMeasurements = false;
-	private boolean generateJsonCdrSimple = false;
 	private InfluxDbConfig influxDbConfig = null;
+	private PrometheusConfig prometheusConfig = null;
+	private ElasticConfig elasticSearchConfig = null;
 
 	public int getPeriod() {
 		return period;
@@ -37,15 +38,6 @@ public class GeneratorConfig {
 		this.useFakeMeasurements = useFakeMeasurements;
 	}
 
-	public boolean isGenerateJsonCdrSimple() {
-		return generateJsonCdrSimple;
-	}
-
-	@XmlElement
-	public void setGenerateJsonCdrSimple(boolean generateJsonCdrSimple) {
-		this.generateJsonCdrSimple = generateJsonCdrSimple;
-	}
-
 	public InfluxDbConfig getInfluxDbConfig() {
 		return influxDbConfig;
 	}
@@ -54,5 +46,25 @@ public class GeneratorConfig {
 	public void setInfluxDbConfig(InfluxDbConfig influxDbConfig) {
 		this.influxDbConfig = influxDbConfig;
 	}
+
+	public PrometheusConfig getPrometheusConfig() {
+		return prometheusConfig;
+	}
+
+	@XmlElement(name="prometheus")
+	public void setPrometheusConfig(PrometheusConfig prometheusConfig) {
+		this.prometheusConfig = prometheusConfig;
+	}
+
+	public ElasticConfig getElasticSearchConfig() {
+		return elasticSearchConfig;
+	}
+
+	@XmlElement(name="elasticsearch")
+	public void setElasticSearchConfig(ElasticConfig elasticSearchConfig) {
+		this.elasticSearchConfig = elasticSearchConfig;
+	}
+	
+	
 	
 }

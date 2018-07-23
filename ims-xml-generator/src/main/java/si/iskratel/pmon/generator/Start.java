@@ -6,11 +6,19 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.servlet.ServletContextHandler;
+import org.eclipse.jetty.servlet.ServletHolder;
+
+import io.prometheus.client.exporter.MetricsServlet;
+import io.prometheus.client.hotspot.DefaultExports;
 import si.iskratel.pmon.generator.cdr.CdrGenerator;
 import si.iskratel.pmon.generator.cdr.CdrSimple;
 import si.iskratel.pmon.generator.config.Generator;
 import si.iskratel.pmon.generator.config.Node;
 import si.iskratel.pmon.generator.influxdb.HttpClient;
+import si.iskratel.pmon.generator.prometheus.HelloServlet;
+import si.iskratel.pmon.generator.prometheus.PmonMetrics;
 import si.iskratel.pmon.generator.xml.MeasCollecFile;
 
 public class Start implements Runnable {
@@ -36,7 +44,8 @@ public class Start implements Runnable {
 		
 		System.out.println("INFO: Running...");
 		
-		if (generator.getConfig().isGenerateJsonCdrSimple()) {
+		if (generator.getConfig().getElasticSearchConfig() != null
+				&& generator.getConfig().getElasticSearchConfig().isEnabled()) {
 			
 			int fileNumber = 0;
 			
@@ -58,6 +67,48 @@ public class Start implements Runnable {
 			
 			System.out.println("CDR generation done. Exiting.");
 			System.exit(0);
+		}
+		
+		if (generator.getConfig().getPrometheusConfig() != null
+				&& generator.getConfig().getPrometheusConfig().isEnabled()) {
+			
+			Server server = new Server(generator.getConfig().getPrometheusConfig().getPort());
+			ServletContextHandler context = new ServletContextHandler();
+			context.setContextPath("/");
+			server.setHandler(context);
+			// Expose our example servlet.
+			context.addServlet(new ServletHolder(new HelloServlet()), "/");
+			// Expose Promtheus metrics.
+//			context.addServlet(new ServletHolder(new MetricsServlet()), "/metrics");
+			context.addServlet(new ServletHolder(new MetricsServlet()), "/pmon/metrics");
+			// Add metrics about CPU, JVM memory etc.
+			DefaultExports.initialize();
+
+			// Start the webserver.
+			try {
+				server.start();
+//				server.join();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+				System.exit(0);
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.exit(0);
+			}
+			
+			while (true) {
+				
+				CdrSimple cdr = CdrGenerator.generateCdrSimple();
+				
+				PmonMetrics.calls.inc();
+				
+				try {
+					Thread.sleep(1 * 1000);
+				} catch (InterruptedException e) {
+				}
+				
+			}
+			
 		}
 
 		while (true) {

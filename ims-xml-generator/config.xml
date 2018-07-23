@@ -4,14 +4,16 @@
 		<period>30</period>
 		<outputDirectory>generated</outputDirectory>
 		<fakeMeas>false</fakeMeas>
-		<generateJsonCdrSimple>true</generateJsonCdrSimple>
 		<influxdb>
 			<!-- write xml measurements into influx db, works only inside eclipse (because of dependencies) -->
 			<enabled>false</enabled>
 			<url>http://192.168.1.115:8086/write?db=pmon</url>
 		</influxdb>
-		<prometheus>
+		<elasticsearch>
 			<enabled>false</enabled>
+		</elasticsearch>
+		<prometheus>
+			<enabled>true</enabled>
 			<port>29992</port>
 			<path>/pmon/metrics</path>
 		</prometheus>
