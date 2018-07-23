@@ -32,6 +32,7 @@
 		<module>utils4j</module>
 		<module>jlayer</module>
 		<module>prometheus-client</module>
+		<module>load-test</module>
 	</modules>
 
 	<properties>
