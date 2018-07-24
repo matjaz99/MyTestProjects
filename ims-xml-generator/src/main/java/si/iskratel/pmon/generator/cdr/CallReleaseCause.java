@@ -18,8 +18,14 @@ public class CallReleaseCause {
 		int[] array = {USER_BUSY, FREE_NO_ANS, CALL_REJECTED, INCOMPLETE_DIAL};
 		
 		int r = Util.getRandom(0, 100);
-		if (r < 70) {
+		if (r < 50) {
 			return NORMAL_CALL_CLEARING;
+		}
+		if (r < 70) {
+			return FREE_NO_ANS;
+		}
+		if (r < 80) {
+			return USER_BUSY;
 		}
 		
 		if (r < 95) {

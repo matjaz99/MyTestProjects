@@ -14,7 +14,7 @@
 		</elasticsearch>
 		<prometheus>
 			<enabled>true</enabled>
-			<port>29992</port>
+			<port>29901</port>
 			<path>/pmon/metrics</path>
 		</prometheus>
 	</config>

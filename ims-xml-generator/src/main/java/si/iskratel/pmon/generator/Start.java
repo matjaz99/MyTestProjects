@@ -19,6 +19,7 @@ import si.iskratel.pmon.generator.config.Node;
 import si.iskratel.pmon.generator.influxdb.HttpClient;
 import si.iskratel.pmon.generator.prometheus.HelloServlet;
 import si.iskratel.pmon.generator.prometheus.PmonMetrics;
+import si.iskratel.pmon.generator.prometheus.PmonServlet;
 import si.iskratel.pmon.generator.xml.MeasCollecFile;
 
 public class Start implements Runnable {
@@ -80,7 +81,8 @@ public class Start implements Runnable {
 			context.addServlet(new ServletHolder(new HelloServlet()), "/");
 			// Expose Promtheus metrics.
 //			context.addServlet(new ServletHolder(new MetricsServlet()), "/metrics");
-			context.addServlet(new ServletHolder(new MetricsServlet()), "/pmon/metrics");
+//			context.addServlet(new ServletHolder(new MetricsServlet()), "/pmon/metrics");
+			context.addServlet(new ServletHolder(new PmonServlet()), "/pmon/metrics");
 			// Add metrics about CPU, JVM memory etc.
 			DefaultExports.initialize();
 
@@ -98,12 +100,17 @@ public class Start implements Runnable {
 			
 			while (true) {
 				
+				int rnd = Util.getRandom(0, 5000);
 				CdrSimple cdr = CdrGenerator.generateCdrSimple();
+				Util.pushTimeForward(rnd);
 				
-				PmonMetrics.calls.inc();
+				System.out.println(cdr.toString());
+				
+				PmonMetrics.callsTotal.labels("1048342", "S-CSCF", "" + cdr.getCallReleaseCause(), cdr.getTrafficType()).inc();
+				PmonMetrics.calls.labels("1048342", "S-CSCF", "" + cdr.getCallReleaseCause(), cdr.getTrafficType()).inc();
 				
 				try {
-					Thread.sleep(1 * 1000);
+					Thread.sleep(rnd);
 				} catch (InterruptedException e) {
 				}
 				
