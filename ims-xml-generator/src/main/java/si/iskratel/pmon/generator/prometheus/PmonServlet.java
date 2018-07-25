@@ -13,10 +13,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import io.prometheus.client.CollectorRegistry;
-import io.prometheus.client.exporter.MetricsServlet;
 import io.prometheus.client.exporter.common.TextFormat;
 
 public class PmonServlet extends HttpServlet {
+	
+	private static final long serialVersionUID = 1086152075142668611L;
 	
 	private CollectorRegistry registry;
 
@@ -40,7 +41,7 @@ public class PmonServlet extends HttpServlet {
 	      writer.flush();
 	    } finally {
 	      writer.close();
-	      PmonMetrics.calls.clear();
+//	      PmonMetrics.calls.clear();
 	    }
 	  }
 
