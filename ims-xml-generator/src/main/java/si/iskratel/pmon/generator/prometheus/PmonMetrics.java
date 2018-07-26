@@ -8,7 +8,7 @@ public class PmonMetrics {
 	public static final Counter callsTotal = Counter.build()
 			.name("pmon_cdr_calls_total")
 			.help("Number of calls.")
-			.labelNames("nodeId", "nodeType", "callReleaseCause", "trafficType")
+			.labelNames("nodeId", "nodeType", "callReleaseCause")
 			.register();
 	
 	public static final Gauge calls = Gauge.build()

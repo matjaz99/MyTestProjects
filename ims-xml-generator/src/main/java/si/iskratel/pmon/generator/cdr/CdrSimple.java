@@ -1,8 +1,10 @@
 package si.iskratel.pmon.generator.cdr;
 
-import si.iskratel.pmon.generator.Util;
-
 public class CdrSimple {
+	
+	public static int count = 0;
+	
+	private int id;
 	
 	private String callingPartyNumber;
 	private String calledPartyNumber;
@@ -17,6 +19,18 @@ public class CdrSimple {
 	private String trafficType;
 	
 	private String suppService;
+	
+	public CdrSimple() {
+		id = count++;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public String getCallingPartyNumber() {
 		return callingPartyNumber;
@@ -84,7 +98,7 @@ public class CdrSimple {
 
 	@Override
 	public String toString() {
-		return "CdrSimple [callingPartyNumber=" + callingPartyNumber + ", calledPartyNumber=" + calledPartyNumber
+		return "CdrSimple [id=" + id + ", callingPartyNumber=" + callingPartyNumber + ", calledPartyNumber=" + calledPartyNumber
 				+ ", duration=" + duration + ", startTime=" + startTime + ", endTime=" + endTime
 				+ ", call_release_cause=" + callReleaseCause + ", trafficType=" + trafficType + "]";
 	}

@@ -100,14 +100,14 @@ public class Start implements Runnable {
 			
 			while (true) {
 				
-				int rnd = Util.getRandom(0, 5000);
+				int rnd = Util.getRandom(50000, 60000);
 				CdrSimple cdr = CdrGenerator.generateCdrSimple();
 				Util.pushTimeForward(rnd);
 				
 				System.out.println(cdr.toString());
 				
-				PmonMetrics.callsTotal.labels("1048342", "S-CSCF", "" + cdr.getCallReleaseCause(), cdr.getTrafficType()).inc();
-				PmonMetrics.calls.labels("1048342", "S-CSCF", "" + cdr.getCallReleaseCause(), cdr.getTrafficType()).inc();
+				PmonMetrics.callsTotal.labels("1048342", "S-CSCF", "" + cdr.getCallReleaseCause()).inc();
+//				PmonMetrics.calls.labels("1048342", "S-CSCF", "" + cdr.getCallReleaseCause(), cdr.getTrafficType()).inc();
 				
 				try {
 					Thread.sleep(rnd);
