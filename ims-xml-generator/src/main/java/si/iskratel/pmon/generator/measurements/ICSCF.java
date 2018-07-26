@@ -1,5 +1,7 @@
 package si.iskratel.pmon.generator.measurements;
 
+import si.iskratel.pmon.generator.Util;
+
 public class ICSCF extends IMSNodeSimulator {
 	
 	private int UR_AttUAR = 500;
@@ -31,8 +33,8 @@ public class ICSCF extends IMSNodeSimulator {
 	
 	private void simulateUAR() {
 		
-		UR_AttUAR = getNextValue(UR_AttUAR, 300, 1000, 100);
-		UR_FailUAA = getNextValue(UR_FailUAA, 0, 300, 50);
+		UR_AttUAR = Util.getNextValue(UR_AttUAR, 300, 1000, 100);
+		UR_FailUAA = Util.getNextValue(UR_FailUAA, 0, 300, 50);
 		
 		measurementsMap.put("UR.AttUAR", UR_AttUAR);
 		measurementsMap.put("UR.SuccUAA", UR_AttUAR - UR_FailUAA);
@@ -42,7 +44,7 @@ public class ICSCF extends IMSNodeSimulator {
 	
 	private void simulateDroppedSessions() {
 		
-		SC_DroppedSession = getNextValue(SC_DroppedSession, 0, 3000, 500);
+		SC_DroppedSession = Util.getNextValue(SC_DroppedSession, 0, 3000, 500);
 		
 		measurementsMap.put("SC.DroppedSession", SC_DroppedSession);
 		
@@ -50,8 +52,8 @@ public class ICSCF extends IMSNodeSimulator {
 	
 	private void simulateLIR() {
 		
-		LIQ_AttLIR = getNextValue(LIQ_AttLIR, 500, 6000, 500);
-		LIQ_FailLIA = getNextValue(LIQ_FailLIA, 0, 500, 50);
+		LIQ_AttLIR = Util.getNextValue(LIQ_AttLIR, 500, 6000, 500);
+		LIQ_FailLIA = Util.getNextValue(LIQ_FailLIA, 0, 500, 50);
 		LIQ_SuccLIA = LIQ_AttLIR - LIQ_FailLIA;
 		
 		measurementsMap.put("LIQ.AttLIR", LIQ_AttLIR);
@@ -62,13 +64,13 @@ public class ICSCF extends IMSNodeSimulator {
 	
 	private void simulateSessionsToFromOtherDomains() {
 		
-		IC_AttSessionFromOtherNtwkDmn = getNextValue(IC_AttSessionFromOtherNtwkDmn, 0, 5000, 500);
-		IC_403SessionFromOtherNtwkDmn = getNextValue(IC_403SessionFromOtherNtwkDmn, 0, 500, 20);
-		IC_SuccSessionFromOtherNtwkDmn = getNextValue(IC_SuccSessionFromOtherNtwkDmn, 0, 4000, 500);
+		IC_AttSessionFromOtherNtwkDmn = Util.getNextValue(IC_AttSessionFromOtherNtwkDmn, 0, 5000, 500);
+		IC_403SessionFromOtherNtwkDmn = Util.getNextValue(IC_403SessionFromOtherNtwkDmn, 0, 500, 20);
+		IC_SuccSessionFromOtherNtwkDmn = Util.getNextValue(IC_SuccSessionFromOtherNtwkDmn, 0, 4000, 500);
 		
-		IC_AttSessionToOtherNtwkDmn = getNextValue(IC_AttSessionToOtherNtwkDmn, 0, 5000, 500);
-		IC_403SessionToOtherNtwkDmn = getNextValue(IC_403SessionToOtherNtwkDmn, 0, 500, 20);
-		IC_SuccSessionToOtherNtwkDmn = getNextValue(IC_SuccSessionToOtherNtwkDmn, 0, 4000, 500);
+		IC_AttSessionToOtherNtwkDmn = Util.getNextValue(IC_AttSessionToOtherNtwkDmn, 0, 5000, 500);
+		IC_403SessionToOtherNtwkDmn = Util.getNextValue(IC_403SessionToOtherNtwkDmn, 0, 500, 20);
+		IC_SuccSessionToOtherNtwkDmn = Util.getNextValue(IC_SuccSessionToOtherNtwkDmn, 0, 4000, 500);
 		
 		measurementsMap.put("IC.AttSessionFromOtherNtwkDmn", IC_AttSessionFromOtherNtwkDmn);
 		measurementsMap.put("IC.403SessionFromOtherNtwkDmn", IC_403SessionFromOtherNtwkDmn);

@@ -1,5 +1,7 @@
 package si.iskratel.pmon.generator.measurements;
 
+import si.iskratel.pmon.generator.Util;
+
 public class TAS extends IMSNodeSimulator {
 	
 	private int SC_AttSessionImOrig = 5000;
@@ -84,10 +86,10 @@ public class TAS extends IMSNodeSimulator {
 	
 	private void simulateSessionImOrig() {
 		
-		SC_AttSessionImOrig = getNextValue(SC_AttSessionImOrig, 1000, 5000, 100);
-		SC_FailSessionImOrig = getNextValue(SC_FailSessionImOrig, 0, 1000, 100);
+		SC_AttSessionImOrig = Util.getNextValue(SC_AttSessionImOrig, 1000, 5000, 100);
+		SC_FailSessionImOrig = Util.getNextValue(SC_FailSessionImOrig, 0, 1000, 100);
 		SC_SuccSessionImOrig = SC_AttSessionImOrig - SC_FailSessionImOrig;
-		SC_AnsSessionImOrig = getNextValue(SC_AnsSessionImOrig, SC_FailSessionImOrig, SC_SuccSessionImOrig, 100);
+		SC_AnsSessionImOrig = Util.getNextValue(SC_AnsSessionImOrig, SC_FailSessionImOrig, SC_SuccSessionImOrig, 100);
 		
 		measurementsMap.put("SC.AttSessionImOrig", SC_AttSessionImOrig);
 		measurementsMap.put("SC.SuccSessionImOrig", SC_SuccSessionImOrig);
@@ -98,8 +100,8 @@ public class TAS extends IMSNodeSimulator {
 	
 	private void simulateSessionAsOrig() {
 		
-		SC_AttSessionAsOrig = getNextValue(SC_AttSessionAsOrig, 4000, 5000, 100);
-		SC_SuccSessionAsOrig = getNextValue(SC_SuccSessionAsOrig, 1000, 4000, 100);
+		SC_AttSessionAsOrig = Util.getNextValue(SC_AttSessionAsOrig, 4000, 5000, 100);
+		SC_SuccSessionAsOrig = Util.getNextValue(SC_SuccSessionAsOrig, 1000, 4000, 100);
 		
 		measurementsMap.put("SC.SC_AttSessionAsOrig", SC_AttSessionAsOrig);
 		measurementsMap.put("SC.SC_SuccSessionAsOrig", SC_SuccSessionAsOrig);
@@ -108,18 +110,18 @@ public class TAS extends IMSNodeSimulator {
 	
 	private void simulateConference() {
 		
-		CONF_AttCreation = getNextValue(CONF_AttCreation, 0, 1000, 100);
-		CONF_SuccCreation = getNextValue(CONF_SuccCreation, 0, 500, 100);
-		CONF_AttJoining = getNextValue(CONF_AttJoining, 0, 500, 10);
-		CONF_SuccJoining = getNextValue(CONF_SuccJoining, 0, 300, 10);
-		CONF_AttInvitation = getNextValue(CONF_AttInvitation, 0, 1000, 100);
-		CONF_SuccInviJoinConf = getNextValue(CONF_SuccInviJoinConf, 0, 2500, 100);
-		CONF_AttSubscription = getNextValue(CONF_AttSubscription, 0, 500, 10);
-		CONF_SuccSubscription = getNextValue(CONF_SuccSubscription, 0, 400, 10);
-		CONF_OnlineUserMax = getNextValue(CONF_OnlineUserMax, 0, 3000, 100);
-		CONF_OnlineConfMax = getNextValue(CONF_OnlineConfMax, 0, 2500, 100);
-		CONF_OnlineUserMean = getNextValue(CONF_OnlineUserMean, 0, 2000, 100);
-		CONF_OnlineConfMean = getNextValue(CONF_OnlineConfMean, 0, 1500, 100);
+		CONF_AttCreation = Util.getNextValue(CONF_AttCreation, 0, 1000, 100);
+		CONF_SuccCreation = Util.getNextValue(CONF_SuccCreation, 0, 500, 100);
+		CONF_AttJoining = Util.getNextValue(CONF_AttJoining, 0, 500, 10);
+		CONF_SuccJoining = Util.getNextValue(CONF_SuccJoining, 0, 300, 10);
+		CONF_AttInvitation = Util.getNextValue(CONF_AttInvitation, 0, 1000, 100);
+		CONF_SuccInviJoinConf = Util.getNextValue(CONF_SuccInviJoinConf, 0, 2500, 100);
+		CONF_AttSubscription = Util.getNextValue(CONF_AttSubscription, 0, 500, 10);
+		CONF_SuccSubscription = Util.getNextValue(CONF_SuccSubscription, 0, 400, 10);
+		CONF_OnlineUserMax = Util.getNextValue(CONF_OnlineUserMax, 0, 3000, 100);
+		CONF_OnlineConfMax = Util.getNextValue(CONF_OnlineConfMax, 0, 2500, 100);
+		CONF_OnlineUserMean = Util.getNextValue(CONF_OnlineUserMean, 0, 2000, 100);
+		CONF_OnlineConfMean = Util.getNextValue(CONF_OnlineConfMean, 0, 1500, 100);
 		
 		measurementsMap.put("CONF.AttCreation", CONF_AttCreation);
 		measurementsMap.put("CONF.SuccCreation", CONF_SuccCreation);
@@ -138,16 +140,16 @@ public class TAS extends IMSNodeSimulator {
 	
 	private void simulatePresence() {
 		
-		PRES_OnlineWatcherMax = getNextValue(PRES_OnlineWatcherMax, 0, 2000, 50);
-		PRES_OnlinePresentityMax = getNextValue(PRES_OnlinePresentityMax, 0, 2000, 50);
-		PRES_OnlineWatcherMean = getNextValue(PRES_OnlineWatcherMean, 0, 1000, 50);
-		PRES_OnlinePresentityMean = getNextValue(PRES_OnlinePresentityMean, 0, 1000, 50);
-		PRES_AttSubscribe = getNextValue(PRES_AttSubscribe, 0, 1000, 50);
-		PRES_SuccSubscribe = getNextValue(PRES_SuccSubscribe, 0, 500, 50);
-		PRES_AttNotify = getNextValue(PRES_AttNotify, 0, 500, 50);
-		PRES_SuccNotify = getNextValue(PRES_SuccNotify, 0, 400, 10);
-		PRES_AttPublish = getNextValue(PRES_AttPublish, 0, 300, 50);
-		PRES_SuccPub = getNextValue(PRES_SuccPub, 0, 250, 50);
+		PRES_OnlineWatcherMax = Util.getNextValue(PRES_OnlineWatcherMax, 0, 2000, 50);
+		PRES_OnlinePresentityMax = Util.getNextValue(PRES_OnlinePresentityMax, 0, 2000, 50);
+		PRES_OnlineWatcherMean = Util.getNextValue(PRES_OnlineWatcherMean, 0, 1000, 50);
+		PRES_OnlinePresentityMean = Util.getNextValue(PRES_OnlinePresentityMean, 0, 1000, 50);
+		PRES_AttSubscribe = Util.getNextValue(PRES_AttSubscribe, 0, 1000, 50);
+		PRES_SuccSubscribe = Util.getNextValue(PRES_SuccSubscribe, 0, 500, 50);
+		PRES_AttNotify = Util.getNextValue(PRES_AttNotify, 0, 500, 50);
+		PRES_SuccNotify = Util.getNextValue(PRES_SuccNotify, 0, 400, 10);
+		PRES_AttPublish = Util.getNextValue(PRES_AttPublish, 0, 300, 50);
+		PRES_SuccPub = Util.getNextValue(PRES_SuccPub, 0, 250, 50);
 		
 		measurementsMap.put("PRES.OnlineWatcherMax", PRES_OnlineWatcherMax);
 		measurementsMap.put("PRES.OnlinePresentityMax", PRES_OnlinePresentityMax);
@@ -164,35 +166,35 @@ public class TAS extends IMSNodeSimulator {
 	
 	private void simulateOtherMeasurements() {
 		
-		SC_CFUUsed = getNextValue(SC_CFUUsed, 0, 200, 20);
-		SC_CFBUsed = getNextValue(SC_CFBUsed, 0, 200, 20);
-		SC_CFNRUsed = getNextValue(SC_CFNRUsed, 0, 200, 20);
-		SC_CFNRcUsed = getNextValue(SC_CFNRcUsed, 0, 200, 20);
-		SC_CFNLUsed = getNextValue(SC_CFNLUsed, 0, 200, 20);
-		SC_CDUsed = getNextValue(SC_CDUsed, 0, 200, 20);
-		SC_CWUsed = getNextValue(SC_CWUsed, 0, 200, 20);
-		SC_HoldUsed = getNextValue(SC_HoldUsed, 0, 200, 20);
-		SC_OCBUsed = getNextValue(SC_OCBUsed, 0, 200, 20);
-		SC_ICBUsed = getNextValue(SC_ICBUsed, 0, 200, 20);
-		SC_ACRUsed = getNextValue(SC_ACRUsed, 0, 200, 20);
-		SC_OIPUsed = getNextValue(SC_OIPUsed, 0, 200, 20);
-		SC_OIRUsed = getNextValue(SC_OIRUsed, 0, 200, 20);
-		SC_TIPUsed = getNextValue(SC_TIPUsed, 0, 200, 20);
-		SC_TIRUsed = getNextValue(SC_TIRUsed, 0, 200, 20);
-		SC_MWIUsed = getNextValue(SC_MWIUsed, 0, 200, 20);
-		SC_FAUsed = getNextValue(SC_FAUsed, 0, 200, 20);
-		SC_CRSUsed = getNextValue(SC_CRSUsed, 0, 200, 20);
-		SC_CATUsed = getNextValue(SC_CATUsed, 0, 200, 20);
-		SC_AOCSUsedOrig = getNextValue(SC_AOCSUsedOrig, 0, 200, 20);
-		SC_AOCSUsedTerm = getNextValue(SC_AOCSUsedTerm, 0, 200, 20);
-		SC_AOCDUsed = getNextValue(SC_AOCDUsed, 0, 200, 20);
-		SC_AOCEUsed = getNextValue(SC_AOCEUsed, 0, 200, 20);
-		SC_CCBSUsed = getNextValue(SC_CCBSUsed, 0, 200, 20);
-		SC_CCNRUsed = getNextValue(SC_CCNRUsed, 0, 200, 20);
-		SC_CUGUsed = getNextValue(SC_CUGUsed, 0, 200, 20);
-		SC_MCIDUsed = getNextValue(SC_MCIDUsed, 0, 200, 20);
-		SC_ECTBlindUsed = getNextValue(SC_ECTBlindUsed, 0, 200, 20);
-		SC_ECTAskUsed = getNextValue(SC_ECTAskUsed, 0, 200, 20);
+		SC_CFUUsed = Util.getNextValue(SC_CFUUsed, 0, 200, 20);
+		SC_CFBUsed = Util.getNextValue(SC_CFBUsed, 0, 200, 20);
+		SC_CFNRUsed = Util.getNextValue(SC_CFNRUsed, 0, 200, 20);
+		SC_CFNRcUsed = Util.getNextValue(SC_CFNRcUsed, 0, 200, 20);
+		SC_CFNLUsed = Util.getNextValue(SC_CFNLUsed, 0, 200, 20);
+		SC_CDUsed = Util.getNextValue(SC_CDUsed, 0, 200, 20);
+		SC_CWUsed = Util.getNextValue(SC_CWUsed, 0, 200, 20);
+		SC_HoldUsed = Util.getNextValue(SC_HoldUsed, 0, 200, 20);
+		SC_OCBUsed = Util.getNextValue(SC_OCBUsed, 0, 200, 20);
+		SC_ICBUsed = Util.getNextValue(SC_ICBUsed, 0, 200, 20);
+		SC_ACRUsed = Util.getNextValue(SC_ACRUsed, 0, 200, 20);
+		SC_OIPUsed = Util.getNextValue(SC_OIPUsed, 0, 200, 20);
+		SC_OIRUsed = Util.getNextValue(SC_OIRUsed, 0, 200, 20);
+		SC_TIPUsed = Util.getNextValue(SC_TIPUsed, 0, 200, 20);
+		SC_TIRUsed = Util.getNextValue(SC_TIRUsed, 0, 200, 20);
+		SC_MWIUsed = Util.getNextValue(SC_MWIUsed, 0, 200, 20);
+		SC_FAUsed = Util.getNextValue(SC_FAUsed, 0, 200, 20);
+		SC_CRSUsed = Util.getNextValue(SC_CRSUsed, 0, 200, 20);
+		SC_CATUsed = Util.getNextValue(SC_CATUsed, 0, 200, 20);
+		SC_AOCSUsedOrig = Util.getNextValue(SC_AOCSUsedOrig, 0, 200, 20);
+		SC_AOCSUsedTerm = Util.getNextValue(SC_AOCSUsedTerm, 0, 200, 20);
+		SC_AOCDUsed = Util.getNextValue(SC_AOCDUsed, 0, 200, 20);
+		SC_AOCEUsed = Util.getNextValue(SC_AOCEUsed, 0, 200, 20);
+		SC_CCBSUsed = Util.getNextValue(SC_CCBSUsed, 0, 200, 20);
+		SC_CCNRUsed = Util.getNextValue(SC_CCNRUsed, 0, 200, 20);
+		SC_CUGUsed = Util.getNextValue(SC_CUGUsed, 0, 200, 20);
+		SC_MCIDUsed = Util.getNextValue(SC_MCIDUsed, 0, 200, 20);
+		SC_ECTBlindUsed = Util.getNextValue(SC_ECTBlindUsed, 0, 200, 20);
+		SC_ECTAskUsed = Util.getNextValue(SC_ECTAskUsed, 0, 200, 20);
 		
 		measurementsMap.put("SC.CFUUsed", SC_CFUUsed);
 		measurementsMap.put("SC.CFBUsed", SC_CFBUsed);

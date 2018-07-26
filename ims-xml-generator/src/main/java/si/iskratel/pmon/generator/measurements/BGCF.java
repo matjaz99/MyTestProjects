@@ -1,5 +1,7 @@
 package si.iskratel.pmon.generator.measurements;
 
+import si.iskratel.pmon.generator.Util;
+
 public class BGCF extends IMSNodeSimulator {
 	
 	private int SC_AttSession = 3000;
@@ -21,15 +23,15 @@ public class BGCF extends IMSNodeSimulator {
 	
 	private void simulateSessions() {
 		
-		SC_AttSession = getNextValue(SC_AttSession, 0, 3000, 100);
-		SC_AttSessionFwdToMGCF = getNextValue(SC_AttSessionFwdToMGCF, 600, 1000, 100);
-		SC_AttSessionFwdToBGCF = getNextValue(SC_AttSessionFwdToBGCF, 600, 1000, 100);
-		SC_AttSessionFwdToCSCF = getNextValue(SC_AttSessionFwdToCSCF, 600, 1000, 100);
-		SC_AttSessionFwdToIBCF = getNextValue(SC_AttSessionFwdToIBCF, 600, 1000, 100);
-		SC_SuccSessionFwdToMGCF = getNextValue(SC_SuccSessionFwdToMGCF, 0, 600, 50);
-		SC_SuccSessionFwdToBGCF = getNextValue(SC_SuccSessionFwdToBGCF, 0, 600, 50);
-		SC_SuccSessionFwdToCSCF = getNextValue(SC_SuccSessionFwdToCSCF, 0, 600, 50);
-		SC_SuccSessionFwdToIBCF = getNextValue(SC_SuccSessionFwdToIBCF, 0, 600, 50);
+		SC_AttSession = Util.getNextValue(SC_AttSession, 0, 3000, 100);
+		SC_AttSessionFwdToMGCF = Util.getNextValue(SC_AttSessionFwdToMGCF, 600, 1000, 100);
+		SC_AttSessionFwdToBGCF = Util.getNextValue(SC_AttSessionFwdToBGCF, 600, 1000, 100);
+		SC_AttSessionFwdToCSCF = Util.getNextValue(SC_AttSessionFwdToCSCF, 600, 1000, 100);
+		SC_AttSessionFwdToIBCF = Util.getNextValue(SC_AttSessionFwdToIBCF, 600, 1000, 100);
+		SC_SuccSessionFwdToMGCF = Util.getNextValue(SC_SuccSessionFwdToMGCF, 0, 600, 50);
+		SC_SuccSessionFwdToBGCF = Util.getNextValue(SC_SuccSessionFwdToBGCF, 0, 600, 50);
+		SC_SuccSessionFwdToCSCF = Util.getNextValue(SC_SuccSessionFwdToCSCF, 0, 600, 50);
+		SC_SuccSessionFwdToIBCF = Util.getNextValue(SC_SuccSessionFwdToIBCF, 0, 600, 50);
 		
 		measurementsMap.put("SC.AttSession", SC_AttSession);
 		measurementsMap.put("SC.AttSessionFwdToMGCF", SC_AttSessionFwdToMGCF);

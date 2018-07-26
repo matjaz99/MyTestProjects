@@ -33,13 +33,42 @@ public class Util {
 		return rand.nextInt(exclusive) + inclusive;
 	}
 	
+	/**
+	 * Generate next value based on current value +/- delta.
+	 * Delta is random value, but not bigger than maxDeviation.
+	 * Value cannot be bigger than maxValue and not less than 0.
+	 * @param currentValue
+	 * @param maxValue
+	 * @param maxDeviation
+	 * @return
+	 */
+	public static int getNextValue(int currentValue, int minValue, int maxValue, int maxDeviation) {
+		
+		Random rand = new Random();
+		
+		int dev = rand.nextInt(maxDeviation);
+		
+		if (rand.nextBoolean()) {
+			currentValue = currentValue + dev;
+		} else {
+			currentValue = currentValue - dev;
+		}
+		
+		if (currentValue > maxValue) {
+			currentValue = maxValue;
+		}
+		if (currentValue < minValue) {
+			currentValue = minValue;
+		}
+		
+		return currentValue;
+		
+	}
+	
 	
 	public static void appendToFile(String filename, String text) {
 		
 		try {
-			// note the constructor of FileWrite class
-			// true at the end will append text to file
-			// instead of overwriting it
 			FileWriter fstream = new FileWriter(filename, true);
 			BufferedWriter out = new BufferedWriter(fstream);
 			

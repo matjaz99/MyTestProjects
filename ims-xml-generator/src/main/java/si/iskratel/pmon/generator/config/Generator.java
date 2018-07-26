@@ -1,7 +1,5 @@
 package si.iskratel.pmon.generator.config;
 
-import java.util.List;
-
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 

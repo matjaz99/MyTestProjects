@@ -11,10 +11,9 @@ public class PmonMetrics {
 			.labelNames("nodeId", "nodeType", "callReleaseCause")
 			.register();
 	
-	public static final Gauge calls = Gauge.build()
-			.name("pmon_cdr_calls")
-			.help("Number of calls.")
-			.labelNames("nodeId", "nodeType", "callReleaseCause", "trafficType")
+	public static final Gauge temperature = Gauge.build()
+			.name("test_temperature_current")
+			.help("Current temperature.")
 			.register();
 	
 	public static final Counter duration = Counter.build()

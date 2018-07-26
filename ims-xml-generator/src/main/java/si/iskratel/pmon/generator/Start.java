@@ -98,16 +98,18 @@ public class Start implements Runnable {
 				System.exit(0);
 			}
 			
+			PmonMetrics.temperature.set(20);
+			
 			while (true) {
 				
-				int rnd = Util.getRandom(50000, 60000);
+				int rnd = Util.getRandom(55000, 65000);
 				CdrSimple cdr = CdrGenerator.generateCdrSimple();
 				Util.pushTimeForward(rnd);
 				
 				System.out.println(cdr.toString());
 				
 				PmonMetrics.callsTotal.labels("1048342", "S-CSCF", "" + cdr.getCallReleaseCause()).inc();
-//				PmonMetrics.calls.labels("1048342", "S-CSCF", "" + cdr.getCallReleaseCause(), cdr.getTrafficType()).inc();
+				PmonMetrics.temperature.set(Util.getNextValue(new Double(PmonMetrics.temperature.get()).intValue(), -10, 100, 5));
 				
 				try {
 					Thread.sleep(rnd);
@@ -137,6 +139,11 @@ public class Start implements Runnable {
 
 	}
 
+	
+	
+	/**
+	 * Load configuration
+	 */
 	public static void loadConfig() {
 		
 		File file = new File("./config.xml");

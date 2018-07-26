@@ -1,5 +1,7 @@
 package si.iskratel.pmon.generator.measurements;
 
+import si.iskratel.pmon.generator.Util;
+
 public class PCSCF extends IMSNodeSimulator {
 	
 	private int UR_AttInitReg = 1000;
@@ -60,8 +62,8 @@ public class PCSCF extends IMSNodeSimulator {
 	
 	private void simulateInitReg() {
 		
-		UR_AttInitReg = getNextValue(UR_AttInitReg, 300, 1000, 100);
-		UR_FailInitReg = getNextValue(UR_FailInitReg, 0, 300, 50);
+		UR_AttInitReg = Util.getNextValue(UR_AttInitReg, 300, 1000, 100);
+		UR_FailInitReg = Util.getNextValue(UR_FailInitReg, 0, 300, 50);
 		UR_SuccInitReg = UR_AttInitReg - UR_FailInitReg;
 		
 		measurementsMap.put("UR.AttInitReg", UR_AttInitReg);
@@ -72,8 +74,8 @@ public class PCSCF extends IMSNodeSimulator {
 	
 	private void simulateReReg() {
 		
-		UR_AttReReg = getNextValue(UR_AttReReg, 200, 2000, 30);
-		UR_FailReReg = getNextValue(UR_FailReReg, 0, 200, 10);
+		UR_AttReReg = Util.getNextValue(UR_AttReReg, 200, 2000, 30);
+		UR_FailReReg = Util.getNextValue(UR_FailReReg, 0, 200, 10);
 		UR_SuccReReg = UR_AttReReg - UR_FailReReg;
 		
 		measurementsMap.put("UR.AttReReg", UR_AttReReg);
@@ -84,8 +86,8 @@ public class PCSCF extends IMSNodeSimulator {
 	
 	private void simulateDeRegUe() {
 		
-		UR_AttDeRegUe = getNextValue(UR_AttDeRegUe, 200, 2000, 30);
-		UR_FailDeRegUe = getNextValue(UR_FailDeRegUe, 0, 200, 10);
+		UR_AttDeRegUe = Util.getNextValue(UR_AttDeRegUe, 200, 2000, 30);
+		UR_FailDeRegUe = Util.getNextValue(UR_FailDeRegUe, 0, 200, 10);
 		UR_SuccDeRegUe = UR_AttDeRegUe - UR_FailDeRegUe;
 		
 		measurementsMap.put("UR.AttDeRegUe", UR_AttDeRegUe);
@@ -96,10 +98,10 @@ public class PCSCF extends IMSNodeSimulator {
 	
 	private void simulateSessionEstablishments() {
 		
-		SC_AttSession = getNextValue(SC_AttSession, 4000, 5000, 500);
-		SC_FailSession = getNextValue(SC_FailSession, 0, 1000, 300);
+		SC_AttSession = Util.getNextValue(SC_AttSession, 4000, 5000, 500);
+		SC_FailSession = Util.getNextValue(SC_FailSession, 0, 1000, 300);
 		SC_SuccSession = SC_AttSession - SC_FailSession;
-		SC_AnsSession = getNextValue(SC_AnsSession, SC_FailSession, SC_SuccSession, 500);
+		SC_AnsSession = Util.getNextValue(SC_AnsSession, SC_FailSession, SC_SuccSession, 500);
 		
 		measurementsMap.put("SC.AttSession", SC_AttSession);
 		measurementsMap.put("SC.SuccSession", SC_SuccSession);
@@ -110,8 +112,8 @@ public class PCSCF extends IMSNodeSimulator {
 	
 	private void simulateNbrSimulSessions() {
 		
-		SC_NbrSimulAnsSessionMax = getNextValue(SC_NbrSimulAnsSessionMax, 0, 10000, 2000);
-		SC_NbrSimulAnsSessionMean = getNextValue(SC_NbrSimulAnsSessionMean, 0, 7000, 500);
+		SC_NbrSimulAnsSessionMax = Util.getNextValue(SC_NbrSimulAnsSessionMax, 0, 10000, 2000);
+		SC_NbrSimulAnsSessionMean = Util.getNextValue(SC_NbrSimulAnsSessionMean, 0, 7000, 500);
 		
 		measurementsMap.put("SC.NbrSimulAnsSessionMax", SC_NbrSimulAnsSessionMax);
 		measurementsMap.put("SC.NbrSimulAnsSessionMean", SC_NbrSimulAnsSessionMean);
@@ -120,7 +122,7 @@ public class PCSCF extends IMSNodeSimulator {
 	
 	private void simulateDroppedSessions() {
 		
-		SC_DroppedSession = getNextValue(SC_DroppedSession, 0, 3000, 500);
+		SC_DroppedSession = Util.getNextValue(SC_DroppedSession, 0, 3000, 500);
 		
 		measurementsMap.put("SC.DroppedSession", SC_DroppedSession);
 		
@@ -128,8 +130,8 @@ public class PCSCF extends IMSNodeSimulator {
 	
 	private void simulateSessionOrig() {
 		
-		SC_AttSessionOrig = getNextValue(SC_AttSessionOrig, 0, 6000, 1000);
-		SC_SuccSessionOrig = getNextValue(SC_SuccSessionOrig, 0, 5000, 500);
+		SC_AttSessionOrig = Util.getNextValue(SC_AttSessionOrig, 0, 6000, 1000);
+		SC_SuccSessionOrig = Util.getNextValue(SC_SuccSessionOrig, 0, 5000, 500);
 		
 		measurementsMap.put("SC.AttSessionOrig", SC_AttSessionOrig);
 		measurementsMap.put("SC.SuccSessionOrig", SC_SuccSessionOrig);
@@ -138,8 +140,8 @@ public class PCSCF extends IMSNodeSimulator {
 	
 	private void simulateSessionTerm() {
 		
-		SC_AttSessionTerm = getNextValue(SC_AttSessionTerm, 0, 6000, 1000);
-		SC_SuccSessionTerm = getNextValue(SC_SuccSessionTerm, 0, 5000, 500);
+		SC_AttSessionTerm = Util.getNextValue(SC_AttSessionTerm, 0, 6000, 1000);
+		SC_SuccSessionTerm = Util.getNextValue(SC_SuccSessionTerm, 0, 5000, 500);
 		
 		measurementsMap.put("SC.AttSessionTerm", SC_AttSessionTerm);
 		measurementsMap.put("SC.SuccSessionTerm", SC_SuccSessionTerm);
@@ -148,8 +150,8 @@ public class PCSCF extends IMSNodeSimulator {
 	
 	private void simulateAccumulatedSessionTime() {
 		
-		SC_AnsTrafOrig = getNextValue(SC_AnsTrafOrig, 0, 15000, 3000);
-		SC_AnsTrafTerm = getNextValue(SC_AnsTrafTerm, 0, 15000, 3000);
+		SC_AnsTrafOrig = Util.getNextValue(SC_AnsTrafOrig, 0, 15000, 3000);
+		SC_AnsTrafTerm = Util.getNextValue(SC_AnsTrafTerm, 0, 15000, 3000);
 		
 		measurementsMap.put("SC.AnsTrafOrig", SC_AnsTrafOrig);
 		measurementsMap.put("SC.AnsTrafTerm", SC_AnsTrafTerm);
@@ -158,8 +160,8 @@ public class PCSCF extends IMSNodeSimulator {
 	
 	private void simulateReleaseBeforeAndAfterRinging() {
 		
-		SC_RelBeforeRing = getNextValue(SC_RelBeforeRing, 0, 1500, 100);
-		SC_RelAfterRing = getNextValue(SC_AnsTrafTerm, 0, 4000, 100);
+		SC_RelBeforeRing = Util.getNextValue(SC_RelBeforeRing, 0, 1500, 100);
+		SC_RelAfterRing = Util.getNextValue(SC_AnsTrafTerm, 0, 4000, 100);
 		
 		measurementsMap.put("SC.RelBeforeRing", SC_RelBeforeRing);
 		measurementsMap.put("SC.RelAfterRing", SC_RelAfterRing);
@@ -168,10 +170,10 @@ public class PCSCF extends IMSNodeSimulator {
 	
 	private void simulateRoamingUsers() {
 		
-		RU_AttInitRegOfVisitUsers = getNextValue(RU_AttInitRegOfVisitUsers, 0, 6000, 500);
-		RU_Nbr403InitRegOfVisitUsers = getNextValue(RU_Nbr403InitRegOfVisitUsers, 0, 2000, 100);
-		RU_Nbr200InitRegOfVisitUsers = getNextValue(RU_Nbr200InitRegOfVisitUsers, 0, 4000, 500);
-		RU_RmgUsersOut = getNextValue(RU_RmgUsersOut, 0, 5000, 1000);
+		RU_AttInitRegOfVisitUsers = Util.getNextValue(RU_AttInitRegOfVisitUsers, 0, 6000, 500);
+		RU_Nbr403InitRegOfVisitUsers = Util.getNextValue(RU_Nbr403InitRegOfVisitUsers, 0, 2000, 100);
+		RU_Nbr200InitRegOfVisitUsers = Util.getNextValue(RU_Nbr200InitRegOfVisitUsers, 0, 4000, 500);
+		RU_RmgUsersOut = Util.getNextValue(RU_RmgUsersOut, 0, 5000, 1000);
 		
 		measurementsMap.put("RU.AttInitRegOfVisitUsers", RU_AttInitRegOfVisitUsers);
 		measurementsMap.put("RU.Nbr403InitRegOfVisitUsers", RU_Nbr403InitRegOfVisitUsers);

@@ -1,5 +1,7 @@
 package si.iskratel.pmon.generator.measurements;
 
+import si.iskratel.pmon.generator.Util;
+
 public class VM extends IMSNodeSimulator {
 	
 	private int EQPT_MeanProcessorUsage = 40;
@@ -16,9 +18,9 @@ public class VM extends IMSNodeSimulator {
 	
 	private void simulateCpuAndMemory() {
 		
-		EQPT_MeanProcessorUsage = getNextValue(EQPT_MeanProcessorUsage, 0, 100, 10);
-		EQPT_PeakProcessorUsage = getNextValue(EQPT_PeakProcessorUsage, 0, 100, 10);
-		EQPT_MemMeanUsage = getNextValue(EQPT_MemMeanUsage, 0, 32000, 1000);
+		EQPT_MeanProcessorUsage = Util.getNextValue(EQPT_MeanProcessorUsage, 0, 100, 10);
+		EQPT_PeakProcessorUsage = Util.getNextValue(EQPT_PeakProcessorUsage, 0, 100, 10);
+		EQPT_MemMeanUsage = Util.getNextValue(EQPT_MemMeanUsage, 0, 32000, 1000);
 		
 		measurementsMap.put("EQPT.MeanProcessorUsage", EQPT_MeanProcessorUsage);
 		measurementsMap.put("EQPT.PeakProcessorUsage", EQPT_PeakProcessorUsage);
