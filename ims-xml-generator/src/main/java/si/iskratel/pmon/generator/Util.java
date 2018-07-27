@@ -29,8 +29,11 @@ public class Util {
 	
 	
 	public static int getRandom(int inclusive, int exclusive) {
+		if (inclusive > exclusive || exclusive < 0) {
+			return 0;
+		}
 		Random rand = new Random();
-		return rand.nextInt(exclusive) + inclusive;
+		return rand.nextInt(exclusive - inclusive) + inclusive;
 	}
 	
 	/**
