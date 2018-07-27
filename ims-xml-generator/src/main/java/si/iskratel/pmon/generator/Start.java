@@ -10,7 +10,6 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 
-import io.prometheus.client.exporter.MetricsServlet;
 import io.prometheus.client.hotspot.DefaultExports;
 import si.iskratel.pmon.generator.cdr.CdrGenerator;
 import si.iskratel.pmon.generator.cdr.CdrSimple;
@@ -98,7 +97,7 @@ public class Start implements Runnable {
 				System.exit(0);
 			}
 			
-			PmonMetrics.temperature.set(20);
+			
 			
 			while (true) {
 				
@@ -109,7 +108,7 @@ public class Start implements Runnable {
 				System.out.println(cdr.toString());
 				
 				PmonMetrics.callsTotal.labels("1048342", "S-CSCF", "" + cdr.getCallReleaseCause()).inc();
-				PmonMetrics.temperature.set(Util.getNextValue(new Double(PmonMetrics.temperature.get()).intValue(), -10, 100, 5));
+				PmonMetrics.simulateMetrics();
 				
 				try {
 					Thread.sleep(rnd);

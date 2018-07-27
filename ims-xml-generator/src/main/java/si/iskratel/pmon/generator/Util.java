@@ -44,6 +44,10 @@ public class Util {
 	 */
 	public static int getNextValue(int currentValue, int minValue, int maxValue, int maxDeviation) {
 		
+		if (minValue >= maxValue) {
+			return 0;
+		}
+		
 		Random rand = new Random();
 		
 		int dev = rand.nextInt(maxDeviation);
