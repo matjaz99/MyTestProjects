@@ -107,7 +107,7 @@ public class PmonMetrics {
 		payment.labels("Hofer", "France").inc(Util.getRandom(0, 5 * hf));
 		payment.labels("Spar", "Austria").inc(Util.getRandom(0, 6 * sa));
 		payment.labels("Spar", "Germany").inc(Util.getRandom(0, 5 * sg));
-		payment.labels("Spar", "France").inc(Util.getRandom(0, 78 * sf));
+		payment.labels("Spar", "France").inc(Util.getRandom(0, 7 * sf));
 		
 	}
 	
