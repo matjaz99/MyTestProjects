@@ -9,7 +9,7 @@ public class PmonMetrics {
 	public static final Counter callsTotal = Counter.build()
 			.name("pmon_cdr_calls_total")
 			.help("Number of calls.")
-			.labelNames("nodeId", "nodeType", "callReleaseCause")
+			.labelNames("nodeId", "nodeType", "callReleaseCause", "trafficType")
 			.register();
 	
 	public static final Counter duration = Counter.build()

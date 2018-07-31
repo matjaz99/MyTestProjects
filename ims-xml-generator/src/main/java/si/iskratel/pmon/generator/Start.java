@@ -107,7 +107,8 @@ public class Start implements Runnable {
 				
 				System.out.println(cdr.toString());
 				
-				PmonMetrics.callsTotal.labels("1048342", "S-CSCF", "" + cdr.getCallReleaseCause()).inc();
+				String[] nodes = {"1048001", "1048002"};
+				PmonMetrics.callsTotal.labels(Util.getRandomFromArray(nodes), "S-CSCF", "" + cdr.getCallReleaseCause(), cdr.getTrafficType()).inc();
 				PmonMetrics.simulateMetrics();
 				
 				try {

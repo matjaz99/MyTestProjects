@@ -19,10 +19,10 @@ public class TrafficType {
 		
 		int r = Util.getRandom(0, 100);
 		if (r < 50) {
-			return Incoming_call;
+			return Transit_call;
 		}
 		
-		if (r < 70) {
+		if (r < 80) {
 			return Local_call;
 		}
 		
