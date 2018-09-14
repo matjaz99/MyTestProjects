@@ -13,7 +13,7 @@ public class HelloServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 6543246533363601515L;
 	
-	public static final Counter requests = Counter.build().name("hello_world_requests_total")
+	public static final Counter requests = Counter.build().name("test_hello_world_requests_total")
 			.help("Number of hello world requests served.").register();
 
 	@Override

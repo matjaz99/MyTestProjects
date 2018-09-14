@@ -108,7 +108,11 @@ public class Start implements Runnable {
 				System.out.println(cdr.toString());
 				
 				String[] nodes = {"1048001", "1048002"};
-				PmonMetrics.callsTotal.labels(Util.getRandomFromArray(nodes), "S-CSCF", "" + cdr.getCallReleaseCause(), cdr.getTrafficType()).inc();
+				String[] nodeTypes = {"S-CSCF", "TAS"};
+				PmonMetrics.callsTotal.labels(Util.getRandomFromArray(nodes), 
+						Util.getRandomFromArray(nodeTypes), 
+						cdr.getCallReleaseCauseAsString(), 
+						cdr.getTrafficType()).inc();
 				PmonMetrics.simulateMetrics();
 				
 				try {
@@ -119,20 +123,27 @@ public class Start implements Runnable {
 			}
 			
 		}
-
-		while (true) {
+		
+		if (generator.getConfig().getInfluxDbConfig() != null
+				&& generator.getConfig().getInfluxDbConfig().isEnabled()) {
 			
-			for (Node node: generator.getInventory().getNodesList()) {
-				
-				MeasCollecFile mcf = node.generateXml();
-				
-				writeToInflux(mcf);
-				
-			}
 			
-			try {
-				Thread.sleep(generator.getConfig().getPeriod() * 1000);
-			} catch (InterruptedException e) {
+			while (true) {
+				
+				for (Node node: generator.getInventory().getNodesList()) {
+					
+					MeasCollecFile mcf = node.generateXml();
+					
+					// send to influx db
+					HttpClient.sendPost(mcf);
+					
+				}
+				
+				try {
+					Thread.sleep(generator.getConfig().getPeriod() * 1000);
+				} catch (InterruptedException e) {
+				}
+				
 			}
 			
 		}
@@ -178,13 +189,5 @@ public class Start implements Runnable {
 
 	}
 	
-	public static void writeToInflux(MeasCollecFile mcf) {
-		
-		if (generator.getConfig().getInfluxDbConfig() != null
-				&& generator.getConfig().getInfluxDbConfig().isEnabled()) {
-			HttpClient.sendPost(mcf);
-		}
-				
-	}
 
 }

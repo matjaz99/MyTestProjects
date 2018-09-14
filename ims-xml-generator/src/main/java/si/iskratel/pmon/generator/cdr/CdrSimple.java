@@ -79,6 +79,24 @@ public class CdrSimple {
 	public void setCallReleaseCause(int callReleaseCause) {
 		this.callReleaseCause = callReleaseCause;
 	}
+	
+	public String getCallReleaseCauseAsString() {
+		switch (callReleaseCause) {
+		case 16:
+			return "Normal";
+		case 17:
+			return "User busy";
+		case 18:
+			return "No reply";
+		case 21:
+			return "Call rejected";
+		case 28:
+			return "Incomplete dial";
+		default:
+			break;
+		}
+		return "Other";
+	}
 
 	public String getTrafficType() {
 		return trafficType;
