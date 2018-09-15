@@ -7,6 +7,7 @@ public class GeneratorConfig {
 	private int period = 900;
 	private String outputDirectory = "./generated";
 	private boolean useFakeMeasurements = false;
+	private boolean pushTimeForwardEnabled = false;
 	private InfluxDbConfig influxDbConfig = null;
 	private PrometheusConfig prometheusConfig = null;
 	private ElasticConfig elasticSearchConfig = null;
@@ -36,6 +37,15 @@ public class GeneratorConfig {
 	@XmlElement(name="fakeMeas")
 	public void setUseFakeMeasurements(boolean useFakeMeasurements) {
 		this.useFakeMeasurements = useFakeMeasurements;
+	}
+
+	public boolean isPushTimeForwardEnabled() {
+		return pushTimeForwardEnabled;
+	}
+
+	@XmlElement(name="pushTimeForward")
+	public void setPushTimeForwardEnabled(boolean pushTimeForwardEnabled) {
+		this.pushTimeForwardEnabled = pushTimeForwardEnabled;
 	}
 
 	public InfluxDbConfig getInfluxDbConfig() {

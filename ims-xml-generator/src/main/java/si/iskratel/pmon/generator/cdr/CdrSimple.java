@@ -6,6 +6,9 @@ public class CdrSimple {
 	
 	private int id;
 	
+	private String nodeId;
+	private String nodeType;
+	
 	private String callingPartyNumber;
 	private String calledPartyNumber;
 	
@@ -30,6 +33,22 @@ public class CdrSimple {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public String getNodeId() {
+		return nodeId;
+	}
+
+	public void setNodeId(String nodeId) {
+		this.nodeId = nodeId;
+	}
+
+	public String getNodeType() {
+		return nodeType;
+	}
+
+	public void setNodeType(String nodeType) {
+		this.nodeType = nodeType;
 	}
 
 	public String getCallingPartyNumber() {
@@ -114,12 +133,14 @@ public class CdrSimple {
 		this.suppService = suppService;
 	}
 
-	@Override
-	public String toString() {
-		return "CdrSimple [id=" + id + ", callingPartyNumber=" + callingPartyNumber + ", calledPartyNumber=" + calledPartyNumber
-				+ ", duration=" + duration + ", startTime=" + startTime + ", endTime=" + endTime
-				+ ", call_release_cause=" + callReleaseCause + ", trafficType=" + trafficType + "]";
-	}
+//	@Override
+//	public String toString() {
+//		return "CdrSimple [id=" + id + ", callingPartyNumber=" + callingPartyNumber + ", calledPartyNumber=" + calledPartyNumber
+//				+ ", duration=" + duration + ", startTime=" + startTime + ", endTime=" + endTime
+//				+ ", call_release_cause=" + callReleaseCause + ", trafficType=" + trafficType + "]";
+//	}
+	
+	
 	
 	public String toJsonString() {
 		String s = "{'callingPartyNumber':'" + callingPartyNumber + "','calledPartyNumber':'" + calledPartyNumber
@@ -128,6 +149,14 @@ public class CdrSimple {
 				+ trafficType + "','suppService':'" + suppService + "'}";
 		s = s.replace("'", "\"");
 		return s;
+	}
+
+	@Override
+	public String toString() {
+		return "CdrSimple [id=" + id + ", nodeId=" + nodeId + ", nodeType=" + nodeType + ", callingPartyNumber="
+				+ callingPartyNumber + ", calledPartyNumber=" + calledPartyNumber + ", duration=" + duration
+				+ ", startTime=" + startTime + ", endTime=" + endTime + ", callReleaseCause=" + callReleaseCause
+				+ ", trafficType=" + trafficType + "]";
 	}
 	
 }

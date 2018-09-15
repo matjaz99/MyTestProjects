@@ -10,9 +10,18 @@ public class Util {
 	
 	public static long relativeClock = System.currentTimeMillis();
 	
+	public static long getNowInMillis() {
+		return System.currentTimeMillis();
+	}
 	
 	public static void pushTimeForward(int millis) {
 		relativeClock = relativeClock + millis;
+	}
+	
+	public static String getAbsoluteDate() {
+		Date d = new Date(getNowInMillis());
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd H:mm:ss");
+		return sdf.format(d);
 	}
 	
 	public static String getRelativeDate() {

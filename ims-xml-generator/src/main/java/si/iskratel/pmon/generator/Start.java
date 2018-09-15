@@ -1,6 +1,8 @@
 package si.iskratel.pmon.generator;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -101,18 +103,50 @@ public class Start implements Runnable {
 			
 			while (true) {
 				
-				int rnd = Util.getRandom(55000, 65000);
-				CdrSimple cdr = CdrGenerator.generateCdrSimple();
-				Util.pushTimeForward(rnd);
+				int rnd = 60000; //Util.getRandom(55000, 65000);
 				
-				System.out.println(cdr.toString());
+				// generate N cdr records
+				int N = Util.getRandom(10, 100);
+				List<CdrSimple> cdrList = new ArrayList<CdrSimple>();
+				for (int j = 0; j < N; j++) {
+					
+					CdrSimple cdr = CdrGenerator.generateCdrSimple();
+					cdrList.add(cdr);
+					Util.pushTimeForward(rnd);
+					
+					System.out.println(cdr.toString());
+					
+				}
 				
-				String[] nodes = {"1048001", "1048002"};
-				String[] nodeTypes = {"S-CSCF", "TAS"};
-				PmonMetrics.callsTotal.labels(Util.getRandomFromArray(nodes), 
-						Util.getRandomFromArray(nodeTypes), 
-						cdr.getCallReleaseCauseAsString(), 
-						cdr.getTrafficType()).inc();
+				// increment Counters for every cdr
+				for (CdrSimple cdr : cdrList) {
+					
+					PmonMetrics.callsTotalCounter.labels(cdr.getNodeId(), 
+							cdr.getNodeType(), 
+							cdr.getCallReleaseCauseAsString(), 
+							cdr.getTrafficType()).inc();
+					
+					PmonMetrics.callsDurationCounter.labels(cdr.getNodeId(), cdr.getNodeType()).inc(cdr.getDuration());
+					
+				}
+				
+				// set Gauges (aggregate CDRs for last interval)
+				PmonMetrics.callsTotalGauge.clear();
+				for (CdrSimple cdr : cdrList) {
+					PmonMetrics.callsTotalGauge.labels(cdr.getNodeId(), 
+							cdr.getNodeType(), 
+							cdr.getCallReleaseCauseAsString(), 
+							cdr.getTrafficType()).inc();
+				}
+				
+				int duration = 0;
+				for (CdrSimple cdr : cdrList) {
+					duration += cdr.getDuration();
+				}
+				PmonMetrics.callsDurationGauge.labels(cdrList.get(0).getNodeId(), cdrList.get(0).getNodeType()).set(duration);
+				
+				
+				
 				PmonMetrics.simulateMetrics();
 				
 				try {

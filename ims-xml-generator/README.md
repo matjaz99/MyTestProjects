@@ -21,5 +21,10 @@ Configuration of InfluxDB client consists of:
 #### v2.0
 - added InfluxDB support (using http requests)
 - measurements are stored in InfluxDB (and displayed by Grafana)
+- added ElasticSearch support
+- measurements are generaed in files, use script import-into-elastic.sh to import data
+- added Prometheus support
+- metrics are exposed on /pmon/metrics url endpoint
+- some other metrics added
 
 

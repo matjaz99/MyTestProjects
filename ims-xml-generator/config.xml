@@ -4,6 +4,7 @@
 		<period>30</period>
 		<outputDirectory>generated</outputDirectory>
 		<fakeMeas>false</fakeMeas>
+		<pushTimeForward>false</pushTimeForward>
 		<influxdb>
 			<!-- write xml measurements into influx db, works only inside eclipse (because of dependencies) -->
 			<enabled>false</enabled>
