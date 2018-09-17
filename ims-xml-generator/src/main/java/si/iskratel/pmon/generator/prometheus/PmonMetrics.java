@@ -6,6 +6,12 @@ import si.iskratel.pmon.generator.Util;
 
 public class PmonMetrics {
 	
+	public static final Counter cdrRecordsProcessedTotalCounter = Counter.build()
+			.name("pmon_cdr_records_processed_total")
+			.help("Number of processed cdr records.")
+			.labelNames("nodeId", "nodeType")
+			.register();
+	
 	public static final Counter callsTotalCounter = Counter.build()
 			.name("pmon_cdr_calls_total")
 			.help("Number of calls.")
@@ -18,7 +24,13 @@ public class PmonMetrics {
 			.labelNames("nodeId", "nodeType")
 			.register();
 	
-	public static final Gauge callsTotalGauge = Gauge.build()
+	public static final Gauge cdrRecordsProcessedGauge = Gauge.build()
+			.name("pmon_cdr_records_processed")
+			.help("Number of processed cdr records in last interval.")
+			.labelNames("nodeId", "nodeType")
+			.register();
+	
+	public static final Gauge callsGauge = Gauge.build()
 			.name("pmon_cdr_calls")
 			.help("Number of calls.")
 			.labelNames("nodeId", "nodeType", "callReleaseCause", "trafficType")

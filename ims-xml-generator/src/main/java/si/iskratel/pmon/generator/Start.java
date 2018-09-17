@@ -118,6 +118,11 @@ public class Start implements Runnable {
 					
 				}
 				
+				System.out.println("Gererated CDRs: " + N);
+				
+				PmonMetrics.cdrRecordsProcessedTotalCounter.labels(cdrList.get(0).getNodeId(), cdrList.get(0).getNodeType()).inc(N);
+				PmonMetrics.cdrRecordsProcessedGauge.labels(cdrList.get(0).getNodeId(), cdrList.get(0).getNodeType()).set(N);
+				
 				// increment Counters for every cdr
 				for (CdrSimple cdr : cdrList) {
 					
@@ -131,9 +136,9 @@ public class Start implements Runnable {
 				}
 				
 				// set Gauges (aggregate CDRs for last interval)
-				PmonMetrics.callsTotalGauge.clear();
+				PmonMetrics.callsGauge.clear();
 				for (CdrSimple cdr : cdrList) {
-					PmonMetrics.callsTotalGauge.labels(cdr.getNodeId(), 
+					PmonMetrics.callsGauge.labels(cdr.getNodeId(), 
 							cdr.getNodeType(), 
 							cdr.getCallReleaseCauseAsString(), 
 							cdr.getTrafficType()).inc();
