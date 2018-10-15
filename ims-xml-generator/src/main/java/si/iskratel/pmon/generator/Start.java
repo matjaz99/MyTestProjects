@@ -118,6 +118,11 @@ public class Start implements Runnable {
 					
 				}
 				
+				// node metrics
+				PmonMetrics.pmonMonitoredNodes.labels("1048001", "S-CSCF", "Up").set(1);
+				PmonMetrics.pmonMonitoredNodes.labels("1048002", "TAS", "Down").set(1);
+				PmonMetrics.pmonMonitoredNodes.labels("1048003", "MGCF", "Down").set(1);
+				
 				System.out.println("Gererated CDRs: " + N);
 				
 				PmonMetrics.cdrRecordsProcessedTotalCounter.labels(cdrList.get(0).getNodeId(), cdrList.get(0).getNodeType()).inc(N);
