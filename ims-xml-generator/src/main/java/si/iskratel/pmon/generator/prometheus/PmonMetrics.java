@@ -6,9 +6,21 @@ import si.iskratel.pmon.generator.Util;
 
 public class PmonMetrics {
 	
+	public static final Gauge pmonMonitoredNodes = Gauge.build()
+			.name("pmon_monitored_nodes")
+			.help("Number of monitored nodes")
+			.labelNames("nodeId", "nodeType")
+			.register();
+	
 	public static final Counter cdrRecordsProcessedTotalCounter = Counter.build()
 			.name("pmon_cdr_records_processed_total")
 			.help("Number of processed cdr records.")
+			.labelNames("nodeId", "nodeType")
+			.register();
+	
+	public static final Counter cdrRecordsFailedTotalCounter = Counter.build()
+			.name("pmon_cdr_records_failed_total")
+			.help("Number of unsuccessfully processed cdr records.")
 			.labelNames("nodeId", "nodeType")
 			.register();
 	
