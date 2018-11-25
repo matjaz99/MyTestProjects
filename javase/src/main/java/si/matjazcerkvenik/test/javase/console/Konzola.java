@@ -7,41 +7,45 @@ import java.io.InputStreamReader;
 public class Konzola {
 	
 	public static void main(String[] args) {
+		
+		String[] cmd = {"ls", "-la"};
+//		String[] cmd = {"service", "ssh", "status"};
+		runLinuxCommand(cmd);
 	    
-	    String[] cmds1 = {"service", "fsxotd", "status"};
-	    //String[] cmds3 = {"ps", "-ef", "|", "grep", "xot"};
-	    
-	    runLinuxCommand(cmds1);
-	    
-	    sleep(1000);
-	    
-	    String[] cmds2 = {"service", "fsxotd", "stop"};
-	    runLinuxCommand(cmds2);
-	    
-	    sleep(1000);
-	    
-	    String[] cmds3 = {"service", "fsxotd", "status"};
-	    runLinuxCommand(cmds3);
-	    
-	    sleep(1000);
-	    
-	    String[] cmds3a = {"service", "fshcx25", "stop"};
-	    runLinuxCommand(cmds3a);
-	    
-	    sleep(1000);
-	    
-	    String[] cmds3b = {"service", "fsxotd", "status"};
-	    runLinuxCommand(cmds3b);
-	    
-	    sleep(1000);
-	    
-	    String[] cmds4 = {"service", "fshcx25", "start"};
-	    runLinuxCommand(cmds4);
-	    
-	    sleep(1000);
-	    
-	    String[] cmds5 = {"service", "fsxotd", "status"};
-	    runLinuxCommand(cmds5);
+//	    String[] cmds1 = {"service", "fsxotd", "status"};
+//	    //String[] cmds3 = {"ps", "-ef", "|", "grep", "xot"};
+//	    
+//	    runLinuxCommand(cmds1);
+//	    
+//	    sleep(1000);
+//	    
+//	    String[] cmds2 = {"service", "fsxotd", "stop"};
+//	    runLinuxCommand(cmds2);
+//	    
+//	    sleep(1000);
+//	    
+//	    String[] cmds3 = {"service", "fsxotd", "status"};
+//	    runLinuxCommand(cmds3);
+//	    
+//	    sleep(1000);
+//	    
+//	    String[] cmds3a = {"service", "fshcx25", "stop"};
+//	    runLinuxCommand(cmds3a);
+//	    
+//	    sleep(1000);
+//	    
+//	    String[] cmds3b = {"service", "fsxotd", "status"};
+//	    runLinuxCommand(cmds3b);
+//	    
+//	    sleep(1000);
+//	    
+//	    String[] cmds4 = {"service", "fshcx25", "start"};
+//	    runLinuxCommand(cmds4);
+//	    
+//	    sleep(1000);
+//	    
+//	    String[] cmds5 = {"service", "fsxotd", "status"};
+//	    runLinuxCommand(cmds5);
 	    
 	    
 	  }

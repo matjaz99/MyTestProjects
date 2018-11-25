@@ -33,6 +33,8 @@
 		<module>jlayer</module>
 		<module>prometheus-client</module>
 		<module>load-test</module>
+		<module>prometheus-springboot-client</module>
+		<module>bootstrap-js</module>
 	</modules>
 
 	<properties>
