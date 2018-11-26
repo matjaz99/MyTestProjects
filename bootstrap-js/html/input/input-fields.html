@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width = device-width, initial-scale = 1">
+	<title>Bootstrap tutorial</title>
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
+	<link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+	<style type="text/css">
+		.jumbotron {
+			background-color: #2E2D88;
+			color: white;
+		}
+		.tab-content {
+			border-left: 1px solid #ddd;
+			border-right: 1px solid #ddd;
+			border-bottom: 1px solid #ddd;
+			padding: 10px;
+		}
+		.nav-tabs {
+			margin-bottom: 0;
+		}
+	</style>
+</head>
+<body>
+
+
+<div class="container">
+	<h3>Input field (large and small)</h3>
+	<div class="input-group input-group-lg">
+		<span class="input-group-addon">Your name</span>
+		<input type="text" class="form-control" placeholder="Full name">
+	</div>
+
+	<div class="input-group input-group-sm">
+		<input type="text" class="form-control" placeholder="Full name">
+		<span class="input-group-btn">
+			<button class="btn btn-default">Your name</button>
+		</span>
+	</div>
+</div>
+
+
+
+<div class="container">
+	<h3>Input with dropdown menu</h3>
+	<div class="row">
+		<div class="input-group">
+			<div class="input-group-btn">
+				<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">User ID <span class="caret"></span></button>
+				<ul class="dropdown-menu">
+					<li><a href="#">Facebook</a></li>
+					<li><a href="#">Twiter</a></li>
+					<li><a href="#">Linkedin</a></li>
+				</ul>
+			</div>
+			<input type="text" class="form-control" aria-label="...">
+		</div>
+	</div>
+</div>
+
+<div class="container">
+	<h3>Input with checkbox</h3>
+	<div class="row">
+		<div class="input-group">
+			<span class="input-group-addon">
+				<input type="checkbox">
+			</span>
+			<input type="text" class="form-control" aria-label="...">
+		</div>
+	</div>
+</div>
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+
+</body>
+</html>

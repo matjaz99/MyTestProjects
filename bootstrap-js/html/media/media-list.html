@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width = device-width, initial-scale = 1">
+	<title>Bootstrap tutorial</title>
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
+	<link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+	<style type="text/css">
+		.jumbotron {
+			background-color: #2E2D88;
+			color: white;
+		}
+		.tab-content {
+			border-left: 1px solid #ddd;
+			border-right: 1px solid #ddd;
+			border-bottom: 1px solid #ddd;
+			padding: 10px;
+		}
+		.nav-tabs {
+			margin-bottom: 0;
+		}
+	</style>
+</head>
+<body>
+
+<div class="container">
+	<h3>Media list</h3>
+	<h3>What did you Eat for Lunch?</h3>
+ 
+  <div class="media"> <!-- class media , to create media element-->
+      <a class="pull-left" href="#">
+        <img class="media-object" src="../img/chicken-icon.png" alt="...">
+      </a>
+      <div class="media-body">
+        <h4 class="media-heading">A Ate a Veggie Burger</h4>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
+        <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Lorem ipsum dolor...</p>
+      </div>
+  </div>
+ 
+  <div class="media"> <!-- class media , to create media element  -->
+      <a class="pull-left" href="#">
+        <img class="media-object" src="../img/chicken-icon.png" alt="..."> <!-- media-object 2 -->
+      </a>
+      <div class="media-body">
+        <h4 class="media-heading">Eggplant Parmesan</h4>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
+        <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Lorem ipsum dolor...</p>
+ 
+        <!-- Nested Media : Was placed before the closing media-body div element -->
+      <div class="media">
+          <a class="pull-left" href="#">
+        <img class="media-object" src="../img/chicken-icon.png" alt="...">
+          </a>
+      <div class="media-body">
+            <h4 class="media-heading">My Veggie Meatball Sub was Awesome</h4>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
+            <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Lorem ipsum dolor...</p>
+       </div>
+     </div>
+   </div> <!-- media-body for Eggplant closes here -->
+</div>
+</div>
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+
+</body>
+</html>
