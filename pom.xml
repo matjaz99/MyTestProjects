@@ -12,7 +12,6 @@
 	<modules>
 		
 		<module>mysql</module>
-
 		<module>javase</module>
 		<module>derby</module>
 		<module>mariadb</module>
@@ -33,8 +32,8 @@
 		<module>jlayer</module>
 		<module>prometheus-client</module>
 		<module>load-test</module>
-		<module>prometheus-springboot-client</module>
 		<module>bootstrap-js</module>
+		<module>zookeeper-springboot</module>
 	</modules>
 
 	<properties>
