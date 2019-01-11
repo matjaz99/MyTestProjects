@@ -1,7 +1,5 @@
 package si.matjazcerkvenik.test.gson.example1;
 
-import com.google.gson.annotations.Expose;
-
 public class Car {
 	
 	public String brand = null;

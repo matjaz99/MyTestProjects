@@ -9,6 +9,8 @@ public class Test1 {
 	
 	public static void main(String[] args) {
 		
+		// JSON to Java object
+		
 		String json = "{\"brand\":\"Jeep\", \"doors\": 3}";
 
 		Gson gson = new Gson();
@@ -16,6 +18,7 @@ public class Test1 {
 		System.out.println(car.toString());
 		
 		
+		// Java object to JSON
 		
 		Car car2 = new Car();
 		car2.brand = "Rover";
@@ -26,9 +29,13 @@ public class Test1 {
 		System.out.println(s);
 		
 		
+		// configure gson through GsonBuilder:
+		// output null value as null
+		// pretty output
 		
 		GsonBuilder builder = new GsonBuilder();
-		builder.serializeNulls(); // output null value as null
+		builder.serializeNulls();
+		builder.setPrettyPrinting();
 		Gson gson3 = builder.create();
 
 		Car car3 = new Car();
