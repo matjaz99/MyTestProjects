@@ -35,6 +35,7 @@
 		<module>bootstrap-js</module>
 		<module>zookeeper-springboot</module>
 		<module>gson</module>
+		<module>yaml-jackson</module>
 	</modules>
 
 	<properties>

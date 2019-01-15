@@ -1,0 +1,1 @@
+https://dzone.com/articles/read-yaml-in-java-with-jackson
