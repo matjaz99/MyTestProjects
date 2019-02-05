@@ -6,11 +6,14 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.StringWriter;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import org.yaml.snakeyaml.TypeDescription;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
+import org.yaml.snakeyaml.nodes.Tag;
 
 public class Main {
 	
@@ -27,6 +30,7 @@ public class Main {
 		main.parse5();
 		main.parse6();
 		main.print();
+		main.print2();
 		
 	}
 	
@@ -114,13 +118,30 @@ public class Main {
 	public void print2() {
 		
 		Map<String, Object> data = new LinkedHashMap<String, Object>();
-		data.put("name", "Janez");
-		data.put("lastname", "Novak");
-		data.put("fruit", new String[] {"Apple", "Banana", "Orange"});
+		Customer c = new Customer();
+		c.setFirstName("Ferdinand");
+		c.setLastName("The Great");
+		c.setAge(50);
+		List<Contact> cList = new LinkedList<Contact>();
+		Contact contact = new Contact();
+		contact.setType("phone");
+		contact.setNumber(7777);
+		cList.add(contact);
+		Contact contact2 = new Contact();
+		contact2.setType("mobile");
+		contact2.setNumber(8888);
+		cList.add(contact2);
+		c.setContactDetails(cList);
+		Address addr = new Address();
+		addr.setCity("Ljubljana");
+		addr.setState("Slovenia");
+		c.setHomeAddress(addr);
+		data.put("customer", c);
 		Yaml yaml = new Yaml();
 		StringWriter writer = new StringWriter();
-		yaml.dump(data, writer);
-		System.out.println(writer.toString());
+		//yaml.dump(data, writer);
+		yaml.dumpAs(c, Tag.MAP, null);
+		System.out.println(yaml.dumpAs(c, Tag.MAP, null));
 		
 	}
 	
