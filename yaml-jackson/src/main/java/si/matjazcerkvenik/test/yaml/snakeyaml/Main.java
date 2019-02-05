@@ -139,8 +139,8 @@ public class Main {
 		data.put("customer", c);
 		Yaml yaml = new Yaml();
 		StringWriter writer = new StringWriter();
-		//yaml.dump(data, writer);
-		yaml.dumpAs(c, Tag.MAP, null);
+		yaml.dump(data, writer);
+		System.out.println(writer.toString());
 		System.out.println(yaml.dumpAs(c, Tag.MAP, null));
 		
 	}
