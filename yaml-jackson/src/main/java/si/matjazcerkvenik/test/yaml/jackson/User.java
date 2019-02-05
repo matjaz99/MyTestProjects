@@ -1,4 +1,4 @@
-package si.matjazcerkvenik.test.jackson.yaml;
+package si.matjazcerkvenik.test.yaml.jackson;
 
 import java.util.Map;
 

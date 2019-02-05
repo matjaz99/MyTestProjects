@@ -4,9 +4,13 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.io.StringWriter;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.yaml.snakeyaml.TypeDescription;
 import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.constructor.Constructor;
 
 public class Main {
 	
@@ -16,11 +20,17 @@ public class Main {
 		
 		Main main = new Main();
 		
-		main.parseYaml1();
+		main.parse1();
+		main.parse2();
+		main.parse3();
+		main.parse4();
+		main.parse5();
+		main.parse6();
+		main.print();
 		
 	}
 	
-	public void parseYaml1() throws FileNotFoundException {
+	public void parse1() throws FileNotFoundException {
 		
 		Yaml yaml = new Yaml();
 		InputStream inputStream = new FileInputStream(new File("test_files/customer.yaml"));
@@ -29,6 +39,88 @@ public class Main {
 //		  .getResourceAsStream("test_files/customer.yaml");
 		Map<String, Object> obj = yaml.load(inputStream);
 		System.out.println(obj);
+		
+	}
+	
+	public void parse2() throws FileNotFoundException {
+		
+		Yaml yaml = new Yaml();
+		InputStream inputStream = new FileInputStream(new File("test_files/customer_with_type.yaml"));
+		Customer customer = yaml.load(inputStream);
+		System.out.println(customer.toString());
+		
+	}
+	
+	public void parse3() throws FileNotFoundException {
+		
+		Yaml yaml = new Yaml(new Constructor(Customer.class));
+		InputStream inputStream = new FileInputStream(new File("test_files/customer.yaml"));
+//		InputStream inputStream = new FileInputStream(new File("test_files/customer_with_type.yaml"));
+		Customer customer = yaml.load(inputStream);
+		System.out.println(customer.toString());
+		
+	}
+	
+	public void parse4() throws FileNotFoundException {
+		
+		Yaml yaml = new Yaml(new Constructor(Customer.class));
+		InputStream inputStream = new FileInputStream(new File("test_files/customer_with_contact_details.yaml"));
+//		InputStream inputStream = new FileInputStream(new File("test_files/customer_with_type.yaml"));
+		Customer customer = yaml.load(inputStream);
+		System.out.println(customer.toString());
+		
+	}
+	
+	public void parse5() throws FileNotFoundException {
+		
+		Constructor c = new Constructor(Customer.class);
+		TypeDescription customTypeDescription = new TypeDescription(Customer.class);
+		customTypeDescription.addPropertyParameters("contactDetails", Contact.class);
+		c.addTypeDescription(customTypeDescription);
+		Yaml yaml = new Yaml(c);
+		InputStream inputStream = new FileInputStream(new File("test_files/customer_with_contact_details_2.yaml"));
+//		InputStream inputStream = new FileInputStream(new File("test_files/customer_with_type.yaml"));
+		Customer customer = yaml.load(inputStream);
+		System.out.println(customer.toString());
+		
+	}
+	
+	public void parse6() throws FileNotFoundException {
+		
+		System.out.println("parse6:");
+		Yaml yaml = new Yaml(new Constructor(Customer.class));
+		InputStream inputStream = new FileInputStream(new File("test_files/many_customers_with_contact_details.yaml"));
+//		InputStream inputStream = new FileInputStream(new File("test_files/customer_with_type.yaml"));
+		Iterable<Object> all = yaml.loadAll(inputStream);
+		for (Object o : all) {
+	        System.out.println(o.toString());
+	    }
+		
+	}
+	
+	public void print() {
+		
+		Map<String, Object> data = new LinkedHashMap<String, Object>();
+		data.put("name", "Janez");
+		data.put("lastname", "Novak");
+		data.put("fruit", new String[] {"Apple", "Banana", "Orange"});
+		Yaml yaml = new Yaml();
+		StringWriter writer = new StringWriter();
+		yaml.dump(data, writer);
+		System.out.println(writer.toString());
+		
+	}
+	
+	public void print2() {
+		
+		Map<String, Object> data = new LinkedHashMap<String, Object>();
+		data.put("name", "Janez");
+		data.put("lastname", "Novak");
+		data.put("fruit", new String[] {"Apple", "Banana", "Orange"});
+		Yaml yaml = new Yaml();
+		StringWriter writer = new StringWriter();
+		yaml.dump(data, writer);
+		System.out.println(writer.toString());
 		
 	}
 	

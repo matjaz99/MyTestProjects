@@ -1,0 +1,4 @@
+!!si.matjazcerkvenik.test.yaml.snakeyaml.Customer
+firstName: "John"
+lastName: "Doe"
+age: 20
