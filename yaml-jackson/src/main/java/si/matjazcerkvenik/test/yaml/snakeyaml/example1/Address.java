@@ -1,4 +1,4 @@
-package si.matjazcerkvenik.test.yaml.snakeyaml;
+package si.matjazcerkvenik.test.yaml.snakeyaml.example1;
 
 public class Address {
 	

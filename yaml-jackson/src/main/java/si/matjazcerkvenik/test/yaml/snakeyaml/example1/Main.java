@@ -1,4 +1,4 @@
-package si.matjazcerkvenik.test.yaml.snakeyaml;
+package si.matjazcerkvenik.test.yaml.snakeyaml.example1;
 
 import java.io.File;
 import java.io.FileInputStream;
