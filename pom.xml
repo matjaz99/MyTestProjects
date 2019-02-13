@@ -33,7 +33,6 @@
 		<module>prometheus-client</module>
 		<module>load-test</module>
 		<module>bootstrap-js</module>
-		<module>zookeeper-springboot</module>
 		<module>gson</module>
 		<module>yaml-jackson</module>
 	</modules>
