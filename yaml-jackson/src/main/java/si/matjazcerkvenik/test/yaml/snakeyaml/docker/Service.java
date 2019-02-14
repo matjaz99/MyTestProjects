@@ -10,6 +10,9 @@ public class Service {
 	private List<String> environment;
 	private List<String> volumes;
 	private List<String> command;
+	private List<ServiceConfigs> configs;
+	private List<String> secrets;
+	private ServiceDeployment deploy;
 	public String getImage() {
 		return image;
 	}
@@ -46,10 +49,30 @@ public class Service {
 	public void setCommand(List<String> command) {
 		this.command = command;
 	}
+	public ServiceDeployment getDeploy() {
+		return deploy;
+	}
+	public void setDeploy(ServiceDeployment deploy) {
+		this.deploy = deploy;
+	}
+	public List<ServiceConfigs> getConfigs() {
+		return configs;
+	}
+	public void setConfigs(List<ServiceConfigs> configs) {
+		this.configs = configs;
+	}
+	
+	public List<String> getSecrets() {
+		return secrets;
+	}
+	public void setSecrets(List<String> secrets) {
+		this.secrets = secrets;
+	}
 	@Override
 	public String toString() {
 		return "Service [image=" + image + ", networks=" + networks + ", ports=" + ports + ", environment="
-				+ environment + ", volumes=" + volumes + ", command=" + command + "]";
+				+ environment + ", volumes=" + volumes + ", command=" + command + ", configs=" + configs + ", secrets="
+				+ secrets + ", deploy=" + deploy + "]";
 	}
 	
 	

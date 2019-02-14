@@ -73,9 +73,9 @@ services:
       #- host
     ports:
       - 9115:9115
-    #dns: 8.8.8.8
-    #volumes:
-    #  - "./config:/config"
+    dns: 8.8.8.8
+    volumes:
+      - "./config:/config"
     command:
       - '--config.file=/etc/blackbox_exporter/blackbox.yml'
     configs:
@@ -95,8 +95,6 @@ services:
     ports:
       - 9116:9116
       - 116:116/udp
-    #volumes:
-    #  - /opt/monitoring/snmp-exporter:/etc/snmp_exporter
     configs:
       - source: snmp_exporter_config
         target: /etc/snmp_exporter/snmp.yml
@@ -162,7 +160,6 @@ services:
       - monitoring-network
     ports:
       - 9080:8080
-    command: -logtostderr -docker_only
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - /:/rootfs:ro
