@@ -35,6 +35,7 @@
 		<module>bootstrap-js</module>
 		<module>gson</module>
 		<module>yaml-jackson</module>
+		<module>springboot-actuator</module>
 	</modules>
 
 	<properties>

@@ -8,9 +8,12 @@ import java.awt.SystemTray;
 import java.awt.TrayIcon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.InetAddress;
 import java.net.URI;
 
 import javax.swing.ImageIcon;
+
+// https://github.com/slindenberg/primefaces-jetty
 
 public class Start {
 	
@@ -45,6 +48,8 @@ public class Start {
 					}
 				}
 			});
+			MenuItem ipAction = new MenuItem(InetAddress.getLocalHost().getHostAddress());
+			
 			MenuItem quitAction = new MenuItem("Quit");
 			quitAction.addActionListener(new ActionListener() {
 
@@ -55,6 +60,9 @@ public class Start {
 			});
 
 			popup.add(browseAction);
+			popup.addSeparator();
+			popup.add(ipAction);
+			popup.addSeparator();
 			popup.add(quitAction);
 			trayIcon.setPopupMenu(popup);
 			SystemTray.getSystemTray().add(trayIcon);
