@@ -16,7 +16,7 @@ import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.spring.autoconfigure.MeterRegistryCustomizer;
 
 @RestController
-@RequestMapping("/rest")
+@RequestMapping("/animals")
 @SpringBootApplication
 public class App {
 	
@@ -25,9 +25,9 @@ public class App {
     public static void main(String[] args) {
         ConfigurableApplicationContext context = SpringApplication.run(App.class, args);
 
-        animals.add(new Animal("monkey ", "Lucy"));
-        animals.add(new Animal("elephant ", "Mark"));
-        animals.add(new Animal("zebra ", "Frank"));
+        animals.add(new Animal("monkey ", "Lucy", 10));
+        animals.add(new Animal("elephant ", "Mark", 20));
+        animals.add(new Animal("zebra ", "Frank", 30));
 
     }
 

@@ -4,13 +4,17 @@ public class Animal {
 
     private String species;
     private String name;
+    private int age;
 
-    public Animal(String species, String name) {
-        this.species = species;
-        this.name = name;
-    }
+    
 
-    public String getSpecies() {
+    public Animal(String species, String name, int age) {
+		this.species = species;
+		this.name = name;
+		this.age = age;
+	}
+
+	public String getSpecies() {
         return species;
     }
 
@@ -26,11 +30,10 @@ public class Animal {
         this.name = name;
     }
 
-    @Override
-    public String toString() {
-        return "Animal{" +
-                "species='" + species + '\'' +
-                ", name='" + name + '\'' +
-                '}';
-    }
+	@Override
+	public String toString() {
+		return "Animal [species=" + species + ", name=" + name + ", age=" + age + "]";
+	}
+
+    
 }
