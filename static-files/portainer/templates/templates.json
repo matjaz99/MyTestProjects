@@ -1,0 +1,28 @@
+[
+  {
+    "type": 1,
+    "title": "DTools",
+    "description": "Developer Tools",
+    "categories": ["ssh", "snmp", "docker"],
+    "logo": "http://localhost:8070/portainer/templates/icons/dtools_logo.png",
+    "image": "matjaz99/dtools:5.4.1",
+    "ports": [
+      "8080/tcp"
+    ],
+    "volumes": [{ "container": "/var/lib/registry"}]
+  },
+  {
+    "type": 2,
+    "title": "IT Keycloak",
+    "description": "Authentication server",
+    "categories": ["webserver"],
+    "platform": "linux",
+    "logo": "http://www.matjazcerkvenik.si/developer/img/Raspi-PGB001.png",
+    "image": "matjaz99/keycloak-test:1.0.0.0",
+    "ports": [
+      "8082/tcp",
+      "443/tcp"
+    ],
+    "volumes": [{"container": "/etc/nginx"}, {"container": "/usr/share/nginx/html"}]
+  }
+]
