@@ -36,6 +36,7 @@
 		<module>gson</module>
 		<module>yaml-jackson</module>
 		<module>springboot-actuator</module>
+		<module>java8</module>
 	</modules>
 
 	<properties>
