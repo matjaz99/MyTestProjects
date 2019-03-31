@@ -3,6 +3,7 @@ package si.matjazcerkvenik.test.springboot.actuator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,7 +14,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.micrometer.core.annotation.Timed;
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.Gauge;
 import io.micrometer.core.instrument.MeterRegistry;
+import io.micrometer.core.instrument.Metrics;
 import io.micrometer.spring.autoconfigure.MeterRegistryCustomizer;
 
 @RestController
@@ -22,7 +26,9 @@ import io.micrometer.spring.autoconfigure.MeterRegistryCustomizer;
 public class App {
 	
 	public static List<Animal> animals = new LinkedList<Animal>();
-	public static int randomGauge = 0;
+	
+	private Counter successfulRetrieves = Metrics.counter("animals_successful_retrieves");
+	private Integer animalsRandomGauge = Metrics.gauge("animals_random_gauge", 0);
 	
 //	public static PrometheusMeterRegistry promReg = 
 
@@ -41,21 +47,23 @@ public class App {
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public List<Animal> getAllAnimals() {
         try {
-            Thread.sleep(new Random().nextInt(5000));
+            Thread.sleep(new Random().nextInt(1000));
         } catch (InterruptedException e) {
         }
-        randomGauge = new Random().nextInt(5000);
+        animalsRandomGauge = new Random().nextInt(5000);
         MetricsController.requestsCounter.increment();
+        successfulRetrieves.increment();
         return animals;
     }
     
     @Bean
     MeterRegistryCustomizer<MeterRegistry> meterRegistryCustomizer(MeterRegistry meterRegistry) {
-//    	Gauge gauge = Gauge
-//    	    	  .builder("test_springboot", animals, List::size)
-//    	    	  .register(registry);
     	return meterRegistry1 -> {
-    		meterRegistry.config().commonTags("application", "MyTestApp");
+    		meterRegistry.config().commonTags(
+                    "application", "MyTestApp",
+                    "appVersion", "1.0.0",
+                    "env", "dev",
+                    "instanceId", UUID.randomUUID().toString());
     	};
     }
 	

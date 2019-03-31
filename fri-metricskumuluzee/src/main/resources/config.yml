@@ -1,0 +1,13 @@
+kumuluzee:
+  name: MetricsExporter
+  version: 1.0.0
+  env:
+    name: dev
+
+  server:
+    http:
+      port: 8091
+
+  metrics:
+    servlet:
+      mapping: /metadata/metrics

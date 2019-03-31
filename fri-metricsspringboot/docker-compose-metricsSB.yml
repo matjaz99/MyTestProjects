@@ -1,0 +1,16 @@
+version: '3.7'
+
+services:
+  metricsSB:
+    image: um7316/metricssb:1.0.0
+    ports:
+      - "8092:8080"
+    networks:
+      - mon_monitoring-net
+    deploy:
+      mode: replicated
+      replicas: 1
+
+networks:
+  mon_monitoring-net:
+    external: true

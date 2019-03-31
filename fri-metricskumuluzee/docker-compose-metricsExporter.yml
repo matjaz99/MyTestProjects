@@ -1,0 +1,16 @@
+version: '3.7'
+
+services:
+  metricsExporter:
+    image: um7316/metricsexporter:1.0.0
+    ports:
+      - "8091:8091"
+    networks:
+      - mon_monitoring-net
+    deploy:
+      mode: replicated
+      replicas: 1
+
+networks:
+  mon_monitoring-net:
+    external: true

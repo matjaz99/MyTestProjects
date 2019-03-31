@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.Gauge;
 import io.micrometer.core.instrument.MeterRegistry;
+import io.micrometer.core.instrument.Metrics;
 
 @Controller
 public class MetricsController {
@@ -24,13 +25,12 @@ public class MetricsController {
 //            .publishPercentileHistogram()
 //            .register(registry);
     	this.animalsGauge = Gauge.builder("animals.count", App.animals, List::size)
-                .tags("version", "v1")
+                .tags("tag1", "tag2")
                 .register(registry);
     	MetricsController.requestsCounter = Counter.builder("animals.requests.count")
     			.description("Number of times /animals/all request has been called")
     			.tags("tag1", "tag2")
     			.register(registry);
-//    	MetricsController.randomGauge = Gauge.builder("", App.randomGauge, Double::App.randomGauge);
     }
 
  }
