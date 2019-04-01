@@ -1,10 +1,14 @@
 package si.matjazcerkvenik.test.springboot.actuator;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -20,44 +24,72 @@ import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Metrics;
 import io.micrometer.spring.autoconfigure.MeterRegistryCustomizer;
 
-@RestController
-@RequestMapping("/animals")
+
 @SpringBootApplication
 public class App {
 	
 	public static List<Animal> animals = new LinkedList<Animal>();
+	public static int idCount = 0;
 	
-	private Counter successfulRetrieves = Metrics.counter("animals_successful_retrieves");
-	private Integer animalsRandomGauge = Metrics.gauge("animals_random_gauge", 0);
 	
-//	public static PrometheusMeterRegistry promReg = 
+	public static int timerTaskCycles = 0;
+	private Gauge animalsBySpecies;
+	
+	
+	static {
+		animals.add(new Animal(idCount++, "monkey ", "Lucy", 10));
+	    animals.add(new Animal(idCount++, "monkey ", "Frida", 13));
+	    animals.add(new Animal(idCount++, "monkey ", "Sherman", 11));
+	    animals.add(new Animal(idCount++, "elephant ", "Mark", 20));
+	    animals.add(new Animal(idCount++, "elephant ", "Toby", 25));
+	    animals.add(new Animal(idCount++, "zebra ", "Frank", 30));
+	    animals.add(new Animal(idCount++, "lion ", "Ferdinand", 15));
+	}
+	
 
     public static void main(String[] args) {
         ConfigurableApplicationContext context = SpringApplication.run(App.class, args);
-
-        animals.add(new Animal("monkey ", "Lucy", 10));
-        animals.add(new Animal("elephant ", "Mark", 20));
-        animals.add(new Animal("zebra ", "Frank", 30));
-        animals.add(new Animal("lion ", "Ferdinand", 15));
-
     }
+    
+    
 
-    @Timed(value="animals.all.request", histogram=true,
-    		percentiles={0.95, 0.99}, extraTags={"version", "1.0"})
-    @RequestMapping(value = "/all", method = RequestMethod.GET)
-    public List<Animal> getAllAnimals() {
-        try {
-            Thread.sleep(new Random().nextInt(1000));
-        } catch (InterruptedException e) {
-        }
-        animalsRandomGauge = new Random().nextInt(5000);
-        MetricsController.requestsCounter.increment();
-        successfulRetrieves.increment();
-        return animals;
-    }
+    
+    
+    
+    public static List<Animal> getAnimalsByType(String type) {
+		List<Animal> animalsByType = new ArrayList<Animal>();
+		for (Animal a : animals) {
+			
+			if (a.getSpecies().equalsIgnoreCase(type)) {
+				animalsByType.add(a);
+			}
+			
+		}
+		System.out.println("getAnimalsByType:" + type + ": " + animalsByType.size());
+		return animalsByType;
+	}
+    
+    
+    
+    public static void monitorMetrics() {
+		
+    	for (Animal a : animals) {
+			Map<String, String> tags = new HashMap<String, String>();
+			tags.put("species", a.getSpecies());
+//    		Metrics.gauge("animals_by_species", tags.keySet(), 10);
+		}
+    	
+    	Random r = new Random();
+    	Metrics.gauge("animals_random_gauge", r, Random::nextDouble);
+    	
+    	
+	}
+    
     
     @Bean
     MeterRegistryCustomizer<MeterRegistry> meterRegistryCustomizer(MeterRegistry meterRegistry) {
+    	System.out.println("-> @Bean meterRegistryCustomizer");
+    	
     	return meterRegistry1 -> {
     		meterRegistry.config().commonTags(
                     "application", "MyTestApp",
@@ -66,5 +98,7 @@ public class App {
                     "instanceId", UUID.randomUUID().toString());
     	};
     }
+    
+    
 	
 }
