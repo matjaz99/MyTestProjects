@@ -22,18 +22,16 @@ import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.Gauge;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Metrics;
+import io.micrometer.core.instrument.simple.SimpleMeterRegistry;
+import io.micrometer.prometheus.PrometheusMeterRegistry;
 import io.micrometer.spring.autoconfigure.MeterRegistryCustomizer;
 
 
 @SpringBootApplication
 public class App {
 	
-	public static List<Animal> animals = new LinkedList<Animal>();
+	public static List<Animal> animals = new ArrayList<Animal>();
 	public static int idCount = 0;
-	
-	
-	public static int timerTaskCycles = 0;
-	private Gauge animalsBySpecies;
 	
 	
 	static {
@@ -52,22 +50,6 @@ public class App {
     }
     
     
-
-    
-    
-    
-    public static List<Animal> getAnimalsByType(String type) {
-		List<Animal> animalsByType = new ArrayList<Animal>();
-		for (Animal a : animals) {
-			
-			if (a.getSpecies().equalsIgnoreCase(type)) {
-				animalsByType.add(a);
-			}
-			
-		}
-		System.out.println("getAnimalsByType:" + type + ": " + animalsByType.size());
-		return animalsByType;
-	}
     
     
     
@@ -79,26 +61,39 @@ public class App {
 //    		Metrics.gauge("animals_by_species", tags.keySet(), 10);
 		}
     	
-    	Random r = new Random();
-    	Metrics.gauge("animals_random_gauge", r, Random::nextDouble);
     	
     	
 	}
     
     
     @Bean
-    MeterRegistryCustomizer<MeterRegistry> meterRegistryCustomizer(MeterRegistry meterRegistry) {
+    MeterRegistryCustomizer<MeterRegistry> meterRegistryCustomizer(/*MeterRegistry meterRegistry*/) {
     	System.out.println("-> @Bean meterRegistryCustomizer");
     	
-    	return meterRegistry1 -> {
+    	return meterRegistry -> {
     		meterRegistry.config().commonTags(
-                    "application", "MyTestApp",
-                    "appVersion", "1.0.0",
-                    "env", "dev",
+//                    "application", "MyTestApp",
+                    "registry", "MeterRegistry",
+//                    "appVersion", "1.0.0",
+//                    "env", "dev",
                     "instanceId", UUID.randomUUID().toString());
     	};
     }
     
+    @Bean
+    MeterRegistryCustomizer<PrometheusMeterRegistry> prometheusRegistryCustomizer(/*MeterRegistry meterRegistry*/) {
+    	System.out.println("-> @Bean prometheusRegistryCustomizer");
+    	
+    	return registry -> {
+    		registry.config().commonTags(
+//                    "application", "MyTestApp",
+                    "registry", "PrometheusMeterRegistry",
+//                    "appVersion", "1.0.0",
+//                    "env", "dev",
+                    "instanceId", UUID.randomUUID().toString());
+//    		Metrics.addRegistry(registry);
+    	};
+    }
     
 	
 }

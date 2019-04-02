@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.micrometer.core.annotation.Timed;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.Metrics;
 
@@ -18,9 +17,9 @@ import io.micrometer.core.instrument.Metrics;
 @RequestMapping("/animals")
 public class AnimalsRestController {
 	
-	private Counter animalsGetRequests = Metrics.counter("animals_request", "method", "GET");
-	private Counter animalsPostRequests = Metrics.counter("animals_request", "method", "POST");
-	private Counter animalsDeleteRequests = Metrics.counter("animals_request", "method", "DELETE");
+	private Counter animalsGetRequests = Metrics.counter("animals.request", "method", "GET");
+	private Counter animalsPostRequests = Metrics.counter("animals.request", "method", "POST");
+	private Counter animalsDeleteRequests = Metrics.counter("animals.request", "method", "DELETE");
 	
 	
 //	@Timed(value="animals.all.request", histogram=true,
@@ -28,7 +27,6 @@ public class AnimalsRestController {
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public List<Animal> getAllAnimals() {
     	int r = new Random().nextInt(1000);
-    	System.out.println("random: " + r);
         try {
             Thread.sleep(r);
         } catch (InterruptedException e) {
@@ -39,8 +37,8 @@ public class AnimalsRestController {
 	
     @RequestMapping(method = RequestMethod.DELETE, path = "/delete/{id}")
     public void deleteAnimal(@PathVariable int id) {
-        for (Iterator it = App.animals.iterator(); it.hasNext();) {
-			Animal a = (Animal) it.next();
+        for (Iterator<Animal> it = App.animals.iterator(); it.hasNext();) {
+			Animal a = it.next();
 			if (a.getId() == id) {
 				it.remove();
 			}
