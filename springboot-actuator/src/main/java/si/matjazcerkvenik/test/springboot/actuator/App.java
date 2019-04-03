@@ -35,13 +35,13 @@ public class App {
 	
 	
 	static {
-		animals.add(new Animal(idCount++, "monkey ", "Lucy", 10));
-	    animals.add(new Animal(idCount++, "monkey ", "Frida", 13));
-	    animals.add(new Animal(idCount++, "monkey ", "Sherman", 11));
-	    animals.add(new Animal(idCount++, "elephant ", "Mark", 20));
-	    animals.add(new Animal(idCount++, "elephant ", "Toby", 25));
-	    animals.add(new Animal(idCount++, "zebra ", "Frank", 30));
-	    animals.add(new Animal(idCount++, "lion ", "Ferdinand", 15));
+		animals.add(new Animal(idCount++, "monkey", "Lucy", 10));
+	    animals.add(new Animal(idCount++, "monkey", "Frida", 13));
+	    animals.add(new Animal(idCount++, "monkey", "Sherman", 11));
+	    animals.add(new Animal(idCount++, "elephant", "Mark", 20));
+	    animals.add(new Animal(idCount++, "elephant", "Toby", 25));
+	    animals.add(new Animal(idCount++, "zebra", "Frank", 30));
+	    animals.add(new Animal(idCount++, "lion", "Ferdinand", 15));
 	}
 	
 
@@ -72,10 +72,10 @@ public class App {
     	
     	return meterRegistry -> {
     		meterRegistry.config().commonTags(
-//                    "application", "MyTestApp",
+                    "application", "MyTestApp",
                     "registry", "MeterRegistry",
-//                    "appVersion", "1.0.0",
-//                    "env", "dev",
+                    "appVersion", "1.0.0",
+                    "env", "dev",
                     "instanceId", UUID.randomUUID().toString());
     	};
     }
@@ -86,12 +86,11 @@ public class App {
     	
     	return registry -> {
     		registry.config().commonTags(
-//                    "application", "MyTestApp",
+                    "application", "MyTestApp",
                     "registry", "PrometheusMeterRegistry",
-//                    "appVersion", "1.0.0",
-//                    "env", "dev",
+                    "appVersion", "1.0.0",
+                    "env", "dev",
                     "instanceId", UUID.randomUUID().toString());
-//    		Metrics.addRegistry(registry);
     	};
     }
     

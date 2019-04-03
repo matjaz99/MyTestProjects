@@ -1,8 +1,11 @@
 package si.matjazcerkvenik.test.springboot.actuator;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +16,11 @@ import org.springframework.stereotype.Component;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.Gauge;
 import io.micrometer.core.instrument.Meter;
+import io.micrometer.core.instrument.Meter.Type;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Metrics;
+import io.micrometer.core.instrument.Tag;
+import io.micrometer.core.instrument.Tags;
 import io.micrometer.core.instrument.simple.SimpleMeterRegistry;
 import io.micrometer.prometheus.PrometheusMeterRegistry;
 
@@ -29,6 +35,8 @@ public class TimerTasks {
 	private PrometheusMeterRegistry promRegistry;
 	
 	private Counter x = null;
+	
+	private final ConcurrentHashMap<Meter.Id, AtomicInteger> dynamicGauges = new ConcurrentHashMap<>();
 	
 
 	@Scheduled(fixedDelay = 10000)
@@ -48,13 +56,44 @@ public class TimerTasks {
 		
 		App.monitorMetrics();
 		
+		
+		/*
+		 * These are simple counters that just count how many times this method is called.
+		 * One counter is registered in global registry and another is registered in prometheus registry.
+		 */
 		x.increment(); // in promRegistry
 		Metrics.counter("task.cycles.2").increment(); // in globalRegistry
 		
+		
+		/*
+		 * Display some random generated double value.
+		 * Problem: after a while the value becomes NaN, because GC deleted the value somewhere. Read here:
+		 * https://stackoverflow.com/questions/50879488/micrometer-prometheus-how-do-i-keep-a-gauge-value-from-becoming-nan
+		 * Solution: put the double value in Map
+		 */
+		System.out.println("random.gauge=" + randomDouble);
 		Metrics.gauge("random.gauge", randomDouble, Double::doubleValue);
+		
 		
 		List<Animal> animalsBySpecies = getAnimalsBySpecies("monkey");
 		System.out.println("animalsBySpecies: " + animalsBySpecies.size());
+		
+		List<String> speciesNames = Arrays.asList("monkey", "elephant", "zebra", "lion");
+		for (String spec : speciesNames) {
+			List<Tag> tags = new ArrayList<Tag>();
+			tags.add(Tag.of("species", spec));
+			Metrics.gaugeCollectionSize("animals.by.species", tags, App.animals.stream()
+	                .filter(animal -> animal.getSpecies().equals(spec))
+	                .collect(Collectors.toList()));
+		}
+		
+		for (Animal a : App.animals) {
+			int snapshot = App.animals.stream()
+	                .filter(animal -> animal.getSpecies().equals(a.getSpecies()))
+	                .collect(Collectors.toList()).size();
+			handleDynamicGauge("animals.by.species.2", "species", a.getSpecies(), snapshot);
+		}
+		
 		
 		int regSize = Metrics.globalRegistry.getRegistries().size();
 		System.out.println("registries: " + regSize);
@@ -68,11 +107,11 @@ public class TimerTasks {
 		
 		System.out.println("globalRegistry");
 		for (Meter m : Metrics.globalRegistry.getMeters()) {
-			System.out.println("\t" + m.getId().toString());
+			System.out.println("\t" + m.getId().toString() + ", type=" + m.getId().getType().toString());
 		}
 		System.out.println("promRegistry");
 		for (Meter m : promRegistry.getMeters()) {
-			System.out.println("\t" + m.getId().toString());
+			System.out.println("\t" + m.getId().toString() + ", type=" + m.getId().getType().toString());
 		}
 		
 	}
@@ -80,10 +119,25 @@ public class TimerTasks {
 	private List<Animal> getAnimalsBySpecies(String species) {
 		
         List<Animal> result = App.animals.stream()                // convert list to stream
-                .filter(animal -> !species.equals(animal.getSpecies()))     // we dont like species
+                .filter(animal -> animal.getSpecies().equals(species))     // we dont like species
                 .collect(Collectors.toList());  
 		
         return result;
+	}
+	
+	private void handleDynamicGauge(String meterName, String labelKey, String labelValue, Integer snapshot) {
+	    Meter.Id id = new Meter.Id(meterName, Tags.of(labelKey, labelValue), null, null, Type.GAUGE);
+
+	    dynamicGauges.compute(id, (key, current) -> {
+	        if (current == null) {
+	            AtomicInteger initialValue = new AtomicInteger(snapshot);
+	            promRegistry.gauge(key.getName(), key.getTags(), initialValue);
+	            return initialValue;
+	        } else {
+	            current.set(snapshot);
+	            return current;
+	        }
+	    });
 	}
 
 }
