@@ -10,9 +10,12 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,7 +30,7 @@ import io.micrometer.prometheus.PrometheusMeterRegistry;
 import io.micrometer.spring.autoconfigure.MeterRegistryCustomizer;
 
 
-@SpringBootApplication
+@SpringBootApplication // same as @Configuration @EnableAutoConfiguration @ComponentScan
 public class App {
 	
 	public static List<Animal> animals = new ArrayList<Animal>();
@@ -35,13 +38,16 @@ public class App {
 	
 	
 	static {
-		animals.add(new Animal(idCount++, "monkey", "Lucy", 10));
-	    animals.add(new Animal(idCount++, "monkey", "Frida", 13));
-	    animals.add(new Animal(idCount++, "monkey", "Sherman", 11));
-	    animals.add(new Animal(idCount++, "elephant", "Mark", 20));
-	    animals.add(new Animal(idCount++, "elephant", "Toby", 25));
-	    animals.add(new Animal(idCount++, "zebra", "Frank", 30));
-	    animals.add(new Animal(idCount++, "lion", "Ferdinand", 15));
+		animals.add(new Animal(idCount++, "monkey", "Germany", "Inge", 16));
+		animals.add(new Animal(idCount++, "monkey", "Germany", "Ula", 10));
+		animals.add(new Animal(idCount++, "monkey", "Germany", "Lucy", 14));
+	    animals.add(new Animal(idCount++, "monkey", "France", "Frida", 13));
+	    animals.add(new Animal(idCount++, "monkey", "France", "Sherman", 11));
+	    animals.add(new Animal(idCount++, "elephant", "Sweden", "Yusul", 20));
+	    animals.add(new Animal(idCount++, "elephant", "Sweden", "Mark", 21));
+	    animals.add(new Animal(idCount++, "elephant", "England", "Toby", 25));
+	    animals.add(new Animal(idCount++, "zebra", "Poland", "Frank", 30));
+	    animals.add(new Animal(idCount++, "lion", "Poland", "Ferdinand", 15));
 	}
 	
 

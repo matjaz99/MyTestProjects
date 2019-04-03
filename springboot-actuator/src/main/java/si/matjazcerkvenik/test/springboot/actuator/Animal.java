@@ -4,18 +4,24 @@ public class Animal {
 
 	private int id;
 	private String species;
+	private String country;
 	private String name;
 	private int age;
 	
 	public Animal() {
 	}
 	
-	public Animal(int id, String species, String name, int age) {
+	
+
+	public Animal(int id, String species, String country, String name, int age) {
 		this.id = id;
 		this.species = species;
+		this.country = country;
 		this.name = name;
 		this.age = age;
 	}
+
+
 
 	public int getId() {
 		return id;
@@ -39,6 +45,14 @@ public class Animal {
 
 	public void setSpecies(String species) {
 		this.species = species;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
 	}
 
 	public String getName() {

@@ -37,6 +37,7 @@ public class TimerTasks {
 	private Counter x = null;
 	
 	private final ConcurrentHashMap<Meter.Id, AtomicInteger> dynamicGauges = new ConcurrentHashMap<>();
+	private final ConcurrentHashMap<Meter.Id, AtomicInteger> dynamicGauges2 = new ConcurrentHashMap<>();
 	
 
 	@Scheduled(fixedDelay = 10000)
@@ -94,6 +95,14 @@ public class TimerTasks {
 			handleDynamicGauge("animals.by.species.2", "species", a.getSpecies(), snapshot);
 		}
 		
+		for (Animal a : App.animals) {
+			int snapshot = App.animals.stream()
+					.filter(animal -> animal.getCountry().equals(a.getCountry()))
+					.filter(animal -> animal.getSpecies().equals(a.getSpecies()))
+	                .collect(Collectors.toList()).size();
+			handleDynamicGauge2("animals.by.species.3", snapshot, "species", a.getSpecies(), "country", a.getCountry());
+		}
+		
 		
 		int regSize = Metrics.globalRegistry.getRegistries().size();
 		System.out.println("registries: " + regSize);
@@ -132,6 +141,21 @@ public class TimerTasks {
 	        if (current == null) {
 	            AtomicInteger initialValue = new AtomicInteger(snapshot);
 	            promRegistry.gauge(key.getName(), key.getTags(), initialValue);
+	            return initialValue;
+	        } else {
+	            current.set(snapshot);
+	            return current;
+	        }
+	    });
+	}
+	
+	private void handleDynamicGauge2(String meterName, Integer snapshot, String... tags) {
+	    Meter.Id id = new Meter.Id(meterName, Tags.of(tags), null, null, Type.GAUGE);
+
+	    dynamicGauges2.compute(id, (key, current) -> {
+	        if (current == null) {
+	            AtomicInteger initialValue = new AtomicInteger(snapshot);
+	            Metrics.globalRegistry.gauge(key.getName(), key.getTags(), initialValue);
 	            return initialValue;
 	        } else {
 	            current.set(snapshot);
