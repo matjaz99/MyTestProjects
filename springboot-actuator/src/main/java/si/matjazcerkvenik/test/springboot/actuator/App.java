@@ -57,32 +57,18 @@ public class App {
     
     
     
-    
-    
-    public static void monitorMetrics() {
-		
-    	for (Animal a : animals) {
-			Map<String, String> tags = new HashMap<String, String>();
-			tags.put("species", a.getSpecies());
-//    		Metrics.gauge("animals_by_species", tags.keySet(), 10);
-		}
-    	
-    	
-    	
-	}
-    
-    
     @Bean
     MeterRegistryCustomizer<MeterRegistry> meterRegistryCustomizer(/*MeterRegistry meterRegistry*/) {
     	System.out.println("-> @Bean meterRegistryCustomizer");
     	
     	return meterRegistry -> {
     		meterRegistry.config().commonTags(
-                    "application", "MyTestApp",
-                    "registry", "MeterRegistry",
-                    "appVersion", "1.0.0",
-                    "env", "dev",
-                    "instanceId", UUID.randomUUID().toString());
+                    "application", "MyTestApp"
+//                    "registry", "MeterRegistry",
+//                    "appVersion", "1.0.0",
+//                    "env", "dev",
+//                    "instanceId", UUID.randomUUID().toString()
+                    );
     	};
     }
     
@@ -92,11 +78,12 @@ public class App {
     	
     	return registry -> {
     		registry.config().commonTags(
-                    "application", "MyTestApp",
-                    "registry", "PrometheusMeterRegistry",
-                    "appVersion", "1.0.0",
-                    "env", "dev",
-                    "instanceId", UUID.randomUUID().toString());
+                    "application", "MyTestApp"
+//                    "registry", "PrometheusMeterRegistry",
+//                    "appVersion", "1.0.0",
+//                    "env", "dev",
+//                    "instanceId", UUID.randomUUID().toString()
+                    );
     	};
     }
     

@@ -55,7 +55,6 @@ public class TimerTasks {
 		count++;
 		randomDouble = new Random().nextDouble();
 		
-		App.monitorMetrics();
 		
 		
 		/*
@@ -94,6 +93,8 @@ public class TimerTasks {
 	                .collect(Collectors.toList()).size();
 			handleDynamicGauge("animals.by.species.2", "species", a.getSpecies(), snapshot);
 		}
+		
+		//dynamicGauges2.clear();
 		
 		for (Animal a : App.animals) {
 			int snapshot = App.animals.stream()
