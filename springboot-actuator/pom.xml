@@ -31,13 +31,13 @@
 			<groupId>io.micrometer</groupId>
 			<!--<artifactId>micrometer-core</artifactId> -->
 			<artifactId>micrometer-spring-legacy</artifactId>
-			<version>1.1.1</version>
+			<version>1.1.4</version>
 		</dependency>
 		<!-- Micrometer Prometheus registry -->
 		<dependency>
 			<groupId>io.micrometer</groupId>
 			<artifactId>micrometer-registry-prometheus</artifactId>
-			<version>1.1.1</version>
+			<version>1.1.4</version>
 		</dependency>
 		<!-- this is optional -->
 		<dependency>
