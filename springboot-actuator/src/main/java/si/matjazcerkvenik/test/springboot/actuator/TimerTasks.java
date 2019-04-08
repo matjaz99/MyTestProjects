@@ -148,6 +148,42 @@ public class TimerTasks {
         for (Gauge g : promRegistry.find("animals.by.species.4").gauges()) {
             System.out.println("\tid=" + g.getId().toString() + " value=" + g.value());
         }
+        
+        
+        
+        
+        // again, just use globalRegistry
+        
+        System.out.println("1. clear global registry");
+        Search search1 = Metrics.globalRegistry.find("animals.by.species.5");
+        if (search1.gauges() != null) {
+
+            for (Gauge g : search1.gauges()) {
+                System.out.println("Removing gauge: ID[" + g.getId().getName() + "]:");
+                for (Tag t : g.getId().getTags()) {
+                    System.out.println("\ttag: " + t.getKey() + "=" + t.getValue());
+                }
+                System.out.println("\tvalue: " + g.value());
+                promRegistry.remove(g.getId());
+            }
+
+        }
+
+        System.out.println("2. fill new metrics in global registry");
+        for (Animal a : App.animals) {
+              Gauge.builder("animals.by.species.5",
+                    App.animals.stream()
+                            .filter(animal -> animal.getCountry().equals(a.getCountry()))
+                            .filter(animal -> animal.getSpecies().equals(a.getSpecies()))
+                            .collect(Collectors.toList()).size(),
+                    Integer::intValue).tags("species", a.getSpecies(), "country", a.getCountry()).register(Metrics.globalRegistry);
+        }
+
+        System.out.println("3. print metrics from global registry");
+        for (Gauge g : Metrics.globalRegistry.find("animals.by.species.5").gauges()) {
+            System.out.println("\tid=" + g.getId().toString() + " value=" + g.value());
+        }
+        
 
 
 
