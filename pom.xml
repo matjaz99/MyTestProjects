@@ -38,7 +38,8 @@
 		<module>springboot-actuator</module>
 		<module>java8</module>
 		<module>springboot-primefaces</module>
-	</modules>
+        <module>tomcat-primefaces</module>
+    </modules>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
