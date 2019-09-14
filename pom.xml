@@ -39,7 +39,9 @@
 		<module>java8</module>
 		<module>springboot-primefaces</module>
         <module>tomcat-primefaces</module>
-    </modules>
+        <module>hashcode-manager</module>
+        <module>hashcode-worker</module>
+	</modules>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
