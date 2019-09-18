@@ -1,0 +1,45 @@
+version: '3.6'
+
+networks:
+  net:
+    driver: overlay
+    attachable: true
+
+services:
+
+  hashcode-manager:
+    image: matjaz99/hashcode-manager:1.0
+    networks:
+      - net
+    ports:
+      - 8011:8011
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+        - node.role == manager
+
+  hashcode-worker:
+    image: matjaz99/hashcode-worker:1.0
+    networks:
+      - net
+    ports:
+      - 8012:8012
+    #environment:
+    #  - MNG_HOSTNAME=hashcode-manager
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 265M
+        reservations:
+          cpus: '0.25'
+          memory: 64M

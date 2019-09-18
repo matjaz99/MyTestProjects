@@ -12,14 +12,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
 import si.matjazcerkvenik.test.hashcode.worker.model.Registration;
+import si.matjazcerkvenik.test.hashcode.worker.model.Result;
 import si.matjazcerkvenik.test.hashcode.worker.model.Task;
 
 
 @SpringBootApplication
 public class StartWorker {
 	
-//	public static String managerUrl = "http://hashcode-manager:8011/hashcode/manager";
-	public static String managerUrl = "http://localhost:8011/hashcode/manager";
+	public static String managerUrl = "http://hashcode-manager:8011/hashcode/manager";
+//	public static String managerUrl = "http://localhost:8011/hashcode/manager";
 	
 	@Bean
 	public RestTemplate restTemplate() {
@@ -35,9 +36,25 @@ public class StartWorker {
         System.out.println("\n" + printNetworkInterfaces() + "\n");
         
         RestTemplate restTemplate = new RestTemplate();
-        Task task = restTemplate.postForObject(managerUrl + "/register", reg, Task.class);
         
-        System.out.println("Scheduled task: " + task.toString());
+        Task task = restTemplate.postForObject(managerUrl + "/register", reg, Task.class);
+        System.out.println("Scheduled task [0]: " + task.toString());
+        
+        int i = 0;
+        while (true) {
+        	try {
+				Thread.sleep(30*1000);
+			} catch (InterruptedException e) {
+			}
+        	i++;
+        	Result res = new Result();
+            res.setStatus("FINISHED");
+            res.setResult("This is result " + i);
+            Task task2 = restTemplate.postForObject(managerUrl + "/result", res, Task.class);
+            System.out.println("Scheduled task [" + i + "]: " + task2.toString());
+		}
+        
+        
         
     }
 	
