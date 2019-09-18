@@ -1,4 +1,4 @@
-package si.matjazcerkvenik.test.hashcode.manager;
+package si.matjazcerkvenik.test.hashcode.manager.model;
 
 public class Result {
 	
@@ -16,6 +16,11 @@ public class Result {
 	public void setResult(String result) {
 		this.result = result;
 	}
+	@Override
+	public String toString() {
+		return "Result [status=" + status + ", result=" + result + "]";
+	}
+	
 	
 	
 }
