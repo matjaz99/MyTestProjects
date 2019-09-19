@@ -23,9 +23,9 @@ public class StartManager {
 	
 	// sslscan ip | grep -E "Accepted | Preferred"
 	
-	public static int idCount = 1;
+	public static int workerCount = 1;
 	public static int taskCount = 1;
-	public static List<Worker> register = new ArrayList<Worker>();
+	public static List<Worker> registrar = new ArrayList<Worker>();
 	
 	public static void main(String[] args) {
         SpringApplication.run(StartManager.class, args);
@@ -34,24 +34,24 @@ public class StartManager {
 	@RequestMapping(path = "/register", method = RequestMethod.POST)
 	public Task registerWorker(@RequestBody Registration registration) {
 		Worker w = new Worker();
-		w.setId(idCount++);
+		w.setId(workerCount++);
 		w.setIpAddress(registration.getIp());
-		register.add(w);
+		registrar.add(w);
 		System.out.println("Registered: " + w.toString());
-		
-		return generateNewTask();
+		return generateNewTask(w.getId());
 	}
 	
 	@RequestMapping(path = "/result", method = RequestMethod.POST)
 	public Task resultReturned(@RequestBody Result result) {
 		System.out.println("Result: " + result.toString());
-		
-		return generateNewTask();
+		return generateNewTask(result.getWorkerId());
 	}
 	
-	private Task generateNewTask() {		
+	private Task generateNewTask(int workerId) {		
 		Task t = new Task();
-		t.setId(taskCount++);
+		t.setTaskId(taskCount++);
+		t.setWorkerId(workerId);
+		t.setAlgorithm("dummy");
 		return t;
 	}
 	

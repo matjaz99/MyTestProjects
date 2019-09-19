@@ -2,16 +2,29 @@ package si.matjazcerkvenik.test.hashcode.manager.model;
 
 public class Task {
 	
-	private int id = 0;
+	private int taskId = 0;
+	private int workerId = 0;
 	private String algorithm = "MD5";
 	private String chars = "abcdefghijklmnopqrstuvzxywABCDEFGHIJKLMNOPQRSTUVZXYW1234567890";
 	private String search = "MatjazCerkvenik";
 	
-	public int getId() {
-		return id;
+	public int getTaskId() {
+		return taskId;
 	}
-	public void setId(int id) {
-		this.id = id;
+	public void setTaskId(int taskId) {
+		this.taskId = taskId;
+	}
+	public int getWorkerId() {
+		return workerId;
+	}
+	public void setWorkerId(int workerId) {
+		this.workerId = workerId;
+	}
+	public String getSearch() {
+		return search;
+	}
+	public void setSearch(String search) {
+		this.search = search;
 	}
 	public String getAlgorithm() {
 		return algorithm;
@@ -27,8 +40,8 @@ public class Task {
 	}
 	@Override
 	public String toString() {
-		return "Task [id=" + id + ", algorithm=" + algorithm + ", chars=" + chars + ", search=" + search + "]";
+		return "Task [taskId=" + taskId + ", workerId=" + workerId + ", algorithm=" + algorithm + ", chars=" + chars
+				+ ", search=" + search + "]";
 	}
-	
 
 }
