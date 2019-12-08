@@ -20,6 +20,7 @@ import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Properties;
 import java.util.Random;
@@ -163,6 +164,19 @@ public class Utils4j {
 		return sdf.format(d);
 	}
 
+	/**
+	 * Format timestamp from millis into readable form.
+	 * @param timestamp
+	 * @return readable date
+	 */
+	public String getFormatedTimestamp(long timestamp) {
+		if (timestamp == 0) return "n/a";
+		Calendar cal = Calendar.getInstance();
+		cal.setTimeInMillis(timestamp);
+		SimpleDateFormat sdf = new SimpleDateFormat(DATE_PATTERN_yyyy_MM_dd_H_mm_ss);
+		return sdf.format(cal.getTime());
+	}
+
 	public static Date stringToDate(String date) {
 		DateFormat df = new SimpleDateFormat(DATE_PATTERN_yyyy_MM_dd_H_mm_ss);
 		Date d = new Date();
@@ -175,14 +189,35 @@ public class Utils4j {
 	}
 
 	/**
-	 * Return type of operating system: WINDOWS, OSX, LINUX
-	 * 
+	 * Convert seconds to nice format like this: 1d 2h 40m 15s
+	 * @param secUpTotal
 	 * @return
 	 */
-	public static String getOsType() {
-		String os = System.getProperty("os.name");
-		return os;
+	private String convertToDHMSFormat(int secUpTotal) {
+		int secUpRemain = secUpTotal % 60;
+		int minUpTotal = secUpTotal / 60;
+		int minUpRemain = minUpTotal % 60;
+		int hourUpTotal = minUpTotal / 60;
+		int hourUpRemain = hourUpTotal % 60;
+		int dayUpTotal = hourUpTotal / 24;
+		int dayUpRemain = hourUpTotal % 24;
+
+		String resp = minUpRemain + "m " + secUpRemain + "s";
+
+		if (dayUpTotal == 0) {
+			if (hourUpRemain > 0) {
+				resp = hourUpTotal + "h " + resp;
+			}
+		}
+
+		if (dayUpTotal > 0) {
+			resp = dayUpTotal + "d " + dayUpRemain + "h " + resp;
+		}
+
+		return resp;
 	}
+
+
 
 	/****************************/
 	/*** FILES **/
@@ -557,5 +592,16 @@ public class Utils4j {
 			e.printStackTrace();
 		}
 
+	}
+
+
+	/**
+	 * Return type of operating system: WINDOWS, OSX, LINUX
+	 *
+	 * @return OS type
+	 */
+	public static String getOsType() {
+		String os = System.getProperty("os.name");
+		return os;
 	}
 }

@@ -41,7 +41,8 @@
         <module>tomcat-primefaces</module>
         <module>hashcode-manager</module>
         <module>hashcode-worker</module>
-	</modules>
+        <module>spark-test</module>
+    </modules>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
