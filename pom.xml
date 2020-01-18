@@ -42,6 +42,7 @@
         <module>hashcode-manager</module>
         <module>hashcode-worker</module>
         <module>spark-test</module>
+        <module>weather-metrics</module>
     </modules>
 
 	<properties>
