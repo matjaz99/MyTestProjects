@@ -1,0 +1,20 @@
+version: '3.6'
+
+networks:
+  net:
+    driver: overlay
+    attachable: true
+
+services:
+
+  weather-exporter:
+    image: matjaz99/weather-exporter:1.0
+    networks:
+      - net
+    ports:
+      - 9885:9885
+    environment:
+      - WE_SCRAPE_INTERVAL_SECONDS=60
+    deploy:
+      mode: replicated
+      replicas: 1

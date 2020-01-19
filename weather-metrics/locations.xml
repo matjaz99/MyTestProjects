@@ -1,0 +1,7 @@
+<locations>
+    <location name="Ljubljana" url="https://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observation_LJUBL-ANA_BEZIGRAD_latest.xml"></location>
+    <location name="Novo Mesto" url="https://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observation_NOVO-MES_latest.xml"></location>
+    <location name="Maribor" url="https://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observation_MARIBOR_SLIVNICA_latest.xml"></location>
+    <location name="Portoroz" url="https://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observation_PORTOROZ_SECOVLJE_latest.xml"></location>
+    <location name="Ratece" url="https://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observationAms_RATECE_latest.xml"></location>
+</locations>
