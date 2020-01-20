@@ -10,14 +10,12 @@ import org.eclipse.jetty.servlet.ServletHolder;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Start {
 
-    public static List<Location> locations = new ArrayList<>();
+    public static Locations locations;
 
     public static final Gauge temperature = Gauge.build().name("weather_temperature_celsius")
             .help("Current temperature.").labelNames("location", "lon", "lat").register();
@@ -31,11 +29,13 @@ public class Start {
 
     public static void main(String[] args) throws Exception {
 
-        locations.add(new Location("LJUBLJANA/BEZIGRAD", "https://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observation_LJUBL-ANA_BEZIGRAD_latest.xml"));
-        locations.add(new Location("NOVO MESTO", "https://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observation_NOVO-MES_latest.xml"));
-        locations.add(new Location("MARIBOR/SLIVNICA", "https://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observation_MARIBOR_SLIVNICA_latest.xml"));
-        locations.add(new Location("PORTOROZ/SECOVLJE", "https://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observation_PORTOROZ_SECOVLJE_latest.xml"));
-        locations.add(new Location("RATECE", "https://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observationAms_RATECE_latest.xml"));
+//        locations.add(new Location("LJUBLJANA/BEZIGRAD", "https://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observation_LJUBL-ANA_BEZIGRAD_latest.xml"));
+//        locations.add(new Location("NOVO MESTO", "https://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observation_NOVO-MES_latest.xml"));
+//        locations.add(new Location("MARIBOR/SLIVNICA", "https://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observation_MARIBOR_SLIVNICA_latest.xml"));
+//        locations.add(new Location("PORTOROZ/SECOVLJE", "https://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observation_PORTOROZ_SECOVLJE_latest.xml"));
+//        locations.add(new Location("RATECE", "https://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observationAms_RATECE_latest.xml"));
+
+        loadLocations();
 
         Thread t = new Thread(new WeatherThread(System.getenv("WE_SCRAPE_INTERVAL_SECONDS")));
         t.start();
@@ -59,7 +59,19 @@ public class Start {
 
     }
 
-    public static void saveXmlFile() {
+
+    public static void loadLocations() {
+        try {
+            File file = new File("/app/cfg/arso-locations.xml");
+            JAXBContext jaxbContext = JAXBContext.newInstance(Locations.class);
+            Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+            locations = (Locations) jaxbUnmarshaller.unmarshal(file);
+        } catch (JAXBException e) {
+            e.printStackTrace();
+        }
+    }
+
+//    public static void saveXmlFile() {
 //        try {
 //
 //            File file = new File("aaa.xml");
@@ -69,8 +81,8 @@ public class Start {
 //            jaxbMarshaller.marshal(location.getNetworkNodes(), file);
 //
 //        } catch (JAXBException e) {
-//            pr
+//            e.printStackTrace();
 //        }
-    }
+//    }
 
 }

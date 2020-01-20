@@ -1,0 +1,23 @@
+<locations>
+    <location name="LJUBLJANA/BEZIGRAD" url="https://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observation_LJUBL-ANA_BEZIGRAD_latest.xml"></location>
+    <location name="NOVO MESTO" url="https://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observation_NOVO-MES_latest.xml"></location>
+    <location name="MARIBOR/SLIVNICA" url="https://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observation_MARIBOR_SLIVNICA_latest.xml"></location>
+    <location name="PORTOROZ/SECOVLJE" url="https://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observation_PORTOROZ_SECOVLJE_latest.xml"></location>
+    <location name="RATECE" url="https://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observationAms_RATECE_latest.xml"></location>
+    <location name="NOVA GORICA" url="https://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observation_NOVA-GOR_latest.xml"></location>
+    <location name="CELJE" url="https://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observation_CELJE_latest.xml"></location>
+    <location name="CRNOMELJ" url="https://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observation_CRNOMELJ_latest.xml"></location>
+    <location name="KOCEVJE" url="https://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observation_KOCEVJE_latest.xml"></location>
+    <location name="KREDARICA" url="https://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observation_KREDA-ICA_latest.xml"></location>
+    <location name="MURSKA SOBOTA" url="https://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observation_MURSK-SOB_latest.xml"></location>
+    <location name="POSTOJNA" url="https://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observation_POSTOJNA_latest.xml"></location>
+    <location name="BOVEC" url="https://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observationAms_BOVEC_latest.xml"></location>
+    <location name="ILIRSKA BISTRICA" url="https://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observationAms_ILIRS-BIS_latest.xml"></location>
+    <location name="KRANJ" url="https://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observationAms_KRANJ_latest.xml"></location>
+    <location name="KRSKO-NEK" url="https://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observationAms_KRSKO_NEK_latest.xml"></location>
+    <location name="LOGATEC" url="https://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observationAms_LOGATEC_latest.xml"></location>
+    <location name="POSTOJNA (AMS)" url="https://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observationAms_POSTOJNA_latest.xml"></location>
+    <location name="RAVNE NA KOROSKEM" url="https://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observationAms_RAVNE_NA-KOR_latest.xml"></location>
+    <location name="TREBNJE" url="https://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observationAms_TREBNJE_latest.xml"></location>
+    <location name="VRHNIKA" url="https://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observationAms_VRHNIKA_latest.xml"></location>
+</locations>

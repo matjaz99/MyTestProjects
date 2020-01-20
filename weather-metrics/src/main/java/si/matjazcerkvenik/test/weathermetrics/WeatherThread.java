@@ -23,7 +23,7 @@ public class WeatherThread implements Runnable {
 
         while (true) {
 
-            for (Location loc:Start.locations) {
+            for (Location loc:Start.locations.getLocations()) {
 
 
                 try {
