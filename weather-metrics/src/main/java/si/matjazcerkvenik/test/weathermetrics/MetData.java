@@ -11,6 +11,14 @@ public class MetData {
     private String t_var_desc;
     private String t_var_unit;
     private double t;
+    // vlažnost
+    private String rh_var_desc;
+    private String rh_var_unit;
+    private double rh;
+    // tlak
+    private String p_var_desc;
+    private String p_var_unit; // hPa
+    private double p;
 
     public double getDomain_lat() {
         return domain_lat;
@@ -76,17 +84,71 @@ public class MetData {
         this.t = t;
     }
 
+    public String getRh_var_desc() {
+        return rh_var_desc;
+    }
+
+    public void setRh_var_desc(String rh_var_desc) {
+        this.rh_var_desc = rh_var_desc;
+    }
+
+    public String getRh_var_unit() {
+        return rh_var_unit;
+    }
+
+    public void setRh_var_unit(String rh_var_unit) {
+        this.rh_var_unit = rh_var_unit;
+    }
+
+    public double getRh() {
+        return rh;
+    }
+
+    public void setRh(double rh) {
+        this.rh = rh;
+    }
+
+    public String getP_var_desc() {
+        return p_var_desc;
+    }
+
+    public void setP_var_desc(String p_var_desc) {
+        this.p_var_desc = p_var_desc;
+    }
+
+    public String getP_var_unit() {
+        return p_var_unit;
+    }
+
+    public void setP_var_unit(String p_var_unit) {
+        this.p_var_unit = p_var_unit;
+    }
+
+    public double getP() {
+        return p;
+    }
+
+    public void setP(double p) {
+        this.p = p;
+    }
+
     @Override
     public String toString() {
         return "MetData{" +
-                "domain_lat='" + domain_lat + '\'' +
-                ", domain_lon='" + domain_lon + '\'' +
-                ", domain_altitude='" + domain_altitude + '\'' +
+                "domain_lat=" + domain_lat +
+                ", domain_lon=" + domain_lon +
+                ", domain_altitude=" + domain_altitude +
                 ", domain_title='" + domain_title + '\'' +
                 ", tsValid_issued='" + tsValid_issued + '\'' +
                 ", t_var_desc='" + t_var_desc + '\'' +
                 ", t_var_unit='" + t_var_unit + '\'' +
-                ", t='" + t + '\'' +
+                ", t=" + t +
+                ", rh_var_desc='" + rh_var_desc + '\'' +
+                ", rh_var_unit='" + rh_var_unit + '\'' +
+                ", rh=" + rh +
+                ", p_var_desc='" + p_var_desc + '\'' +
+                ", p_var_unit='" + p_var_unit + '\'' +
+                ", p=" + p +
                 '}';
     }
 }

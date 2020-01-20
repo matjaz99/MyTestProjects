@@ -27,6 +27,10 @@ public class WeatherThread implements Runnable {
 
 
                 try {
+
+                    // increase value for any scrape attempt
+                    Start.number_of_scrapes.labels(loc.getName()).inc();
+
                     Data data = unmarshalInputStream(loc.getUrl());
 
                     Start.temperature.labels(
@@ -34,11 +38,16 @@ public class WeatherThread implements Runnable {
                             "" + data.getMetData().getDomain_lon(),
                             "" + data.getMetData().getDomain_lat()).set(data.getMetData().getT());
 
+                    Start.pressure.labels(loc.getName()).set(data.getMetData().getP());
+
+                    Start.relative_humidity.labels(loc.getName()).set(data.getMetData().getRh());
+
                     Start.last_weather_scrape.labels(loc.getName()).set(System.currentTimeMillis());
 
-                    Start.number_of_scrapes.labels(loc.getName(), "successful").inc();
+
                 } catch (Exception e) {
-                    Start.number_of_scrapes.labels(loc.getName(),"failed").inc();
+                    // count failed scrapes
+                    Start.number_of_failed_scrapes.labels(loc.getName()).inc();
                 }
 
 
@@ -48,8 +57,6 @@ public class WeatherThread implements Runnable {
                 Thread.sleep(scrapeInterval * 1000);
             } catch (InterruptedException e) {
             }
-
-
 
         }
 

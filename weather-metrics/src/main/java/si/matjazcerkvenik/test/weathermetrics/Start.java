@@ -17,25 +17,33 @@ public class Start {
 
     public static Locations locations;
 
-    public static final Gauge temperature = Gauge.build().name("weather_temperature_celsius")
-            .help("Current temperature.").labelNames("location", "lon", "lat").register();
-
     public static final Gauge last_weather_scrape = Gauge.build().name("weather_last_weather_scrape_timestamp")
             .help("Time when last data was collected.").labelNames("location").register();
 
     public static final Counter number_of_scrapes = Counter.build().name("weather_scrapes_total")
-            .help("Number of scrapes.").labelNames("location", "status").register();
+            .help("Number of scrapes.").labelNames("location").register();
+
+    public static final Counter number_of_failed_scrapes = Counter.build().name("weather_scrapes_failed_total")
+            .help("Number of failed scrapes.").labelNames("location").register();
+
+    public static final Gauge temperature = Gauge.build().name("weather_temperature_celsius")
+            .help("Current temperature.").labelNames("location", "lon", "lat").register();
+
+    public static final Gauge pressure = Gauge.build().name("weather_pressure_hpa")
+            .help("Current pressure in hPa.").labelNames("location").register();
+
+    public static final Gauge relative_humidity = Gauge.build().name("weather_relative_humidity")
+            .help("Current relative humidity.").labelNames("location").register();
 
 
     public static void main(String[] args) throws Exception {
 
-//        locations.add(new Location("LJUBLJANA/BEZIGRAD", "https://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observation_LJUBL-ANA_BEZIGRAD_latest.xml"));
-//        locations.add(new Location("NOVO MESTO", "https://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observation_NOVO-MES_latest.xml"));
-//        locations.add(new Location("MARIBOR/SLIVNICA", "https://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observation_MARIBOR_SLIVNICA_latest.xml"));
-//        locations.add(new Location("PORTOROZ/SECOVLJE", "https://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observation_PORTOROZ_SECOVLJE_latest.xml"));
-//        locations.add(new Location("RATECE", "https://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observationAms_RATECE_latest.xml"));
-
         loadLocations();
+
+        // initialize metric with value 0
+        for (Location l:locations.getLocations()) {
+            number_of_failed_scrapes.labels(l.getName());
+        }
 
         Thread t = new Thread(new WeatherThread(System.getenv("WE_SCRAPE_INTERVAL_SECONDS")));
         t.start();
