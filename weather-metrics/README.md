@@ -1,6 +1,6 @@
 # weather metrics exporter
 
-Collect weather data from Arso adn convert them to prometheus metrics.
+Collect weather data from Arso and convert them to prometheus metrics.
 
 
 ##### Current weather:
