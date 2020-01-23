@@ -29,29 +29,47 @@ public class WeatherThread implements Runnable {
                 try {
 
                     // increase value for any scrape attempt
-                    Start.number_of_scrapes.labels(loc.getName()).inc();
+                    Metrics.number_of_scrapes.labels(loc.getName()).inc();
 
                     Data data = unmarshalInputStream(loc.getUrl());
 
-                    Start.temperature.labels(
+                    Metrics.geolocation_lon.labels(loc.getName()).set(data.getMetData().getDomain_lon());
+                    Metrics.geolocation_lat.labels(loc.getName()).set(data.getMetData().getDomain_lat());
+
+                    Metrics.temperature.labels(
                             loc.getName(),
                             "" + data.getMetData().getDomain_lon(),
                             "" + data.getMetData().getDomain_lat()).set(data.getMetData().getT());
 
-                    Start.pressure.labels(loc.getName()).set(data.getMetData().getP());
+                    Metrics.pressure.labels(loc.getName()).set(data.getMetData().getP());
 
-                    Start.relative_humidity.labels(loc.getName()).set(data.getMetData().getRh());
+                    Metrics.relative_humidity.labels(loc.getName()).set(data.getMetData().getRh());
 
-                    Start.last_weather_scrape.labels(loc.getName()).set(System.currentTimeMillis());
+                    Metrics.last_weather_scrape.labels(loc.getName()).set(System.currentTimeMillis());
 
 
                 } catch (Exception e) {
                     // count failed scrapes
-                    Start.number_of_failed_scrapes.labels(loc.getName()).inc();
+                    Metrics.number_of_failed_scrapes.labels(loc.getName()).inc();
+                    e.printStackTrace();
                 }
 
 
             }
+
+            try {
+                Arsopodatki hidro = unmarshalHidro("http://www.arso.gov.si/xml/vode/hidro_podatki_zadnji.xml");
+
+                for (Postaja p:hidro.getWaterStations()) {
+                    Metrics.hidro_river_height.labels(p.getReka(), p.getMerilno_mesto()).set(p.getVodostaj());
+                    Metrics.hidro_river_flow.labels(p.getReka(), p.getMerilno_mesto()).set(p.getPretok());
+                    Metrics.hidro_river_temp.labels(p.getReka(), p.getMerilno_mesto()).set(p.getTemp_vode());
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
 
             try {
                 Thread.sleep(scrapeInterval * 1000);
@@ -80,5 +98,28 @@ public class WeatherThread implements Runnable {
         in.close();
 
         return data;
+
     }
+
+    private Arsopodatki unmarshalHidro(String xmlUrl) throws Exception {
+        URL url = new URL(xmlUrl);
+        BufferedReader in = new BufferedReader(
+                new InputStreamReader(url.openStream()));
+
+//            String inputLine;
+//            while ((inputLine = in.readLine()) != null) {
+//                System.out.println(inputLine);
+//            }
+
+        JAXBContext jaxbContext = JAXBContext.newInstance(Arsopodatki.class);
+        Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+        Arsopodatki data = (Arsopodatki) jaxbUnmarshaller.unmarshal(in);
+        System.out.println(data);
+
+        in.close();
+
+        return data;
+
+    }
+
 }
