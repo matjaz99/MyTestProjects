@@ -34,8 +34,6 @@ public class Start {
         ServletContextHandler context = new ServletContextHandler();
         context.setContextPath("/");
         server.setHandler(context);
-        // Expose our example servlet.
-        context.addServlet(new ServletHolder(new WeatherMetricsServlet()), "/");
         // Expose Promtheus metrics.
         context.addServlet(new ServletHolder(new MetricsServlet()), "/metrics");
         // Add metrics about CPU, JVM memory etc.
