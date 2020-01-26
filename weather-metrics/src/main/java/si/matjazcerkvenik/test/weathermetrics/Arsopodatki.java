@@ -17,4 +17,11 @@ public class Arsopodatki {
     public void setWaterStations(List<Postaja> waterStations) {
         this.waterStations = waterStations;
     }
+
+    @Override
+    public String toString() {
+        return "Arsopodatki{" +
+                "waterStations=" + waterStations +
+                '}';
+    }
 }

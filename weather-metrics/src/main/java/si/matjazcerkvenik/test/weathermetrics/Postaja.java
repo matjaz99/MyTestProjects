@@ -143,4 +143,25 @@ public class Postaja {
     public void setTretji_vv_pretok(double tretji_vv_pretok) {
         this.tretji_vv_pretok = tretji_vv_pretok;
     }
+
+    @Override
+    public String toString() {
+        return "Postaja{" +
+                "sifra='" + sifra + '\'' +
+                ", ge_dolzina=" + ge_dolzina +
+                ", ge_sirina=" + ge_sirina +
+                ", kota=" + kota +
+                ", reka='" + reka + '\'' +
+                ", merilno_mesto='" + merilno_mesto + '\'' +
+                ", ime_kratko='" + ime_kratko + '\'' +
+                ", datum='" + datum + '\'' +
+                ", vodostaj=" + vodostaj +
+                ", pretok=" + pretok +
+                ", pretok_znacilni='" + pretok_znacilni + '\'' +
+                ", temp_vode=" + temp_vode +
+                ", prvi_vv_pretok=" + prvi_vv_pretok +
+                ", drugi_vv_pretok=" + drugi_vv_pretok +
+                ", tretji_vv_pretok=" + tretji_vv_pretok +
+                '}';
+    }
 }

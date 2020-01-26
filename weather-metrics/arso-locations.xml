@@ -19,7 +19,7 @@
     <location region="slo" type="fixed" name="SLOVENJ GRADEC" url="https://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observation_SLOVE-GRA_latest.xml"></location>
     <location region="slo" type="fixed" name="VOGEL" url="https://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observation_VOGEL_latest.xml"></location>
     <location region="slo" type="fixed" name="VOJSKO" url="https://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observation_VOJSKO_latest.xml"></location>
-    <!-- Avto region=slomatske postaje -->
+    <!-- Avtomatske postaje -->
     <location region="slo" type="auto" name="POSTOJNA (AMS)" url="https://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observationAms_POSTOJNA_latest.xml"></location>
     <location region="slo" type="auto" name="RATECE (AMS)" url="https://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observationAms_RATECE_latest.xml"></location>
     <location region="slo" type="auto" name="KRANJ (AMS)" url="https://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observationAms_KRANJ_latest.xml"></location>
@@ -41,4 +41,15 @@
     <location region="slo" type="auto" name="PTUJ" url="https://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observationAms_PTUJ_latest.xml"></location>
     <location region="slo" type="auto" name="RADENCI" url="https://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observationAms_RADENCI_latest.xml"></location>
     <location region="slo" type="auto" name="ROGASKA SLATINA" url="https://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observationAms_ROGAS-SLA_latest.xml"></location>
+    <!-- Avto region=slomatske postaje -->
+    <location region="eu" type="auto" name="AMSTERDAM" url="https://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observation_AMSTE-AP_latest.xml"></location>
+    <location region="eu" type="auto" name="DUNAJ" url="https://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observation_WIEN_HOHE-WAR_latest.xml"></location>
+    <location region="eu" type="auto" name="ATENE" url="https://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observation_ATHINAI_AIRPORT_latest.xml"></location>
+    <location region="eu" type="auto" name="LONDON" url="https://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observation_HEATHROW_latest.xml"></location>
+    <location region="eu" type="auto" name="MADRID" url="https://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observation_MADRID_BARAJAS_latest.xml"></location>
+    <location region="eu" type="auto" name="MOSKVA" url="https://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observation_MOSKVA_latest.xml"></location>
+    <location region="eu" type="auto" name="PARIS" url="https://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observation_PARIS_ORLY_latest.xml"></location>
+    <location region="eu" type="auto" name="RIM" url="https://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observation_PRATI-DI_latest.xml"></location>
+    <location region="eu" type="auto" name="SKOPJE" url="https://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observation_SKOPJ-PET_latest.xml"></location>
+    <location region="eu" type="auto" name="STOCKHOLM" url="https://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observation_STOCK-OLM_BROMMA_latest.xml"></location>
 </locations>

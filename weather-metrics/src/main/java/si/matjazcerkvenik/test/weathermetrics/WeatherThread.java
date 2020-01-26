@@ -14,7 +14,7 @@ public class WeatherThread implements Runnable {
         try {
             scrapeInterval = Integer.parseInt(interval);
         } catch (Exception e) {
-            scrapeInterval = 900;
+            scrapeInterval = 600;
         }
         System.out.println("Setting scrapeInterval to: " + scrapeInterval);
     }
@@ -47,6 +47,12 @@ public class WeatherThread implements Runnable {
 
                     Metrics.last_weather_scrape.labels(loc.getName()).set(System.currentTimeMillis());
 
+                    try {
+                        WHttpClient.sendOkhttpPost(loc, data.getMetData());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
 
                 } catch (Exception e) {
                     // count failed scrapes
@@ -69,6 +75,8 @@ public class WeatherThread implements Runnable {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+
+
 
 
             try {

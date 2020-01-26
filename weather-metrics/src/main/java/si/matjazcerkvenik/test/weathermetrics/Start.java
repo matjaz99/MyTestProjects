@@ -1,7 +1,5 @@
 package si.matjazcerkvenik.test.weathermetrics;
 
-import io.prometheus.client.Counter;
-import io.prometheus.client.Gauge;
 import io.prometheus.client.exporter.MetricsServlet;
 import io.prometheus.client.hotspot.DefaultExports;
 import org.eclipse.jetty.server.Server;
@@ -34,7 +32,7 @@ public class Start {
         ServletContextHandler context = new ServletContextHandler();
         context.setContextPath("/");
         server.setHandler(context);
-        // Expose Promtheus metrics.
+        // Expose Prometheus metrics.
         context.addServlet(new ServletHolder(new MetricsServlet()), "/metrics");
         // Add metrics about CPU, JVM memory etc.
         DefaultExports.initialize();
@@ -50,7 +48,8 @@ public class Start {
 
     public static void loadLocations() {
         try {
-            File file = new File("/app/cfg/arso-locations.xml");
+//            File file = new File("/app/cfg/arso-locations.xml");
+            File file = new File("weather-metrics/arso-locations.xml");
             JAXBContext jaxbContext = JAXBContext.newInstance(Locations.class);
             Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
             locations = (Locations) jaxbUnmarshaller.unmarshal(file);
