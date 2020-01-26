@@ -16,7 +16,9 @@ public class WeatherThread implements Runnable {
         } catch (Exception e) {
             scrapeInterval = 600;
         }
+        if (Start.DEV_ENV) scrapeInterval = 60;
         System.out.println("Setting scrapeInterval to: " + scrapeInterval);
+        System.out.println("Setting elasticHost to: " + ElasticHttpClient.url);
     }
 
     public void run() {
@@ -24,7 +26,6 @@ public class WeatherThread implements Runnable {
         while (true) {
 
             for (Location loc:Start.locations.getLocations()) {
-
 
                 try {
 
@@ -47,19 +48,19 @@ public class WeatherThread implements Runnable {
 
                     Metrics.last_weather_scrape.labels(loc.getName()).set(System.currentTimeMillis());
 
-                    try {
-                        WHttpClient.sendOkhttpPost(loc, data.getMetData());
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                    if (ElasticHttpClient.url != null) {
+                        try {
+                            ElasticHttpClient.sendOkhttpPost(loc, data.getMetData());
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
-
 
                 } catch (Exception e) {
                     // count failed scrapes
                     Metrics.number_of_failed_scrapes.labels(loc.getName()).inc();
                     e.printStackTrace();
                 }
-
 
             }
 
@@ -75,9 +76,6 @@ public class WeatherThread implements Runnable {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
-
-
 
             try {
                 Thread.sleep(scrapeInterval * 1000);

@@ -13,6 +13,8 @@ import java.io.File;
 
 public class Start {
 
+    public static boolean DEV_ENV = false;
+
     public static Locations locations;
 
 
@@ -24,6 +26,8 @@ public class Start {
         for (Location l:locations.getLocations()) {
             Metrics.number_of_failed_scrapes.labels(l.getName());
         }
+
+        if (!DEV_ENV) ElasticHttpClient.setElasticUrl(System.getenv("WE_ELASTICHOST"));
 
         Thread t = new Thread(new WeatherThread(System.getenv("WE_SCRAPE_INTERVAL_SECONDS")));
         t.start();
@@ -41,15 +45,13 @@ public class Start {
         server.start();
         server.join();
 
-
-
     }
 
 
     public static void loadLocations() {
         try {
-//            File file = new File("/app/cfg/arso-locations.xml");
-            File file = new File("weather-metrics/arso-locations.xml");
+            File file = new File("/app/cfg/arso-locations.xml");
+            if (DEV_ENV) file = new File("weather-metrics/arso-locations.xml");
             JAXBContext jaxbContext = JAXBContext.newInstance(Locations.class);
             Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
             locations = (Locations) jaxbUnmarshaller.unmarshal(file);

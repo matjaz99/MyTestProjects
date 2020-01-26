@@ -15,6 +15,7 @@ services:
       - 9885:9885
     environment:
       - WE_SCRAPE_INTERVAL_SECONDS=60
+      - WE_ELASTICHOST=docker-1:9200
     deploy:
       mode: replicated
       replicas: 1
