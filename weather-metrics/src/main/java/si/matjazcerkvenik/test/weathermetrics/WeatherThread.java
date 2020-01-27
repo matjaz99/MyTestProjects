@@ -29,15 +29,14 @@ public class WeatherThread implements Runnable {
                 try {
 
                     // increase value for any scrape attempt
-                    Metrics.number_of_scrapes.labels(loc.getName()).inc();
+                    Metrics.number_of_scrapes.labels(loc.getName(), loc.getRegion()).inc();
 
                     Data data = unmarshalInputStream(loc.getUrl());
 
                     Metrics.geolocation_lon.labels(loc.getName(), loc.getRegion()).set(data.getMetData().getDomain_lon());
                     Metrics.geolocation_lat.labels(loc.getName(), loc.getRegion()).set(data.getMetData().getDomain_lat());
 
-                    Metrics.temperature.labels(
-                            loc.getName(), loc.getRegion()).set(data.getMetData().getT());
+                    Metrics.temperature.labels(loc.getName(), loc.getRegion()).set(data.getMetData().getT());
 
                     Metrics.pressure.labels(loc.getName(), loc.getRegion()).set(data.getMetData().getP());
 
@@ -71,7 +70,7 @@ public class WeatherThread implements Runnable {
                 }
 
             } catch (Exception e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());
             }
 
             try {

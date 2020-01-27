@@ -6,7 +6,7 @@ import io.prometheus.client.Gauge;
 public class Metrics {
 
     public static final Gauge last_weather_scrape = Gauge.build().name("weather_last_weather_scrape_timestamp")
-            .help("Time when last data was collected.").labelNames("location").register();
+            .help("Time when last data was collected.").labelNames("location", "region").register();
 
     public static final Counter number_of_scrapes = Counter.build().name("weather_scrapes_total")
             .help("Number of scrapes.").labelNames("location", "region").register();

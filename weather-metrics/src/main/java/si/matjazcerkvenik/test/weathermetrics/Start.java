@@ -24,7 +24,7 @@ public class Start {
 
         // initialize metric with value 0
         for (Location l:locations.getLocations()) {
-            Metrics.number_of_failed_scrapes.labels(l.getName());
+            Metrics.number_of_failed_scrapes.labels(l.getName(), l.getRegion());
         }
 
         if (!DEV_ENV) ElasticHttpClient.setElasticUrl(System.getenv("WE_ELASTICHOST"));
