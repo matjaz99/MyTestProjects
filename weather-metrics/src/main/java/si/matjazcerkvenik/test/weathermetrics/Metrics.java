@@ -9,25 +9,25 @@ public class Metrics {
             .help("Time when last data was collected.").labelNames("location").register();
 
     public static final Counter number_of_scrapes = Counter.build().name("weather_scrapes_total")
-            .help("Number of scrapes.").labelNames("location").register();
+            .help("Number of scrapes.").labelNames("location", "region").register();
 
     public static final Counter number_of_failed_scrapes = Counter.build().name("weather_scrapes_failed_total")
-            .help("Number of failed scrapes.").labelNames("location").register();
+            .help("Number of failed scrapes.").labelNames("location", "region").register();
 
     public static final Gauge geolocation_lon = Gauge.build().name("weather_station_lon")
-            .help("Station longitude.").labelNames("location").register();
+            .help("Station longitude.").labelNames("location", "region").register();
 
     public static final Gauge geolocation_lat = Gauge.build().name("weather_station_lat")
-            .help("Station latitude.").labelNames("location").register();
+            .help("Station latitude.").labelNames("location", "region").register();
 
     public static final Gauge temperature = Gauge.build().name("weather_temperature_celsius")
-            .help("Current temperature.").labelNames("location", "lon", "lat").register();
+            .help("Current temperature.").labelNames("location", "region").register();
 
     public static final Gauge pressure = Gauge.build().name("weather_pressure_hpa")
-            .help("Current pressure in hPa.").labelNames("location").register();
+            .help("Current pressure in hPa.").labelNames("location", "region").register();
 
     public static final Gauge relative_humidity = Gauge.build().name("weather_relative_humidity")
-            .help("Current relative humidity.").labelNames("location").register();
+            .help("Current relative humidity.").labelNames("location", "region").register();
 
     public static final Gauge hidro_river_height = Gauge.build().name("weather_hidro_river_height")
             .help("Current height.").labelNames("river", "location").register();

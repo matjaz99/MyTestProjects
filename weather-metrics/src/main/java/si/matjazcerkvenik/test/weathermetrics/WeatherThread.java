@@ -18,7 +18,6 @@ public class WeatherThread implements Runnable {
         }
         if (Start.DEV_ENV) scrapeInterval = 60;
         System.out.println("Setting scrapeInterval to: " + scrapeInterval);
-        System.out.println("Setting elasticHost to: " + ElasticHttpClient.url);
     }
 
     public void run() {
@@ -34,19 +33,17 @@ public class WeatherThread implements Runnable {
 
                     Data data = unmarshalInputStream(loc.getUrl());
 
-                    Metrics.geolocation_lon.labels(loc.getName()).set(data.getMetData().getDomain_lon());
-                    Metrics.geolocation_lat.labels(loc.getName()).set(data.getMetData().getDomain_lat());
+                    Metrics.geolocation_lon.labels(loc.getName(), loc.getRegion()).set(data.getMetData().getDomain_lon());
+                    Metrics.geolocation_lat.labels(loc.getName(), loc.getRegion()).set(data.getMetData().getDomain_lat());
 
                     Metrics.temperature.labels(
-                            loc.getName(),
-                            "" + data.getMetData().getDomain_lon(),
-                            "" + data.getMetData().getDomain_lat()).set(data.getMetData().getT());
+                            loc.getName(), loc.getRegion()).set(data.getMetData().getT());
 
-                    Metrics.pressure.labels(loc.getName()).set(data.getMetData().getP());
+                    Metrics.pressure.labels(loc.getName(), loc.getRegion()).set(data.getMetData().getP());
 
-                    Metrics.relative_humidity.labels(loc.getName()).set(data.getMetData().getRh());
+                    Metrics.relative_humidity.labels(loc.getName(), loc.getRegion()).set(data.getMetData().getRh());
 
-                    Metrics.last_weather_scrape.labels(loc.getName()).set(System.currentTimeMillis());
+                    Metrics.last_weather_scrape.labels(loc.getName(), loc.getRegion()).set(System.currentTimeMillis());
 
                     if (ElasticHttpClient.url != null) {
                         try {
@@ -58,7 +55,7 @@ public class WeatherThread implements Runnable {
 
                 } catch (Exception e) {
                     // count failed scrapes
-                    Metrics.number_of_failed_scrapes.labels(loc.getName()).inc();
+                    Metrics.number_of_failed_scrapes.labels(loc.getName(), loc.getRegion()).inc();
                     e.printStackTrace();
                 }
 

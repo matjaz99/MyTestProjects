@@ -22,6 +22,7 @@ public class ElasticHttpClient {
                 url = "http://" + esHost + "/weather/_doc?pretty";
             }
         }
+        System.out.println("Setting elasticHost to: " + url);
     }
 
 
