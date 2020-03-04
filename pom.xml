@@ -43,6 +43,7 @@
         <module>hashcode-worker</module>
         <module>spark-test</module>
         <module>weather-metrics</module>
+        <module>cdr-prsr</module>
     </modules>
 
 	<properties>
