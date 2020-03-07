@@ -31,6 +31,8 @@ public class ElasticHttpClient {
                 "\"timestamp\":" + System.currentTimeMillis() + "" +
                 "}";
 
+        System.out.println(json);
+
         Request request = new Request.Builder()
                 .url(url)
                 .addHeader("User-Agent", "OkHttp Bot")
