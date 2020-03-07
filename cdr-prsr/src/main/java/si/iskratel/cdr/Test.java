@@ -2,9 +2,7 @@ package si.iskratel.cdr;
 
 
 import org.apache.commons.io.IOUtils;
-import si.iskratel.cdr.parser.CDRReader;
-import si.iskratel.cdr.parser.CdrObject;
-import si.iskratel.cdr.parser.DataRecord;
+import si.iskratel.cdr.parser.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -13,25 +11,50 @@ import java.util.List;
 
 public class Test {
 
+    public static long totalCount = 0;
+
     public static void main(String[] args) throws Exception {
 
-        // List<byte[]> bytes = CDRReader.readCDR(new File("C:\\Users\\cerkvenik\\Desktop\\5cdrs"));
-        // System.out.println("size: " + bytes.size());
+//        File dir = new File("/Users/matjaz/Developer/cdrs/cdrs-nemanič");
+        File dir = new File("/Users/matjaz/Developer/cdrs/5cdrs");
+        File[] files = dir.listFiles();
 
-        File f = new File("/Users/matjaz/Dropbox/Iskratel/PMON/CDR/5cdrs");
+        System.out.println("Files in dir: " + files.length);
+
+        for (int i = 0; i < files.length; i++) {
+            parse(files[i]);
+            System.out.println("totalCount: " + totalCount);
+        }
+
+    }
+
+    public static void parse(File f) throws Exception {
+
+//        File f = new File("/Users/matjaz/Dropbox/Iskratel/PMON/CDR/5cdrs");
         //File f = new File("/Users/matjaz/Dropbox/Iskratel/PMON/CDR/111520200205090084");
 //        File f = new File("/Users/matjaz/Dropbox/Iskratel/PMON/CDR/2063820200224090086.si2");
         FileInputStream is = new FileInputStream(f);
-//        ByteArrayInputStream bais = new ByteArrayInputStream(is.readAllBytes()); // Java 9!!!
+//        ByteArrayInputStream bais = new ByteArrayInputStream(is.readAllBytes()); // requires Java 9!!!
         byte[] bytes = IOUtils.toByteArray(is);
         ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
         List<DataRecord> list = CDRReader.readDataRecords(bais);
 
         for (DataRecord dr : list) {
             System.out.println(dr.toString());
+            CdrBeanCreator cbc = new CdrBeanCreator() {
+                @Override
+                public void setSpecificBeanValues(CdrObject cdrObj, CdrBean cdrBean) {
+
+                }
+            };
+            CdrBean cdrBean = cbc.parseBinaryCdr(dr.getDataRecordBytes(), null);
+            ElasticHttpClient.sendOkhttpPost(cdrBean);
+            System.out.println(cdrBean.toString());
+//            Thread.sleep(2000);
         }
 
         System.out.println("size: " + list.size());
+        totalCount += list.size();
 
     }
 
