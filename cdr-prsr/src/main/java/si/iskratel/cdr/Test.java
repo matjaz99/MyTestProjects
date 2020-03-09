@@ -12,21 +12,29 @@ import java.util.List;
 public class Test {
 
     public static long totalCount = 0;
+    public static long startTime = 0;
+    public static long endTime = 0;
 
     public static void main(String[] args) throws Exception {
 
-        File dir = new File("/Users/matjaz/Developer/cdr-files/2063_TS");
+//        File dir = new File("/Users/matjaz/Developer/cdr-files/2063_TS");
 //        File dir = new File("/Users/matjaz/Developer/cdrs/5cdrs");
 //        File dir = new File("/Users/matjaz/Dropbox/Iskratel/PMON/CDR/5cdrs");
 //        File dir = new File("/Users/matjaz/Dropbox/Iskratel/PMON/CDR/more_cdrs");
+        File dir = new File("C:\\Users\\cerkvenik\\Documents\\CDRs\\experimental\\02");
         File[] files = dir.listFiles();
 
         System.out.println("Files in dir: " + files.length);
+        startTime = System.currentTimeMillis();
 
         for (int i = 0; i < files.length; i++) {
             parse(files[i]);
             System.out.println("totalCount: " + totalCount);
         }
+
+        endTime = System.currentTimeMillis();
+
+        System.out.println("total processing time: " + (endTime - startTime));
 
     }
 
@@ -51,13 +59,12 @@ public class Test {
             };
             try {
                 CdrBean cdrBean = cbc.parseBinaryCdr(dr.getDataRecordBytes(), null);
-                ElasticHttpClient.sendOkhttpPost(cdrBean);
+//                ElasticHttpClient.sendOkhttpPost(cdrBean);
+                ElasticHttpClient.sendBulkPost(cdrBean);
 //                System.out.println(cdrBean.toString());
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
-//            Thread.sleep(2000);
         }
 
         System.out.println("size: " + list.size());
