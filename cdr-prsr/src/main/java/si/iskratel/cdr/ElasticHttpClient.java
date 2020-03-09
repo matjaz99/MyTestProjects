@@ -8,7 +8,7 @@ import java.io.IOException;
 public class ElasticHttpClient {
 
 
-    public static String url = "http://alpinevm:9200/cdrs/_doc?pretty";
+    public static String url = "http://pgcentos:9200/cdrs/_doc?pretty";
     public static okhttp3.OkHttpClient httpClient;
     public static MediaType MEDIA_TYPE_JSON = MediaType.parse("application/json");
 
@@ -22,8 +22,8 @@ public class ElasticHttpClient {
         String json = "{" +
                 "\"callid\":\"" + cdrBean.getCallid() + "\"," +
                 "\"ownerNumber\":\"" + cdrBean.getOwnerNumber() + "\"," +
-                "\"callingNumber\":" + cdrBean.getCallingNumber() + "," +
-                "\"calledNumber\":" + cdrBean.getCalledNumber() + "," +
+                "\"callingNumber\":\"" + cdrBean.getCallingNumber() + "\"," +
+                "\"calledNumber\":\"" + cdrBean.getCalledNumber() + "\"," +
                 "\"cdrTimeBeforeRinging\":" + cdrBean.getCdrTimeBeforeRinging() + "," +
                 "\"cdrRingingTimeBeforeAnsw\":" + cdrBean.getCdrRingingTimeBeforeAnsw() + "," +
                 "\"duration\":" + cdrBean.getDuration() + "," +
@@ -40,13 +40,12 @@ public class ElasticHttpClient {
                 .post(RequestBody.create(json, MEDIA_TYPE_JSON))
                 .build();
 
-        try (Response response = httpClient.newCall(request).execute()) {
+        Response response = httpClient.newCall(request).execute();
 
-            if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+        if (!response.isSuccessful()) System.out.println("Unexpected code: " + response);
 
-            // Get response body
-            System.out.println(response.body().string());
-        }
+        // Get response body
+        System.out.println(response.body().string());
 
     }
 

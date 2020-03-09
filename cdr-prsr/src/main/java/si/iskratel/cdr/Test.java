@@ -15,8 +15,10 @@ public class Test {
 
     public static void main(String[] args) throws Exception {
 
-//        File dir = new File("/Users/matjaz/Developer/cdrs/cdrs-nemanič");
-        File dir = new File("/Users/matjaz/Developer/cdrs/5cdrs");
+        File dir = new File("/Users/matjaz/Developer/cdr-files/2063_TS");
+//        File dir = new File("/Users/matjaz/Developer/cdrs/5cdrs");
+//        File dir = new File("/Users/matjaz/Dropbox/Iskratel/PMON/CDR/5cdrs");
+//        File dir = new File("/Users/matjaz/Dropbox/Iskratel/PMON/CDR/more_cdrs");
         File[] files = dir.listFiles();
 
         System.out.println("Files in dir: " + files.length);
@@ -40,16 +42,21 @@ public class Test {
         List<DataRecord> list = CDRReader.readDataRecords(bais);
 
         for (DataRecord dr : list) {
-            System.out.println(dr.toString());
+//            System.out.println(dr.toString());
             CdrBeanCreator cbc = new CdrBeanCreator() {
                 @Override
                 public void setSpecificBeanValues(CdrObject cdrObj, CdrBean cdrBean) {
 
                 }
             };
-            CdrBean cdrBean = cbc.parseBinaryCdr(dr.getDataRecordBytes(), null);
-            ElasticHttpClient.sendOkhttpPost(cdrBean);
-            System.out.println(cdrBean.toString());
+            try {
+                CdrBean cdrBean = cbc.parseBinaryCdr(dr.getDataRecordBytes(), null);
+                ElasticHttpClient.sendOkhttpPost(cdrBean);
+//                System.out.println(cdrBean.toString());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
 //            Thread.sleep(2000);
         }
 
