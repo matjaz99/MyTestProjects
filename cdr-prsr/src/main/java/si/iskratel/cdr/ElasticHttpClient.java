@@ -9,9 +9,10 @@ public class ElasticHttpClient {
 
 
     public static String url = "http://pgcentos:9200/cdrs/_doc?pretty";
-    public static okhttp3.OkHttpClient httpClient;
+    public static okhttp3.OkHttpClient httpClient = new OkHttpClient();
     public static MediaType MEDIA_TYPE_JSON = MediaType.parse("application/json");
 
+    public static int postCount = 0;
 
     public static void sendOkhttpPost(CdrBean cdrBean) throws Exception {
 
@@ -50,13 +51,12 @@ public class ElasticHttpClient {
     }
 
     public static int bulkCount = 0;
-    public static String bulkJson = "";
-    public static String bulkUrl = "http://mcrk-docker-1:9200/cdrs/_bulk?pretty";
+    public static StringBuilder sb = new StringBuilder();
 
     public static void sendBulkPost(CdrBean cdrBean) throws Exception {
 
-        bulkJson += "{ \"index\":{} }\n";
-        bulkJson += "{" +
+        sb.append("{ \"index\":{} }\n");
+        sb.append("{" +
                 "\"callid\":\"" + cdrBean.getCallid() + "\"," +
                 "\"ownerNumber\":\"" + cdrBean.getOwnerNumber() + "\"," +
                 "\"callingNumber\":\"" + cdrBean.getCallingNumber() + "\"," +
@@ -66,31 +66,28 @@ public class ElasticHttpClient {
                 "\"duration\":" + cdrBean.getDuration() + "," +
                 "\"cause\":" + cdrBean.getCause() + "," +
                 "\"timestamp\":" + System.currentTimeMillis() + "" +
-                "}\n";
+                "}\n");
         bulkCount++;
 
-        if (bulkCount % 1000 != 0) return;
-
-        if (httpClient == null) httpClient = new OkHttpClient();
-
-
-//        System.out.println(bulkJson);
+        if (bulkCount % Test.BULK_SIZE != 0) return;
 
         Request request = new Request.Builder()
-                .url(bulkUrl)
+                .url(Test.ES_URL)
                 .addHeader("User-Agent", "OkHttp Bot")
 //                .addHeader("Content-Type", "application/json")
-                .post(RequestBody.create(bulkJson, MEDIA_TYPE_JSON))
+                .post(RequestBody.create(sb.toString(), MEDIA_TYPE_JSON))
                 .build();
 
         Response response = httpClient.newCall(request).execute();
+        postCount++;
+        System.out.println("POST sent: " + postCount);
 
         if (!response.isSuccessful()) System.out.println("Unexpected code: " + response);
 
         // Get response body
 //        System.out.println(response.body().string());
 
-        bulkJson = "";
+        sb = new StringBuilder();
         bulkCount = 0;
 
     }
