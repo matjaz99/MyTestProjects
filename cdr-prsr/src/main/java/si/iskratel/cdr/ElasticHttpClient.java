@@ -3,8 +3,6 @@ package si.iskratel.cdr;
 import okhttp3.*;
 import si.iskratel.cdr.parser.CdrBean;
 
-import java.io.IOException;
-
 public class ElasticHttpClient {
 
 
@@ -29,6 +27,13 @@ public class ElasticHttpClient {
                 "\"cdrRingingTimeBeforeAnsw\":" + cdrBean.getCdrRingingTimeBeforeAnsw() + "," +
                 "\"duration\":" + cdrBean.getDuration() + "," +
                 "\"cause\":" + cdrBean.getCause() + "," +
+                "\"cacType\":\"" + cdrBean.getCacType() + "\"," +
+                "\"cacPrefix\":\"" + cdrBean.getCacPrefix() + "\"," +
+                "\"cacNumber\":\"" + cdrBean.getCacNumber() + "\"," +
+                "\"inTrunkId\":\"" + cdrBean.getInTrunkId() + "\"," +
+                "\"inTrunkGroupId\":\"" + cdrBean.getInTrunkGroupId() + "\"," +
+                "\"outTrunkId\":\"" + cdrBean.getOutTrunkId() + "\"," +
+                "\"outTrunkGroupId\":\"" + cdrBean.getOutTrunkGroupId() + "\"," +
                 "\"timestamp\":" + System.currentTimeMillis() + "" +
                 "}";
 
@@ -50,7 +55,7 @@ public class ElasticHttpClient {
 
     }
 
-    public static int bulkCount = 0;
+    public static int bulkSize = 0;
     public static StringBuilder sb = new StringBuilder();
 
     public static void sendBulkPost(CdrBean cdrBean) throws Exception {
@@ -65,11 +70,18 @@ public class ElasticHttpClient {
                 "\"cdrRingingTimeBeforeAnsw\":" + cdrBean.getCdrRingingTimeBeforeAnsw() + "," +
                 "\"duration\":" + cdrBean.getDuration() + "," +
                 "\"cause\":" + cdrBean.getCause() + "," +
+                "\"cacType\":\"" + cdrBean.getCacType() + "\"," +
+                "\"cacPrefix\":\"" + cdrBean.getCacPrefix() + "\"," +
+                "\"cacNumber\":\"" + cdrBean.getCacNumber() + "\"," +
+                "\"inTrunkId\":\"" + cdrBean.getInTrunkId() + "\"," +
+                "\"inTrunkGroupId\":\"" + cdrBean.getInTrunkGroupId() + "\"," +
+                "\"outTrunkId\":\"" + cdrBean.getOutTrunkId() + "\"," +
+                "\"outTrunkGroupId\":\"" + cdrBean.getOutTrunkGroupId() + "\"," +
                 "\"timestamp\":" + System.currentTimeMillis() + "" +
                 "}\n");
-        bulkCount++;
+        bulkSize++;
 
-        if (bulkCount % Test.BULK_SIZE != 0) return;
+        if (bulkSize % Test.BULK_SIZE != 0) return;
 
         Request request = new Request.Builder()
                 .url(Test.ES_URL)
@@ -88,7 +100,7 @@ public class ElasticHttpClient {
 //        System.out.println(response.body().string());
 
         sb = new StringBuilder();
-        bulkCount = 0;
+        bulkSize = 0;
 
     }
 

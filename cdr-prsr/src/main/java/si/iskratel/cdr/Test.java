@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class Test {
 
@@ -23,10 +24,17 @@ public class Test {
     public static long startTime = 0;
     public static long endTime = 0;
 
+    public static LinkedBlockingQueue<CdrBean> queue = new LinkedBlockingQueue();
+    public static boolean running = true;
+
     public static void main(String[] args) throws Exception {
 
-        String testDir = "C:\\Users\\cerkvenik\\Documents\\CDRs\\experimental\\02";
-        String testUrl = "http://mcrk-docker-1:9200/cdrs/_bulk?pretty";
+        Runtime.getRuntime().addShutdownHook(new MyShutdownHook());
+
+//        String testDir = "C:\\Users\\cerkvenik\\Documents\\CDRs\\experimental\\02";
+        String testDir = "/Users/matjaz/Developer/cdr-files/samples/02";
+//        String testUrl = "http://mcrk-docker-1:9200/cdrs/_bulk?pretty";
+        String testUrl = "http://pgcentos:9200/cdrs/_bulk?pretty";
 
         Map<String, String> getenv = System.getenv();
         DIRECTORY = getenv.getOrDefault("CDRPR_DIRECTORY", testDir);
@@ -38,11 +46,16 @@ public class Test {
         File dir = new File(DIRECTORY);
         File[] files = dir.listFiles();
 
+        Thread t = new Thread(new EsClientThread());
+        t.start();
+
         startTime = System.currentTimeMillis();
 
         for (int i = 0; i < files.length; i++) {
             parse(files[i]);
         }
+
+        while (running) {}
 
         endTime = System.currentTimeMillis();
         long processingTime = endTime - startTime;
@@ -79,11 +92,12 @@ public class Test {
             };
             try {
                 CdrBean cdrBean = cbc.parseBinaryCdr(dr.getDataRecordBytes(), null);
+                queue.put(cdrBean);
                 totalCount++;
                 if (BULK_SIZE == 1) {
                     ElasticHttpClient.sendOkhttpPost(cdrBean);
                 } else {
-                    ElasticHttpClient.sendBulkPost(cdrBean);
+//                    ElasticHttpClient.sendBulkPost(cdrBean);
                 }
                 debug(cdrBean.toString());
             } catch (BadCdrRecordException e) {
