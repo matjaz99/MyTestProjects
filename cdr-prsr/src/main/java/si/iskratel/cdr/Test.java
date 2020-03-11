@@ -8,6 +8,7 @@ import si.iskratel.cdr.parser.*;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -26,6 +27,8 @@ public class Test {
 
     public static LinkedBlockingQueue<CdrBean> queue = new LinkedBlockingQueue();
     public static boolean running = true;
+
+    public static List<EsClientThread2> threads = new ArrayList<>();
 
     public static void main(String[] args) throws Exception {
 
@@ -46,8 +49,26 @@ public class Test {
         File dir = new File(DIRECTORY);
         File[] files = dir.listFiles();
 
-        Thread t = new Thread(new EsClientThread());
-        t.start();
+        for (int i = 0; i < NUM_OF_THREADS; i++) {
+            threads.add(new EsClientThread2());
+        }
+
+        for (int i = 0; i < files.length; i++) {
+            for (EsClientThread2 c : threads) {
+                c.addFile(files[i]);
+                i++;
+                if (i == files.length) {
+                    break;
+                }
+            }
+        }
+
+        for (int i = 0; i < NUM_OF_THREADS; i++) {
+            threads.get(i).start();
+        }
+
+//        Thread t = new Thread(new EsClientThread());
+//        t.start();
 
         startTime = System.currentTimeMillis();
 
