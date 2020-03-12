@@ -4,6 +4,8 @@ networks:
   net:
     driver: overlay
     attachable: true
+  es_elastic:
+    external: true
 
 services:
 
@@ -11,12 +13,15 @@ services:
     image: matjaz99/cdrpr:1.0
     networks:
       - net
+      - es_elastic
     environment:
       - CDRPR_DIRECTORY=/opt/cdr
-      - CDRPR_THREADS=3
-      - CDRPR_BULK_SIZE=1000
+      - CDRPR_THREADS=4
+      - CDRPR_BULK_SIZE=10000
       - CDRPR_DEBUG_ENABLED=false
-      - CDRPR_ES_URL=http://mcrk-docker-1:9200/cdrs/_bulk?pretty
+      - CDRPR_ES_URL=http://es01:9200/cdrs/_bulk?pretty
+    volumes:
+      - /opt/cdr:/opt/cdr
     deploy:
       mode: replicated
       replicas: 1

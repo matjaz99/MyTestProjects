@@ -2,11 +2,8 @@ FROM openjdk:8-jre
 
 RUN mkdir -p /opt/cdr
 
-COPY target/weather-metrics-1.0-jar-with-dependencies.jar /app/weather-metrics-1.0-jar-with-dependencies.jar
-COPY arso-locations.xml /app/cfg/arso-locations.xml
+COPY target/cdr-prsr-1.0-jar-with-dependencies.jar /opt/cdr-prsr-1.0-jar-with-dependencies.jar
 
-WORKDIR /app
+WORKDIR /opt
 
-EXPOSE 9885
-
-CMD java -jar weather-metrics-1.0-jar-with-dependencies.jar
+CMD java -jar cdr-prsr-1.0-jar-with-dependencies.jar

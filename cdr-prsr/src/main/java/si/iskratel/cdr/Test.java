@@ -34,17 +34,22 @@ public class Test {
 
         Runtime.getRuntime().addShutdownHook(new MyShutdownHook());
 
-//        String testDir = "C:\\Users\\cerkvenik\\Documents\\CDRs\\experimental\\02";
-        String testDir = "/Users/matjaz/Developer/cdr-files/samples/02";
-//        String testUrl = "http://mcrk-docker-1:9200/cdrs/_bulk?pretty";
-        String testUrl = "http://pgcentos:9200/cdrs/_bulk?pretty";
+        String testDir = "C:\\Users\\cerkvenik\\Documents\\CDRs\\experimental\\03";
+//        String testDir = "/Users/matjaz/Developer/cdr-files/samples/02";
+        String testUrl = "http://mcrk-docker-1:9200/cdrs/_bulk?pretty";
+//        String testUrl = "http://pgcentos:9200/cdrs/_bulk?pretty";
 
         Map<String, String> getenv = System.getenv();
         DIRECTORY = getenv.getOrDefault("CDRPR_DIRECTORY", testDir);
-        NUM_OF_THREADS = Integer.parseInt(getenv.getOrDefault("CDRPR_THREADS", "1"));
+        NUM_OF_THREADS = Integer.parseInt(getenv.getOrDefault("CDRPR_THREADS", "4"));
         BULK_SIZE = Integer.parseInt(getenv.getOrDefault("CDRPR_BULK_SIZE", "10000"));
         DEBUG_ENABLED = Boolean.parseBoolean(getenv.getOrDefault("CDRPR_DEBUG_ENABLED", "false"));
         ES_URL = getenv.getOrDefault("CDRPR_ES_URL", testUrl);
+
+        System.out.println("Threads: " + NUM_OF_THREADS);
+        System.out.println("Bulk size: " + BULK_SIZE);
+        System.out.println("Directory: " + DIRECTORY);
+        System.out.println("ES URL: " + ES_URL);
 
         File dir = new File(DIRECTORY);
         File[] files = dir.listFiles();
@@ -53,44 +58,68 @@ public class Test {
             threads.add(new EsClientThread2());
         }
 
+        int j = 0;
         for (int i = 0; i < files.length; i++) {
-            for (EsClientThread2 c : threads) {
-                c.addFile(files[i]);
-                i++;
-                if (i == files.length) {
-                    break;
-                }
+            threads.get(j).addFile(files[i]);
+            j++;
+            if (j == NUM_OF_THREADS) {
+                j = 0;
             }
         }
 
+        startTime = System.currentTimeMillis();
+
         for (int i = 0; i < NUM_OF_THREADS; i++) {
             threads.get(i).start();
+            Thread.sleep(100);
         }
 
 //        Thread t = new Thread(new EsClientThread());
 //        t.start();
 
-        startTime = System.currentTimeMillis();
+//        for (int i = 0; i < files.length; i++) {
+//            parse(files[i]);
+//        }
 
-        for (int i = 0; i < files.length; i++) {
-            parse(files[i]);
+        while (true) {
+            boolean stillRunning = false;
+            for (EsClientThread2 t : threads) {
+                stillRunning = stillRunning || t.isRunning();
+            }
+            if (stillRunning) {
+                Thread.sleep(100);
+            } else {
+                break;
+            }
         }
 
-        while (running) {}
+        long totalCdrCount = 0;
+        long totalBadCdrCount = 0;
+        int totalPostCount = 0;
+        for (EsClientThread2 t : threads) {
+            totalCdrCount += t.getTotalCdrCount();
+            totalBadCdrCount += t.getBadCdrRecordExceptionCount();
+            totalPostCount += t.getPostCount();
+        }
 
         endTime = System.currentTimeMillis();
         long processingTime = endTime - startTime;
 
-        System.out.println("----- Results -----");
+        System.out.println("--- Main process ended ---");
         System.out.println("Threads: " + NUM_OF_THREADS);
         System.out.println("Bulk size: " + BULK_SIZE);
         System.out.println("Directory: " + DIRECTORY);
         System.out.println("Files in dir: " + files.length);
-        System.out.println("Records count: " + totalCount);
-        System.out.println("Bad records count: " + badCdrRecordExceptionCount);
+        System.out.println("Records count: " + totalCdrCount);
+        System.out.println("Bad records count: " + totalBadCdrCount);
         System.out.println("Total processing time: " + processingTime);
-        System.out.println("Rate: " + (totalCount * 1.0 / processingTime / 1.0 * 1000));
-        System.out.println("Post requests count: " + ElasticHttpClient.postCount);
+        System.out.println("Rate: " + (totalCdrCount * 1.0 / processingTime / 1.0 * 1000));
+        System.out.println("Post requests count: " + totalPostCount);
+
+        while (true) {
+            // do not exit
+            Thread.sleep(1000);
+        }
 
     }
 
