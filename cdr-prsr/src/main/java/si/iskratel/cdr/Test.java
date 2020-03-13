@@ -20,6 +20,7 @@ public class Test {
     public static int NUM_OF_THREADS = 1;
     public static boolean DEBUG_ENABLED = false;
     public static String ES_URL;
+    public static boolean EXIT = false;
     public static long totalCount = 0;
     public static long badCdrRecordExceptionCount = 0;
     public static long startTime = 0;
@@ -45,6 +46,7 @@ public class Test {
         BULK_SIZE = Integer.parseInt(getenv.getOrDefault("CDRPR_BULK_SIZE", "10000"));
         DEBUG_ENABLED = Boolean.parseBoolean(getenv.getOrDefault("CDRPR_DEBUG_ENABLED", "false"));
         ES_URL = getenv.getOrDefault("CDRPR_ES_URL", testUrl);
+        EXIT = Boolean.parseBoolean(getenv.getOrDefault("CDRPR_EXIT", "true"));
 
         System.out.println("Threads: " + NUM_OF_THREADS);
         System.out.println("Bulk size: " + BULK_SIZE);
@@ -116,9 +118,11 @@ public class Test {
         System.out.println("Rate: " + (totalCdrCount * 1.0 / processingTime / 1.0 * 1000));
         System.out.println("Post requests count: " + totalPostCount);
 
-        while (true) {
-            // do not exit
-            Thread.sleep(1000);
+        if (!EXIT) {
+            while (true) {
+                // do not exit
+                Thread.sleep(1000);
+            }
         }
 
     }
