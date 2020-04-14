@@ -35,10 +35,10 @@ public class Test {
 
         Runtime.getRuntime().addShutdownHook(new MyShutdownHook());
 
-        String testDir = "C:\\Users\\cerkvenik\\Documents\\CDRs\\experimental\\03";
-//        String testDir = "/Users/matjaz/Developer/cdr-files/samples/02";
-        String testUrl = "http://mcrk-docker-1:9200/cdrs/_bulk?pretty";
-//        String testUrl = "http://pgcentos:9200/cdrs/_bulk?pretty";
+//        String testDir = "C:\\Users\\cerkvenik\\Documents\\CDRs\\experimental\\03";
+        String testDir = "/Users/matjaz/Developer/cdr-files/samples/15M";
+//        String testUrl = "http://mcrk-docker-1:9200/cdrs/_bulk?pretty";
+        String testUrl = "http://pgcentos:9200/cdrs/_bulk?pretty";
 
         Map<String, String> getenv = System.getenv();
         DIRECTORY = getenv.getOrDefault("CDRPR_DIRECTORY", testDir);
@@ -56,8 +56,8 @@ public class Test {
         File dir = new File(DIRECTORY);
         File[] files = dir.listFiles();
 
-        for (int i = 0; i < NUM_OF_THREADS; i++) {
-            threads.add(new EsClientThread2());
+        for (int i = 1; i < NUM_OF_THREADS + 1; i++) {
+            threads.add(new EsClientThread2(i));
         }
 
         int j = 0;
@@ -98,10 +98,12 @@ public class Test {
         long totalCdrCount = 0;
         long totalBadCdrCount = 0;
         int totalPostCount = 0;
+        int totalResendCount = 0;
         for (EsClientThread2 t : threads) {
             totalCdrCount += t.getTotalCdrCount();
             totalBadCdrCount += t.getBadCdrRecordExceptionCount();
             totalPostCount += t.getPostCount();
+            totalResendCount += t.getResendCount();
         }
 
         endTime = System.currentTimeMillis();
@@ -117,6 +119,7 @@ public class Test {
         System.out.println("Total processing time: " + processingTime);
         System.out.println("Rate: " + (totalCdrCount * 1.0 / processingTime / 1.0 * 1000));
         System.out.println("Post requests count: " + totalPostCount);
+        System.out.println("Resend count: " + totalResendCount);
 
         if (!EXIT) {
             while (true) {
