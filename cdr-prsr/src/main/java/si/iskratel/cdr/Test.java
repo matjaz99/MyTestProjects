@@ -21,6 +21,7 @@ public class Test {
     public static boolean DEBUG_ENABLED = false;
     public static String ES_URL;
     public static boolean EXIT = false;
+    public static boolean SIMULATOR_MODE = false;
     public static long totalCount = 0;
     public static long badCdrRecordExceptionCount = 0;
     public static long startTime = 0;
@@ -30,6 +31,7 @@ public class Test {
     public static boolean running = true;
 
     public static List<EsClientThread2> threads = new ArrayList<>();
+    public static List<CdrSimulatorThread> simulatorThreadThreads = new ArrayList<>();
 
     public static void main(String[] args) throws Exception {
 
@@ -43,21 +45,26 @@ public class Test {
         Map<String, String> getenv = System.getenv();
         DIRECTORY = getenv.getOrDefault("CDRPR_DIRECTORY", testDir);
         NUM_OF_THREADS = Integer.parseInt(getenv.getOrDefault("CDRPR_THREADS", "4"));
-        BULK_SIZE = Integer.parseInt(getenv.getOrDefault("CDRPR_BULK_SIZE", "10000"));
+        BULK_SIZE = Integer.parseInt(getenv.getOrDefault("CDRPR_BULK_SIZE", "5000"));
         DEBUG_ENABLED = Boolean.parseBoolean(getenv.getOrDefault("CDRPR_DEBUG_ENABLED", "false"));
         ES_URL = getenv.getOrDefault("CDRPR_ES_URL", testUrl);
         EXIT = Boolean.parseBoolean(getenv.getOrDefault("CDRPR_EXIT", "true"));
+        SIMULATOR_MODE = Boolean.parseBoolean(getenv.getOrDefault("CDRPR_SIMULATOR_MODE", "false"));
 
         System.out.println("Threads: " + NUM_OF_THREADS);
         System.out.println("Bulk size: " + BULK_SIZE);
         System.out.println("Directory: " + DIRECTORY);
         System.out.println("ES URL: " + ES_URL);
+        System.out.println("SIMULATOR_MODE: " + SIMULATOR_MODE);
+
+        // run simulator only; will not parse files if true!
+        if (SIMULATOR_MODE) runSimulator();
 
         File dir = new File(DIRECTORY);
         File[] files = dir.listFiles();
 
         for (int i = 1; i < NUM_OF_THREADS + 1; i++) {
-            threads.add(new EsClientThread2(i));
+            threads.add(new EsClientThread2(i, "1001"));
         }
 
         int j = 0;
@@ -168,6 +175,15 @@ public class Test {
 
     public static void debug(String s) {
         if (DEBUG_ENABLED) System.out.println(s);
+    }
+
+    public static void runSimulator() {
+
+        for (int i = 1; i < NUM_OF_THREADS + 1; i++) {
+            CdrSimulatorThread t = new CdrSimulatorThread(i, "1001");
+            t.start();
+            simulatorThreadThreads.add(t);
+        }
     }
 
 }

@@ -13,6 +13,11 @@ public class MyShutdownHook extends Thread {
 		// release resources...
 		
 		Test.running = false;
+
+		for (CdrSimulatorThread t :
+				Test.simulatorThreadThreads) {
+			t.s
+		}
 		
 	}
 	

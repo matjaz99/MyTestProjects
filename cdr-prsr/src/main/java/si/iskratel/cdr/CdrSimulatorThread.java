@@ -14,9 +14,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
 
-public class EsClientThread2 extends Thread {
-
-    private LinkedBlockingQueue<File> filesQueue = new LinkedBlockingQueue();
+public class CdrSimulatorThread extends Thread {
 
     private boolean running = true;
     private String nodeId;
@@ -35,18 +33,9 @@ public class EsClientThread2 extends Thread {
     private OkHttpClient httpClient = new OkHttpClient();
     private MediaType MEDIA_TYPE_JSON = MediaType.parse("application/json");
 
-    public EsClientThread2(int id, String nodeId) {
+    public CdrSimulatorThread(int id, String nodeId) {
         this.nodeId = nodeId;
         threadId = id;
-    }
-
-    public void addFile(File f) {
-        try {
-            filesQueue.put(f);
-            filesCount++;
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 
 
@@ -209,6 +198,10 @@ public class EsClientThread2 extends Thread {
     }
 
     public boolean isRunning() { return running; }
+
+    public void setRunning(boolean running) {
+        this.running = running;
+    }
 
     public int getThreadId() {
         return threadId;
