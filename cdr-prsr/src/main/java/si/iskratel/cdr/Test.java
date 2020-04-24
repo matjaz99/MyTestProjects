@@ -11,6 +11,7 @@ import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class Test {
@@ -22,6 +23,10 @@ public class Test {
     public static String ES_URL;
     public static boolean EXIT = false;
     public static boolean SIMULATOR_MODE = false;
+    public static String SIMULATOR_NODEID;
+    public static int SIMULATOR_DELAY=10;
+    public static int SIMULATOR_CALL_REASON=0;
+
     public static long totalCount = 0;
     public static long badCdrRecordExceptionCount = 0;
     public static long startTime = 0;
@@ -49,13 +54,19 @@ public class Test {
         DEBUG_ENABLED = Boolean.parseBoolean(getenv.getOrDefault("CDRPR_DEBUG_ENABLED", "false"));
         ES_URL = getenv.getOrDefault("CDRPR_ES_URL", testUrl);
         EXIT = Boolean.parseBoolean(getenv.getOrDefault("CDRPR_EXIT", "true"));
-        SIMULATOR_MODE = Boolean.parseBoolean(getenv.getOrDefault("CDRPR_SIMULATOR_MODE", "false"));
+        SIMULATOR_MODE = Boolean.parseBoolean(getenv.getOrDefault("CDRPR_SIMULATOR_MODE", "true"));
+        SIMULATOR_NODEID = getenv.getOrDefault("CDRPR_SIMULATOR_NODEID", "000000");
+        SIMULATOR_DELAY = Integer.parseInt(getenv.getOrDefault("CDRPR_SIMULATOR_DELAY", "100"));
+        SIMULATOR_CALL_REASON = Integer.parseInt(getenv.getOrDefault("CDRPR_SIMULATOR_CALL_REASON", "0"));
 
-        System.out.println("Threads: " + NUM_OF_THREADS);
-        System.out.println("Bulk size: " + BULK_SIZE);
-        System.out.println("Directory: " + DIRECTORY);
-        System.out.println("ES URL: " + ES_URL);
+        System.out.println("NUM_OF_THREADS: " + NUM_OF_THREADS);
+        System.out.println("BULK_SIZE: " + BULK_SIZE);
+        System.out.println("DIRECTORY: " + DIRECTORY);
+        System.out.println("ES_URL: " + ES_URL);
         System.out.println("SIMULATOR_MODE: " + SIMULATOR_MODE);
+        System.out.println("SIMULATOR_NODEID: " + SIMULATOR_NODEID);
+        System.out.println("SIMULATOR_DELAY: " + SIMULATOR_DELAY);
+        System.out.println("SIMULATOR_CALL_REASON: " + SIMULATOR_CALL_REASON);
 
         // run simulator only; will not parse files if true!
         if (SIMULATOR_MODE) runSimulator();
@@ -180,10 +191,26 @@ public class Test {
     public static void runSimulator() {
 
         for (int i = 1; i < NUM_OF_THREADS + 1; i++) {
-            CdrSimulatorThread t = new CdrSimulatorThread(i, "1001");
+            CdrSimulatorThread t = new CdrSimulatorThread(i);
             t.start();
             simulatorThreadThreads.add(t);
+            System.out.println("Simulator thread created: " + t.getThreadId());
+            try {
+                Thread.sleep(9346);
+            } catch (InterruptedException e) {
+
+            }
         }
+
+        while (running) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+
+            }
+        }
+
+        System.exit(0);
     }
 
 }

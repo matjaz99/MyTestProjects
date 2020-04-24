@@ -16,7 +16,7 @@ public class MyShutdownHook extends Thread {
 
 		for (CdrSimulatorThread t :
 				Test.simulatorThreadThreads) {
-			t.s
+			t.setRunning(false);
 		}
 		
 	}

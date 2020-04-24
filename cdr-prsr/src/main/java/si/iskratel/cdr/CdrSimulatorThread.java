@@ -12,19 +12,17 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class CdrSimulatorThread extends Thread {
 
     private boolean running = true;
-    private String nodeId;
     private int threadId = 0;
-    private int filesCount = 0;
     private int bulkSize = 0;
     private int postCount = 0;
     private int resendCount = 0;
     private long totalCdrCount = 0;
-    private long badCdrRecordExceptionCount = 0;
     private long startTime = 0;
     private long endTime = 0;
 
@@ -33,8 +31,7 @@ public class CdrSimulatorThread extends Thread {
     private OkHttpClient httpClient = new OkHttpClient();
     private MediaType MEDIA_TYPE_JSON = MediaType.parse("application/json");
 
-    public CdrSimulatorThread(int id, String nodeId) {
-        this.nodeId = nodeId;
+    public CdrSimulatorThread(int id) {
         threadId = id;
     }
 
@@ -43,68 +40,91 @@ public class CdrSimulatorThread extends Thread {
 
         startTime = System.currentTimeMillis();
 
-        while (!filesQueue.isEmpty()) {
-            parse(filesQueue.poll());
+        while (running) {
+
+            try {
+                Thread.sleep(Test.SIMULATOR_DELAY);
+            } catch (InterruptedException e) {
+            }
+
+            simulate();
+
+            if (totalCdrCount % 1000000 == 0) {
+                endTime = System.currentTimeMillis();
+                long processingTime = endTime - startTime;
+                System.out.println("----- Results -----");
+                System.out.println("\tThread ID: " + threadId);
+                System.out.println("\tRecords count: " + totalCdrCount);
+                System.out.println("\tProcessing time: " + processingTime);
+                System.out.println("\tRate: " + (totalCdrCount * 1.0 / processingTime / 1.0 * 1000));
+                System.out.println("\tPost requests count: " + postCount);
+                System.out.println("\tResend count: " + resendCount);
+            }
         }
 
         // send what is left to be sent
         bulkSize = Test.BULK_SIZE;
         sendCdrBulkPost();
 
-        endTime = System.currentTimeMillis();
-        long processingTime = endTime - startTime;
+    }
 
-        System.out.println("----- Results -----");
-        System.out.println("\tThread ID: " + threadId);
-        System.out.println("\tProcessed files: " + filesCount);
-        System.out.println("\tRecords count: " + totalCdrCount);
-        System.out.println("\tBad records count: " + badCdrRecordExceptionCount);
-        System.out.println("\tProcessing time: " + processingTime);
-        System.out.println("\tRate: " + (totalCdrCount * 1.0 / processingTime / 1.0 * 1000));
-        System.out.println("\tPost requests count: " + postCount);
-        System.out.println("\tResend count: " + resendCount);
+    public void simulate() {
 
-        running = false;
+        CdrBean cdrBean = new CdrBean();
+        cdrBean.setId((int) totalCdrCount);
+        cdrBean.setCallid(totalCdrCount);
+        cdrBean.setSequence(2);
+        cdrBean.setCallType(0);
+        cdrBean.setCallingNumber(getRandomInRange(2000, 2999) + "");
+        cdrBean.setCalledNumber(getRandomInRange(8000, 8999) + "");
+        cdrBean.setCdrTimeBeforeRinging(getRandomInRange(500, 2500));
+        cdrBean.setCdrRingingTimeBeforeAnsw(getRandomInRange(5000, 15000));
+        cdrBean.setCause(Test.SIMULATOR_CALL_REASON);
+        if (Test.SIMULATOR_CALL_REASON == 0) cdrBean.setCause(getRandomInRange(1, 127));
+
+        int duration = 0;
+        if (Test.SIMULATOR_CALL_REASON == 16) {
+            if (totalCdrCount % 2 == 0) {
+                duration = getRandomInRange(100, 900);
+            } else if (totalCdrCount % 3 == 0) {
+                duration = getRandomInRange(300, 1200);
+            } else if (totalCdrCount % 5 == 0) {
+                duration = getRandomInRange(900, 1800);
+            } else if (totalCdrCount % 7 == 0) {
+                duration = getRandomInRange(1200, 2800);
+            } else if (totalCdrCount % 9 == 0) {
+                duration = getRandomInRange(1800, 3800);
+            } else if (totalCdrCount % 11 == 0) {
+                duration = getRandomInRange(3600, 4800);
+            } else {
+                duration = getRandomInRange(200, 4800);
+            }
+        }
+        cdrBean.setDuration(duration * 1000);
+
+        Date d = new Date();
+        cdrBean.setStartTime(d);
+        long st = d.getTime();
+        long et = st + cdrBean.getDuration();
+        Date d2 = new Date(et);
+        cdrBean.setEndTime(d2);
+
+        cdrBean.setInTrunkId(1);
+        cdrBean.setInTrunkGroupId(9999);
+        cdrBean.setOutTrunkId(1);
+        cdrBean.setOutTrunkGroupId(9999);
+
+
+        totalCdrCount++;
+        putToStringBuilder(cdrBean);
+        sendCdrBulkPost();
 
     }
 
-    public void parse(File f) {
-
-        try {
-
-            FileInputStream is = new FileInputStream(f);
-//        ByteArrayInputStream bais = new ByteArrayInputStream(is.readAllBytes()); // requires Java 9!!!
-            byte[] bytes = IOUtils.toByteArray(is);
-            ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
-            List<DataRecord> list = CDRReader.readDataRecords(bais);
-            Test.debug("records in file: " + list.size());
-
-            for (DataRecord dr : list) {
-                //Test.debug(dr.toString());
-                CdrBeanCreator cbc = new CdrBeanCreator() {
-                    @Override
-                    public void setSpecificBeanValues(CdrObject cdrObj, CdrBean cdrBean) {
-
-                    }
-                };
-                try {
-                    CdrBean cdrBean = cbc.parseBinaryCdr(dr.getDataRecordBytes(), null);
-                    totalCdrCount++;
-                    putToStringBuilder(cdrBean);
-                    sendCdrBulkPost();
-                    //Test.debug(cdrBean.toString());
-                } catch (BadCdrRecordException e) {
-                    badCdrRecordExceptionCount++;
-                    PpdrBean ppdrBean = cbc.parseBinaryPpdr(dr);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+    private int getRandomInRange(int min, int max) {
+        // min and max are inclusive
+        Random r = new Random();
+        return r.nextInt((max - min) + 1) + min;
     }
 
     public void sendCdrBulkPost() {
@@ -187,7 +207,7 @@ public class CdrSimulatorThread extends Thread {
         sb.append("\"ctxCalledNumber\":\"").append(cdrBean.getCtxCalledNumber()).append("\",");
         sb.append("\"bgidOrig\":\"").append(cdrBean.getBgidOrig()).append("\",");
         sb.append("\"bgidTerm\":\"").append(cdrBean.getBgidTerm()).append("\",");
-        sb.append("\"nodeId\":\"").append(nodeId).append("\",");
+        sb.append("\"nodeId\":\"").append(Test.SIMULATOR_NODEID).append("\",");
         sb.append("\"timestamp\":").append(cdrBean.getStartTime().getTime()).append("}\n");
         bulkSize++;
     }
@@ -219,7 +239,4 @@ public class CdrSimulatorThread extends Thread {
         return totalCdrCount;
     }
 
-    public long getBadCdrRecordExceptionCount() {
-        return badCdrRecordExceptionCount;
-    }
 }
