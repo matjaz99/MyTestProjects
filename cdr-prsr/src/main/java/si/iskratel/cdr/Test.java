@@ -196,7 +196,7 @@ public class Test {
             simulatorThreadThreads.add(t);
             System.out.println("Simulator thread created: " + t.getThreadId());
             try {
-                Thread.sleep(9346);
+                Thread.sleep(3456);
             } catch (InterruptedException e) {
 
             }
