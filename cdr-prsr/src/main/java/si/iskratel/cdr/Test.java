@@ -8,10 +8,8 @@ import si.iskratel.cdr.parser.*;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.io.IOException;
+import java.util.*;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class Test {
@@ -34,9 +32,12 @@ public class Test {
 
     public static LinkedBlockingQueue<CdrBean> queue = new LinkedBlockingQueue();
     public static boolean running = true;
+    public static Map<String, Long> callsInProgress = new HashMap<>();
 
     public static List<EsClientThread2> threads = new ArrayList<>();
     public static List<CdrSimulatorThread> simulatorThreadThreads = new ArrayList<>();
+
+    public static Properties releaseCausesProps;
 
     public static void main(String[] args) throws Exception {
 
@@ -45,28 +46,36 @@ public class Test {
 //        String testDir = "C:\\Users\\cerkvenik\\Documents\\CDRs\\experimental\\03";
         String testDir = "/Users/matjaz/Developer/cdr-files/samples/15M";
 //        String testUrl = "http://mcrk-docker-1:9200/cdrs/_bulk?pretty";
-        String testUrl = "http://pgcentos:9200/cdrs/_bulk?pretty";
+//        String testUrl = "http://pgcentos:9200/cdrs/_bulk?pretty";
+        String testUrl = "http://centosvm:9200/cdrs/_bulk?pretty";
 
         Map<String, String> getenv = System.getenv();
         DIRECTORY = getenv.getOrDefault("CDRPR_DIRECTORY", testDir);
-        NUM_OF_THREADS = Integer.parseInt(getenv.getOrDefault("CDRPR_THREADS", "4"));
+        NUM_OF_THREADS = Integer.parseInt(getenv.getOrDefault("CDRPR_THREADS", "16"));
         BULK_SIZE = Integer.parseInt(getenv.getOrDefault("CDRPR_BULK_SIZE", "5000"));
         DEBUG_ENABLED = Boolean.parseBoolean(getenv.getOrDefault("CDRPR_DEBUG_ENABLED", "false"));
         ES_URL = getenv.getOrDefault("CDRPR_ES_URL", testUrl);
         EXIT = Boolean.parseBoolean(getenv.getOrDefault("CDRPR_EXIT", "true"));
         SIMULATOR_MODE = Boolean.parseBoolean(getenv.getOrDefault("CDRPR_SIMULATOR_MODE", "true"));
-        SIMULATOR_NODEID = getenv.getOrDefault("CDRPR_SIMULATOR_NODEID", "000000");
+        SIMULATOR_NODEID = getenv.getOrDefault("CDRPR_SIMULATOR_NODEID", "Simulator");
         SIMULATOR_DELAY = Integer.parseInt(getenv.getOrDefault("CDRPR_SIMULATOR_DELAY", "100"));
         SIMULATOR_CALL_REASON = Integer.parseInt(getenv.getOrDefault("CDRPR_SIMULATOR_CALL_REASON", "0"));
 
         System.out.println("NUM_OF_THREADS: " + NUM_OF_THREADS);
         System.out.println("BULK_SIZE: " + BULK_SIZE);
-        System.out.println("DIRECTORY: " + DIRECTORY);
+        System.out.println("CDR_DIRECTORY: " + DIRECTORY);
         System.out.println("ES_URL: " + ES_URL);
         System.out.println("SIMULATOR_MODE: " + SIMULATOR_MODE);
         System.out.println("SIMULATOR_NODEID: " + SIMULATOR_NODEID);
         System.out.println("SIMULATOR_DELAY: " + SIMULATOR_DELAY);
         System.out.println("SIMULATOR_CALL_REASON: " + SIMULATOR_CALL_REASON);
+
+        releaseCausesProps = new Properties();
+        try {
+            releaseCausesProps.load(new FileInputStream("call_release_causes.properties"));
+        } catch (IOException e) {
+            System.err.println("IOException: " + e.getMessage());
+        }
 
         // run simulator only; will not parse files if true!
         if (SIMULATOR_MODE) runSimulator();
@@ -196,11 +205,14 @@ public class Test {
             simulatorThreadThreads.add(t);
             System.out.println("Simulator thread created: " + t.getThreadId());
             try {
-                Thread.sleep(3456);
+                Thread.sleep(1234);
             } catch (InterruptedException e) {
 
             }
         }
+
+        CleanerThread ct = new CleanerThread();
+        ct.start();
 
         while (running) {
             try {

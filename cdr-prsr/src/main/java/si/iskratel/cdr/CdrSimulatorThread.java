@@ -1,19 +1,11 @@
 package si.iskratel.cdr;
 
 import okhttp3.*;
-import org.apache.commons.io.IOUtils;
-import si.iskratel.cdr.manager.BadCdrRecordException;
 import si.iskratel.cdr.parser.*;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
-import java.util.concurrent.LinkedBlockingQueue;
+import java.util.*;
 
 public class CdrSimulatorThread extends Thread {
 
@@ -43,13 +35,13 @@ public class CdrSimulatorThread extends Thread {
         while (running) {
 
             try {
-                Thread.sleep(Test.SIMULATOR_DELAY);
+                Thread.sleep(getRandomGaussian(Test.SIMULATOR_DELAY, Test.SIMULATOR_DELAY / 2));
             } catch (InterruptedException e) {
             }
 
             simulate();
 
-            if (totalCdrCount % 100000 == 0) {
+            if (totalCdrCount % 50000 == 0) {
                 endTime = System.currentTimeMillis();
                 long processingTime = endTime - startTime;
                 System.out.println("----- Results -----");
@@ -76,32 +68,10 @@ public class CdrSimulatorThread extends Thread {
         cdrBean.setSequence(2);
         cdrBean.setCallType(0);
 
-        int a = getRandomInRange(10000, 14999);
-        int b = getRandomInRange(80000, 89999);
-//        if (totalCdrCount % 2 == 0) {
-//            a = getRandomInRange(100, 900);
-//            b = getRandomInRange(100, 900);
-//        } else if (totalCdrCount % 3 == 0) {
-//            a = getRandomInRange(300, 1200);
-//            b = getRandomInRange(100, 900);
-//        } else if (totalCdrCount % 5 == 0) {
-//            a = getRandomInRange(900, 1800);
-//            b = getRandomInRange(100, 900);
-//        } else if (totalCdrCount % 7 == 0) {
-//            a = getRandomInRange(1200, 2800);
-//            b = getRandomInRange(100, 900);
-//        } else if (totalCdrCount % 9 == 0) {
-//            a = getRandomInRange(1800, 3800);
-//            b = getRandomInRange(100, 900);
-//        } else if (totalCdrCount % 11 == 0) {
-//            a = getRandomInRange(3600, 4800);
-//            b = getRandomInRange(100, 900);
-//        } else {
-//            a = getRandomInRange(200, 4800);
-//            b = getRandomInRange(100, 900);
-//        }
-        cdrBean.setCallingNumber(a + "");
-        cdrBean.setCalledNumber(b + "");
+        String a = getANumber();
+        cdrBean.setCallingNumber(a);
+        String b = "" + getRandomInRange(800000, 899999);
+        cdrBean.setCalledNumber(b);
 
         cdrBean.setCdrTimeBeforeRinging(getRandomGaussian(2500, 500));
         cdrBean.setCdrRingingTimeBeforeAnsw(getRandomGaussian(15000, 10000));
@@ -126,7 +96,7 @@ public class CdrSimulatorThread extends Thread {
         }
 
         int duration = 0;
-        if (Test.SIMULATOR_CALL_REASON == 16) {
+        if (cdrBean.getCause() == 16) {
             if (totalCdrCount % 2 == 0) {
                 duration = getRandomInRange(100, 900);
             } else if (totalCdrCount % 3 == 0) {
@@ -143,12 +113,13 @@ public class CdrSimulatorThread extends Thread {
                 duration = getRandomInRange(200, 4800);
             }
         }
-        cdrBean.setDuration(duration * 1000);
+        duration = duration * 1000; // to millis
+        cdrBean.setDuration(duration);
 
         Date d = new Date();
         cdrBean.setStartTime(d);
         long st = d.getTime();
-        long et = st + cdrBean.getDuration();
+        long et = st + duration;
         Date d2 = new Date(et);
         cdrBean.setEndTime(d2);
 
@@ -157,10 +128,26 @@ public class CdrSimulatorThread extends Thread {
         cdrBean.setOutTrunkId(1);
         cdrBean.setOutTrunkGroupId(9999);
 
+        if (duration > 0) {
+            Test.callsInProgress.put(a, et);
+            System.out.println("adding: " + a + ", duration=" + duration + ", size=" + Test.callsInProgress.size());
+        }
+        // size je v bistvu število aktivnih sessionov/klicev
+
         totalCdrCount++;
         putToStringBuilder(cdrBean);
         sendCdrBulkPost();
 
+    }
+
+    private String getANumber() {
+        int a = 0;
+        while (true) {
+//            a = getRandomInRange(1000, 1999);
+            a = getRandomInRange(100000, 199999);
+            if (!Test.callsInProgress.containsKey(a + "")) break;
+        }
+        return a + "";
     }
 
     private int getRandomInRange(int min, int max) {
@@ -173,7 +160,7 @@ public class CdrSimulatorThread extends Thread {
         // min and max are inclusive
         Random r = new Random();
         double gauss = r.nextGaussian();
-        return (int) (mean + gauss * dev);
+        return Math.abs((int) (mean + gauss * dev));
     }
 
     public void sendCdrBulkPost() {
@@ -233,6 +220,7 @@ public class CdrSimulatorThread extends Thread {
         sb.append("\"cdrRingingTimeBeforeAnsw\":").append(cdrBean.getCdrRingingTimeBeforeAnsw()).append(",");
         sb.append("\"duration\":").append(cdrBean.getDuration()).append(",");
         sb.append("\"cause\":").append(cdrBean.getCause()).append(",");
+        sb.append("\"causeString\":\"").append(Test.releaseCausesProps.getOrDefault(cdrBean.getCause() + "", "unknown")).append("\",");
         sb.append("\"callReleasingSide\":\"").append(cdrBean.getCallReleasingSide()).append("\",");
         sb.append("\"startTime\":\"").append(toDateString(cdrBean.getStartTime())).append("\",");
         sb.append("\"endTime\":\"").append(toDateString(cdrBean.getEndTime())).append("\",");
