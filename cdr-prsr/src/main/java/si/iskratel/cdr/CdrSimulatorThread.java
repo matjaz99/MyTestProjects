@@ -70,7 +70,7 @@ public class CdrSimulatorThread extends Thread {
 
         String a = getANumber();
         cdrBean.setCallingNumber(a);
-        String b = "" + getRandomInRange(800000, 899999);
+        String b = "" + getRandomInRange(Test.SIMULATOR_BNUM_START, Test.SIMULATOR_BNUM_START + Test.SIMULATOR_BNUM_RANGE);
         cdrBean.setCalledNumber(b);
 
         cdrBean.setCdrTimeBeforeRinging(getRandomGaussian(2500, 500));
@@ -130,7 +130,6 @@ public class CdrSimulatorThread extends Thread {
 
         if (duration > 0) {
             Test.callsInProgress.put(a, et);
-            System.out.println("adding: " + a + ", duration=" + duration + ", size=" + Test.callsInProgress.size());
         }
         // size je v bistvu število aktivnih sessionov/klicev
 
@@ -141,11 +140,17 @@ public class CdrSimulatorThread extends Thread {
     }
 
     private String getANumber() {
+        long now = System.currentTimeMillis();
         int a = 0;
         while (true) {
-//            a = getRandomInRange(1000, 1999);
-            a = getRandomInRange(100000, 199999);
-            if (!Test.callsInProgress.containsKey(a + "")) break;
+            a = getRandomInRange(Test.SIMULATOR_ANUM_START, Test.SIMULATOR_ANUM_START + Test.SIMULATOR_ANUM_RANGE);
+            if (!Test.callsInProgress.containsKey(a + "")) {
+                break;
+            } else {
+//                if (Test.callsInProgress.get(a + "") < now) {
+//                    Test.callsInProgress.remove(a + "");
+//                }
+            }
         }
         return a + "";
     }

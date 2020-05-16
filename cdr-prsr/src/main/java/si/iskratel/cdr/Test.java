@@ -22,8 +22,12 @@ public class Test {
     public static boolean EXIT = false;
     public static boolean SIMULATOR_MODE = false;
     public static String SIMULATOR_NODEID;
-    public static int SIMULATOR_DELAY=10;
-    public static int SIMULATOR_CALL_REASON=0;
+    public static int SIMULATOR_DELAY = 10;
+    public static int SIMULATOR_CALL_REASON = 0;
+    public static int SIMULATOR_ANUM_START = 0;
+    public static int SIMULATOR_ANUM_RANGE = 0;
+    public static int SIMULATOR_BNUM_START = 0;
+    public static int SIMULATOR_BNUM_RANGE = 0;
 
     public static long totalCount = 0;
     public static long badCdrRecordExceptionCount = 0;
@@ -59,7 +63,11 @@ public class Test {
         SIMULATOR_MODE = Boolean.parseBoolean(getenv.getOrDefault("CDRPR_SIMULATOR_MODE", "true"));
         SIMULATOR_NODEID = getenv.getOrDefault("CDRPR_SIMULATOR_NODEID", "Simulator");
         SIMULATOR_DELAY = Integer.parseInt(getenv.getOrDefault("CDRPR_SIMULATOR_DELAY", "100"));
-        SIMULATOR_CALL_REASON = Integer.parseInt(getenv.getOrDefault("CDRPR_SIMULATOR_CALL_REASON", "0"));
+        SIMULATOR_CALL_REASON = Integer.parseInt(getenv.getOrDefault("CDRPR_SIMULATOR_CALL_REASON", "16"));
+        SIMULATOR_ANUM_START = Integer.parseInt(getenv.getOrDefault("CDRPR_SIMULATOR_ANUM_START", "1000000"));
+        SIMULATOR_ANUM_RANGE = Integer.parseInt(getenv.getOrDefault("CDRPR_SIMULATOR_ANUM_RANGE", "999999"));
+        SIMULATOR_BNUM_START = Integer.parseInt(getenv.getOrDefault("CDRPR_SIMULATOR_BNUM_START", "8000000"));
+        SIMULATOR_BNUM_RANGE = Integer.parseInt(getenv.getOrDefault("CDRPR_SIMULATOR_BNUM_RANGE", "999999"));
 
         System.out.println("NUM_OF_THREADS: " + NUM_OF_THREADS);
         System.out.println("BULK_SIZE: " + BULK_SIZE);
