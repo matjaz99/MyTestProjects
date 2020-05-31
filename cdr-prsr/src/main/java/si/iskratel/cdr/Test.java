@@ -36,7 +36,6 @@ public class Test {
 
     public static LinkedBlockingQueue<CdrBean> queue = new LinkedBlockingQueue();
     public static boolean running = true;
-    public static Map<String, Long> callsInProgress = new HashMap<>();
 
     public static List<EsClientThread2> threads = new ArrayList<>();
     public static List<CdrSimulatorThread> simulatorThreadThreads = new ArrayList<>();
@@ -50,20 +49,20 @@ public class Test {
 //        String testDir = "C:\\Users\\cerkvenik\\Documents\\CDRs\\experimental\\03";
         String testDir = "/Users/matjaz/Developer/cdr-files/samples/15M";
 //        String testUrl = "http://mcrk-docker-1:9200/cdrs/_bulk?pretty";
-//        String testUrl = "http://pgcentos:9200/cdrs/_bulk?pretty";
-        String testUrl = "http://centosvm:9200/cdrs/_bulk?pretty";
+        String testUrl = "http://pgcentos:9200/cdrs/_bulk?pretty";
+//        String testUrl = "http://centosvm:9200/cdrs/_bulk?pretty";
 
         Map<String, String> getenv = System.getenv();
         DIRECTORY = getenv.getOrDefault("CDRPR_DIRECTORY", testDir);
-        NUM_OF_THREADS = Integer.parseInt(getenv.getOrDefault("CDRPR_THREADS", "16"));
-        BULK_SIZE = Integer.parseInt(getenv.getOrDefault("CDRPR_BULK_SIZE", "5000"));
+        NUM_OF_THREADS = Integer.parseInt(getenv.getOrDefault("CDRPR_THREADS", "32"));
+        BULK_SIZE = Integer.parseInt(getenv.getOrDefault("CDRPR_BULK_SIZE", "10000"));
         DEBUG_ENABLED = Boolean.parseBoolean(getenv.getOrDefault("CDRPR_DEBUG_ENABLED", "false"));
         ES_URL = getenv.getOrDefault("CDRPR_ES_URL", testUrl);
         EXIT = Boolean.parseBoolean(getenv.getOrDefault("CDRPR_EXIT", "true"));
         SIMULATOR_MODE = Boolean.parseBoolean(getenv.getOrDefault("CDRPR_SIMULATOR_MODE", "true"));
-        SIMULATOR_NODEID = getenv.getOrDefault("CDRPR_SIMULATOR_NODEID", "Simulator");
+        SIMULATOR_NODEID = getenv.getOrDefault("CDRPR_SIMULATOR_NODEID", "Ljubljana");
         SIMULATOR_DELAY = Integer.parseInt(getenv.getOrDefault("CDRPR_SIMULATOR_DELAY", "100"));
-        SIMULATOR_CALL_REASON = Integer.parseInt(getenv.getOrDefault("CDRPR_SIMULATOR_CALL_REASON", "16"));
+        SIMULATOR_CALL_REASON = Integer.parseInt(getenv.getOrDefault("CDRPR_SIMULATOR_CALL_REASON", "0"));
         SIMULATOR_ANUM_START = Integer.parseInt(getenv.getOrDefault("CDRPR_SIMULATOR_ANUM_START", "1000000"));
         SIMULATOR_ANUM_RANGE = Integer.parseInt(getenv.getOrDefault("CDRPR_SIMULATOR_ANUM_RANGE", "999999"));
         SIMULATOR_BNUM_START = Integer.parseInt(getenv.getOrDefault("CDRPR_SIMULATOR_BNUM_START", "8000000"));
@@ -219,7 +218,7 @@ public class Test {
             }
         }
 
-        CleanerThread ct = new CleanerThread();
+        StorageThread ct = new StorageThread();
         ct.start();
 
         while (running) {

@@ -17,6 +17,7 @@ public class CdrSimulatorThread extends Thread {
     private long totalCdrCount = 0;
     private long startTime = 0;
     private long endTime = 0;
+    private int timeBeforeRinging = 2500;
 
     private StringBuilder sb = new StringBuilder();
 
@@ -41,7 +42,7 @@ public class CdrSimulatorThread extends Thread {
 
             simulate();
 
-            if (totalCdrCount % 50000 == 0) {
+            if (totalCdrCount % 20000 == 0) {
                 endTime = System.currentTimeMillis();
                 long processingTime = endTime - startTime;
                 System.out.println("----- Results -----");
@@ -73,21 +74,24 @@ public class CdrSimulatorThread extends Thread {
         String b = "" + getRandomInRange(Test.SIMULATOR_BNUM_START, Test.SIMULATOR_BNUM_START + Test.SIMULATOR_BNUM_RANGE);
         cdrBean.setCalledNumber(b);
 
-        cdrBean.setCdrTimeBeforeRinging(getRandomGaussian(2500, 500));
-        cdrBean.setCdrRingingTimeBeforeAnsw(getRandomGaussian(15000, 10000));
+        timeBeforeRinging = getRandomGaussian(timeBeforeRinging, 100);
+        if (timeBeforeRinging < 300) timeBeforeRinging = 2500;
+        if (timeBeforeRinging > 5000) timeBeforeRinging = 2500;
+        cdrBean.setCdrTimeBeforeRinging(timeBeforeRinging);
+        cdrBean.setCdrRingingTimeBeforeAnsw(0);
 
         cdrBean.setCause(Test.SIMULATOR_CALL_REASON);
         if (Test.SIMULATOR_CALL_REASON == 0) {
             if (totalCdrCount % 5 == 0) {
-                cdrBean.setCause(28);
+                cdrBean.setCause(16);
             } else if (totalCdrCount % 7 == 0) {
-                cdrBean.setCause(34);
+                cdrBean.setCause(18);
             } else if (totalCdrCount % 9 == 0) {
-                cdrBean.setCause(38);
+                cdrBean.setCause(21);
             } else if (totalCdrCount % 11 == 0) {
-                cdrBean.setCause(111);
+                cdrBean.setCause(34);
             } else if (totalCdrCount % 13 == 0) {
-                cdrBean.setCause(20);
+                cdrBean.setCause(65);
             } else if (totalCdrCount % 17 == 0) {
                 cdrBean.setCause(111);
             } else {
@@ -97,21 +101,37 @@ public class CdrSimulatorThread extends Thread {
 
         int duration = 0;
         if (cdrBean.getCause() == 16) {
+//            if (totalCdrCount % 2 == 0) {
+//                duration = getRandomInRange(100, 900);
+//            } else if (totalCdrCount % 3 == 0) {
+//                duration = getRandomInRange(300, 1200);
+//            } else if (totalCdrCount % 5 == 0) {
+//                duration = getRandomInRange(900, 1800);
+//            } else if (totalCdrCount % 7 == 0) {
+//                duration = getRandomInRange(1200, 2800);
+//            } else if (totalCdrCount % 9 == 0) {
+//                duration = getRandomInRange(1800, 3800);
+//            } else if (totalCdrCount % 11 == 0) {
+//                duration = getRandomInRange(3600, 4800);
+//            } else {
+//                duration = getRandomInRange(200, 4800);
+//            }
             if (totalCdrCount % 2 == 0) {
-                duration = getRandomInRange(100, 900);
+                duration = getRandomGaussian(500, 100);
             } else if (totalCdrCount % 3 == 0) {
-                duration = getRandomInRange(300, 1200);
+                duration = getRandomGaussian(900, 300);
             } else if (totalCdrCount % 5 == 0) {
-                duration = getRandomInRange(900, 1800);
+                duration = getRandomGaussian(1200, 500);
             } else if (totalCdrCount % 7 == 0) {
-                duration = getRandomInRange(1200, 2800);
+                duration = getRandomGaussian(1800, 700);
             } else if (totalCdrCount % 9 == 0) {
-                duration = getRandomInRange(1800, 3800);
+                duration = getRandomGaussian(2200, 1000);
             } else if (totalCdrCount % 11 == 0) {
-                duration = getRandomInRange(3600, 4800);
+                duration = getRandomGaussian(2600, 2000);
             } else {
                 duration = getRandomInRange(200, 4800);
             }
+            cdrBean.setCdrRingingTimeBeforeAnsw(getRandomGaussian(15000, 10000));
         }
         duration = duration * 1000; // to millis
         cdrBean.setDuration(duration);
@@ -123,13 +143,13 @@ public class CdrSimulatorThread extends Thread {
         Date d2 = new Date(et);
         cdrBean.setEndTime(d2);
 
-        cdrBean.setInTrunkId(1);
-        cdrBean.setInTrunkGroupId(9999);
-        cdrBean.setOutTrunkId(1);
-        cdrBean.setOutTrunkGroupId(9999);
+        cdrBean.setInTrunkId(getRandomGaussian(4, 8));
+        cdrBean.setInTrunkGroupId(9970 + getRandomGaussian(5, 5));
+        cdrBean.setOutTrunkId(getRandomGaussian(2, 3));
+        cdrBean.setOutTrunkGroupId(8830 + getRandomGaussian(6, 5));
 
         if (duration > 0) {
-            Test.callsInProgress.put(a, et);
+            StorageThread.addCall(a, et);
         }
         // size je v bistvu število aktivnih sessionov/klicev
 
@@ -143,13 +163,13 @@ public class CdrSimulatorThread extends Thread {
         long now = System.currentTimeMillis();
         int a = 0;
         while (true) {
-            a = getRandomInRange(Test.SIMULATOR_ANUM_START, Test.SIMULATOR_ANUM_START + Test.SIMULATOR_ANUM_RANGE);
-            if (!Test.callsInProgress.containsKey(a + "")) {
-                break;
+            if (a == 0) {
+                a = getRandomInRange(Test.SIMULATOR_ANUM_START, Test.SIMULATOR_ANUM_START + Test.SIMULATOR_ANUM_RANGE);
             } else {
-//                if (Test.callsInProgress.get(a + "") < now) {
-//                    Test.callsInProgress.remove(a + "");
-//                }
+                a++;
+            }
+            if (!StorageThread.contains(a + "")) {
+                break;
             }
         }
         return a + "";
@@ -191,14 +211,14 @@ public class CdrSimulatorThread extends Thread {
                 sleep(1500);
                 response = httpClient.newCall(request).execute();
                 resendCount++;
-                System.out.println("Retrying to send [" + postCount + "]. ThreadId: " + threadId);
+                System.out.println("CdrSimulatorThread[" + threadId + "]: Retrying to send [" + postCount + "].");
             }
             postCount++;
             sb = new StringBuilder();
             bulkSize = 0;
-            System.out.println("POST sent: " + postCount + " ThreadId: " + threadId);
+            System.out.println("CdrSimulatorThread[" + threadId + "]: POST sent count: " + postCount);
 
-            if (!response.isSuccessful()) System.out.println("Unexpected code: " + response);
+            if (!response.isSuccessful()) System.out.println("CdrSimulatorThread[" + threadId + "]: Unexpected code: " + response);
 
             response.close();
 
@@ -206,7 +226,7 @@ public class CdrSimulatorThread extends Thread {
 
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Recursive call. ThreadId: " + threadId);
+            System.out.println("CdrSimulatorThread[" + threadId + "]: Recursive call.");
             resendCount++;
             executeHttpRequest(request);
         }
