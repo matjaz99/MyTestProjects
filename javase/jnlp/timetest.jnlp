@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp
+  spec="1.5+"
+  codebase="http://www.matjazcerkvenik.si/developer/examples/jnlp/"
+  href="timetest.jnlp">
+  <information>
+    <title>TimeTest Application</title>
+    <vendor>Matjaz Cerkvenik</vendor>
+    <homepage href="docs/about.html"/>
+    <description>Convert milliseconds to date</description>
+    <description kind="short">Convert ms to Date</description>
+    <icon href="Clock-icon.png"/>
+    <icon kind="splash" href="Clock-icon.png"/>
+    <offline-allowed/> 
+    <association mime-type="application-x/timetest-file" extensions="timetest" />
+    <shortcut online="false">
+      <desktop/>
+      <menu submenu="My Apps"/>
+    </shortcut>
+  </information>
+  <information os="linux">   
+    <title>TimeTest on Linux</title>
+    <homepage href="docs/about.html" />
+  </information>
+  <security>
+      <all-permissions/>
+  </security>
+  <resources>
+    <j2se version="1.4.2+" java-vm-args="-esa -Xnoclassgc"/>
+    <jar href="timetest.jar"/>
+  </resources>
+  <application-desc main-class="my.project.jnlp.TimeTest">
+  	<argument>arg1</argument> 
+    <argument>arg2</argument>
+  </application-desc>
+</jnlp>

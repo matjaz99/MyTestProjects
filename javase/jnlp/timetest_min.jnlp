@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0+" codebase="http://www.matjazcerkvenik.si/developer/examples/jnlp/" 
+	href="timetest_min.jnlp">
+	<information>
+		<title>TimeTest</title>
+		<vendor>Matjaz</vendor>
+		<homepage href="http://www.matjazcerkvenik.si" />
+		<description>Convert ms to Date</description>
+	</information>
+	<resources>
+		<j2se version="1.5+" />
+		<jar href="timetest_unsigned.jar" />
+	</resources>
+	<application-desc main-class="my.project.jnlp.TimeTest" />
+</jnlp>
