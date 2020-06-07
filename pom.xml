@@ -44,6 +44,7 @@
         <module>spark-test</module>
         <module>weather-metrics</module>
         <module>cdr-prsr</module>
+        <module>redis-jedis</module>
     </modules>
 
 	<properties>
