@@ -32,7 +32,8 @@ public class Producer {
                         String.format("{\"type\":\"test\", \"t\":%.3f, \"k\":%d}", System.nanoTime() * 1e-9, i)));
 
                 // every so often send to a different topic
-                if (i % 1000 == 0) {
+                if (i % 10 == 0) {
+                    System.out.println("10101010");
                     producer.send(new ProducerRecord<String, String>(
                             "fast-messages",
                             String.format("{\"type\":\"marker\", \"t\":%.3f, \"k\":%d}", System.nanoTime() * 1e-9, i)));
@@ -42,6 +43,8 @@ public class Producer {
                     producer.flush();
                     System.out.println("Sent msg number " + i);
                 }
+
+                Thread.sleep(1000);
             }
         } catch (Throwable throwable) {
             System.out.printf("%s", throwable.getStackTrace());

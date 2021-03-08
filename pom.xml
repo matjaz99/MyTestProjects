@@ -45,6 +45,7 @@
         <module>weather-metrics</module>
         <module>cdr-prsr</module>
         <module>redis-jedis</module>
+        <module>kafka213</module>
     </modules>
 
 	<properties>

@@ -39,3 +39,9 @@ Every 1000th message is displayed so you get the feeling how fast it goes.
 
 
 
+
+OR (without zookeeper, kafka 2.13):
+./bin/kafka-topics.sh --create --topic fast-messages --bootstrap-server localhost:9092
+./bin/kafka-topics.sh --create --topic summary-markers --bootstrap-server localhost:9092
+
+
