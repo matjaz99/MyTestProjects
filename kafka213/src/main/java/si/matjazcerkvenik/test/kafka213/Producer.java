@@ -12,6 +12,7 @@ import java.util.concurrent.CountDownLatch;
 public class Producer {
 
     public static void main(String[] args) throws Exception {
+
         Properties props = new Properties();
         props.put(StreamsConfig.APPLICATION_ID_CONFIG, "streams-pipe-example");
         props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, "pgcentos:9092");
@@ -19,11 +20,9 @@ public class Producer {
         props.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, Serdes.String().getClass());
 
         final StreamsBuilder builder = new StreamsBuilder();
-
         builder.stream("streams-plaintext-input").to("streams-pipe-output");
 
         final Topology topology = builder.build();
-
         final KafkaStreams streams = new KafkaStreams(topology, props);
         final CountDownLatch latch = new CountDownLatch(1);
 
