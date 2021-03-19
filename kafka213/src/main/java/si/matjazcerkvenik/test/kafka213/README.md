@@ -2,9 +2,12 @@
 
 Start zookeeper and kafka
 
+```
 $ ./bin/zkServer.sh start /opt/Kafka/zookeeper.propertie
 
 $ ./bin/kafka-server-start.sh /opt/Kafka/server.properties
+```
+
 
 
 Create topics
