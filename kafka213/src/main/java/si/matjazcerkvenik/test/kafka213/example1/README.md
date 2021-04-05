@@ -1,4 +1,13 @@
-# WordCountDemo
+# Example 1: WordCountDemo
+
+https://kafka.apache.org/quickstart
+
+https://kafka.apache.org/documentation/
+
+https://kafka.apache.org/documentation/streams/
+
+https://www.tutorialspoint.com/apache_kafka/apache_kafka_workflow.htm
+
 
 Start zookeeper and kafka
 
