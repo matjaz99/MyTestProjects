@@ -1,11 +1,15 @@
 package si.matjazcerkvenik.test.kafka213.example3;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.clients.producer.RecordMetadata;
+import org.apache.kafka.common.serialization.StringSerializer;
 
 import java.util.Properties;
 import java.util.Random;
+import java.util.concurrent.ExecutionException;
 
 public class AlarmProducer implements Runnable {
 
@@ -23,30 +27,37 @@ public class AlarmProducer implements Runnable {
     @Override
     public void run() {
 
-        String topicName = "test-topic";
+        String topicName = "test-alarms-topic";
 
         Properties props = new Properties();
-        props.put("bootstrap.servers", "centosvm:9092");
+//        props.put("bootstrap.servers", "centosvm:9092");
+        props.put("bootstrap.servers", "pgcentos:9092");
         props.put("acks", "all");
         props.put("retries", 0);
         props.put("batch.size", 16384);
         props.put("linger.ms", 1);
         props.put("buffer.memory", 33554432);
-        props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
-        props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
 
-        Producer<String, String> producer = new KafkaProducer<String, String>(props);
+        ObjectMapper objectMapper = new ObjectMapper();
+        Producer<String, Alarm> producer = new KafkaProducer<String, Alarm>(props, new StringSerializer(),
+                new MyJsonSerializer(objectMapper));
 
         int i = 0;
         while (i < 1000) {
 
             int rnd = new Random().nextInt(alarmNames.length);
+            Alarm alr = new Alarm(i, alarmNames[rnd], severities[rnd]);
 
-            String alarmString = "{\"id\":\"" + Integer.toString(i) + "\",\"alarmName\":\"" + alarmNames[rnd] + "\",\"severity\":\"" + severities[rnd] + "\"}";
+            try {
+                RecordMetadata recordMetadata = producer.send(new ProducerRecord<String, Alarm>(topicName, Integer.toString(i), alr)).get();
+                System.out.println("Alarm [" + i + "] sent successfully to partition: " + recordMetadata.partition() + " with offset: " + recordMetadata.offset());
+                i++;
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
 
-            producer.send(new ProducerRecord<String, String>(topicName, Integer.toString(i), alarmString));
-            System.out.println("Message sent successfully [" + i + "]");
-            i++;
 
             try {
                 Thread.sleep((long) (Math.random() * 1000));

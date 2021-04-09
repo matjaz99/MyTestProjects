@@ -54,7 +54,7 @@ public class WordCountDemo {
                 .groupBy((key, value) -> value)
                 .count(Materialized.<String, Long, KeyValueStore<Bytes, byte[]>>as("counts-store"))
                 .toStream()
-                .to("streams-wordcount-output", Produced.with(Serdes.String(), Serdes.Long()));
+                .to(OUTPUT_TOPIC, Produced.with(Serdes.String(), Serdes.Long()));
 
 
 

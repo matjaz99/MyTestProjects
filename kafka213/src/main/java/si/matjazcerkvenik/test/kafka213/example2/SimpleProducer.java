@@ -16,7 +16,8 @@ public class SimpleProducer {
         Properties props = new Properties();
 
         //Assign localhost id
-        props.put("bootstrap.servers", "centosvm:9092");
+//        props.put("bootstrap.servers", "centosvm:9092");
+        props.put("bootstrap.servers", "pgcentos:9092");
 
         //Set acknowledgements for producer requests.
         props.put("acks", "all");
@@ -40,7 +41,7 @@ public class SimpleProducer {
 
         Producer<String, String> producer = new KafkaProducer<String, String>(props);
 
-        for (int i = 0; i < 13; i++) producer.send(new ProducerRecord<String, String>(topicName, Integer.toString(i), Integer.toString(i)));
+        for (int i = 0; i < 13; i++) producer.send(new ProducerRecord<String, String>(topicName, Integer.toString(i), "Msg-" + Integer.toString(i)));
 
         System.out.println("Message sent successfully");
         producer.close();
