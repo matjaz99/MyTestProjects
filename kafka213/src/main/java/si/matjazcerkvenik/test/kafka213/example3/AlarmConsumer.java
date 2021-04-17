@@ -14,11 +14,11 @@ public class AlarmConsumer {
     public static void main(String[] args) throws Exception {
 
         //Kafka consumer configuration settings
-        String topicName = "test-alarms-topic";
+        String topicName = "alarms-topic";
         Properties props = new Properties();
 
-//        props.put("bootstrap.servers", "centosvm:9092");
-        props.put("bootstrap.servers", "pgcentos:9092");
+        props.put("bootstrap.servers", "centosvm:9092");
+//        props.put("bootstrap.servers", "pgcentos:9092");
         props.put("group.id", "testgroup");
         props.put("enable.auto.commit", "true");
         props.put("auto.commit.interval.ms", "1000");

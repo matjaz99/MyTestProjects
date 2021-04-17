@@ -24,9 +24,9 @@ public class AlarmStreamFilter {
     public static void main(final String[] args) throws IOException {
 
         Properties props = new Properties();
-        props.putIfAbsent(StreamsConfig.APPLICATION_ID_CONFIG, "streams-wordcount");
-        props.putIfAbsent(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, "pgcentos:9092");
-//        props.putIfAbsent(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, "centosvm:9092");
+        props.putIfAbsent(StreamsConfig.APPLICATION_ID_CONFIG, "alarms-stream-filter");
+//        props.putIfAbsent(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, "pgcentos:9092");
+        props.putIfAbsent(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, "centosvm:9092");
         props.putIfAbsent(StreamsConfig.CACHE_MAX_BYTES_BUFFERING_CONFIG, 0);
 //        props.putIfAbsent(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
 
@@ -36,24 +36,24 @@ public class AlarmStreamFilter {
                 new MyJsonDeserializer<>(mapper, Alarm.class));
 
         StreamsBuilder builder = new StreamsBuilder();
-        KStream<String, Alarm> stream = builder.stream("test-alarms-topic", Consumed.with(Serdes.String(), alarmSerde));
+        KStream<String, Alarm> stream = builder.stream("alarms-topic", Consumed.with(Serdes.String(), alarmSerde));
 
         // change severity to uppercase for each alarm in stream
         stream.foreach((key, alarm) -> {
-            System.out.println("key: " + key);
             alarm.setSeverity(alarm.getSeverity().toUpperCase());
+            System.out.println("key: " + key + ", alarmName: " + alarm.getAlarmName() + ", severity: " + alarm.getSeverity());
         });
 
         // filter out only critical alarms
         stream.filter((severity, alarm) -> alarm.getSeverity().equalsIgnoreCase("critical"))
-                .to("test-alarms-critical-filtered-output", Produced.with(Serdes.String(), alarmSerde));
+                .to("alarms-critical-filtered-output", Produced.with(Serdes.String(), alarmSerde));
 
         System.out.println(builder.build().describe()); // describe topology
         KafkaStreams streams = new KafkaStreams(builder.build(), props);
         CountDownLatch latch = new CountDownLatch(1);
 
         // attach shutdown handler to catch control-c
-        Runtime.getRuntime().addShutdownHook(new Thread("test-alarms-shutdown-hook") {
+        Runtime.getRuntime().addShutdownHook(new Thread("alarms-shutdown-hook") {
             @Override
             public void run() {
                 streams.close();

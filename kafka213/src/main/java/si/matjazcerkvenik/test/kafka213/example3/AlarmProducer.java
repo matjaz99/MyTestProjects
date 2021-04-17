@@ -27,11 +27,11 @@ public class AlarmProducer implements Runnable {
     @Override
     public void run() {
 
-        String topicName = "test-alarms-topic";
+        String topicName = "alarms-topic";
 
         Properties props = new Properties();
-//        props.put("bootstrap.servers", "centosvm:9092");
-        props.put("bootstrap.servers", "pgcentos:9092");
+        props.put("bootstrap.servers", "centosvm:9092");
+//        props.put("bootstrap.servers", "pgcentos:9092");
         props.put("acks", "all");
         props.put("retries", 0);
         props.put("batch.size", 16384);
@@ -43,7 +43,7 @@ public class AlarmProducer implements Runnable {
                 new MyJsonSerializer(objectMapper));
 
         int i = 0;
-        while (i < 1000) {
+        while (i < 10000) {
 
             int rnd = new Random().nextInt(alarmNames.length);
             Alarm alr = new Alarm(i, alarmNames[rnd], severities[rnd]);
