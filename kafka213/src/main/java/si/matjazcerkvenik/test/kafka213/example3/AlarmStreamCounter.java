@@ -34,30 +34,31 @@ public class AlarmStreamCounter {
                 new MyJsonDeserializer<>(mapper, Alarm.class));
 
         StreamsBuilder builder = new StreamsBuilder();
+
+        // get alarms from input topic and consume them with my custom made JSON serializer
         KStream<String, Alarm> stream = builder.stream("alarms-topic", Consumed.with(Serdes.String(), alarmSerde));
 
+        // create new stream and extract severity
         KStream<String, String> severityStream = stream.flatMapValues(value -> Arrays.asList(value.getSeverity()));
 //        severityStream.foreach((key, alarm) -> {
 //            System.out.println("key: " + key + ", alarm: " + alarm);
 //        });
 
+        // group alarms by severity - severity becomes new key
         KGroupedStream<String, String> groupedStream = severityStream.groupBy((key, value) -> value);
+        // count alarms by severity in new stream
         KStream<String, Long> counterStream = groupedStream.count().toStream();
         counterStream.foreach((key, value) -> {
             System.out.println("key: " + key + ", value: " + value);
         });
+        // send stream to topic
         counterStream.to("alarms-count-output", Produced.with(Serdes.String(), Serdes.Long()));
 
+        // add another stream processor if you need to
 //        KStream<String, String> alarmNameStream = stream.flatMapValues(value -> Arrays.asList(value.getAlarmName()));
 //        alarmNameStream.foreach((key, alarm) -> {
 //            System.out.println("key: " + key + ", alarm: " + alarm);
 //        });
-
-//        stream.flatMapValues(value -> Arrays.asList(value.getSeverity()))
-//                .groupBy((key, value) -> value)
-//                .count(Materialized.<String, Long, KeyValueStore<Bytes, byte[]>>as("alarms-count-store"))
-//                .toStream()
-//                .to("alarms-count-output", Produced.with(Serdes.String(), Serdes.Long()));
 
         System.out.println(builder.build().describe()); // describe topology
         KafkaStreams streams = new KafkaStreams(builder.build(), props);
