@@ -18,13 +18,8 @@ $ ./bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic alar
 ```
 
 
-https://kafka.apache.org/20/documentation/streams/developer-guide/dsl-api.html
-
 http://cloudurable.com/blog/kafka-tutorial-kafka-producer/index.html
 
-Examples:
-https://www.codota.com/code/java/methods/org.apache.kafka.streams.kstream.KStream/mapValues
 
-Cluster:  
-http://cloudurable.com/blog/kafka-tutorial-kafka-failover-kafka-cluster/index.html
+
 

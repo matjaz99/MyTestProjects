@@ -40,9 +40,9 @@ public class AlarmStreamCounter {
 
         // create new stream and extract severity
         KStream<String, String> severityStream = stream.flatMapValues(value -> Arrays.asList(value.getSeverity()));
-//        severityStream.foreach((key, alarm) -> {
-//            System.out.println("key: " + key + ", alarm: " + alarm);
-//        });
+        severityStream.foreach((key, severity) -> {
+            System.out.println("key: " + key + ", severity: " + severity);
+        });
 
         // group alarms by severity - severity becomes new key
         KGroupedStream<String, String> groupedStream = severityStream.groupBy((key, value) -> value);
