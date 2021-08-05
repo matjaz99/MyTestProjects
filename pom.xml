@@ -46,6 +46,7 @@
         <module>cdr-prsr</module>
         <module>redis-jedis</module>
         <module>kafka213</module>
+        <module>apache-spark</module>
     </modules>
 
 	<properties>
