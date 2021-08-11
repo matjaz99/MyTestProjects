@@ -24,7 +24,8 @@ public class KafkaStreamAlarmCount {
 
     public static void main(String[] args) throws Exception {
 
-        String brokers = "promvm:9092"; // a list of one or more Kafka brokers
+//        String brokers = "promvm:9092"; // a list of one or more Kafka brokers
+        String brokers = "mcrk-docker-1:9092"; // a list of one or more Kafka brokers
         String groupId = "my_consumer"; // a consumer group name to consume from topics
         String topics = "alertmonitor_notifications"; // a list of one or more kafka topics to consume from
 
