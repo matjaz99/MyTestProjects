@@ -3,6 +3,7 @@ package si.matjazcerkvenik.test.spark;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
+import org.apache.spark.sql.streaming.Trigger;
 
 public class KafkaStreamCdrProcessor {
 
@@ -21,13 +22,17 @@ public class KafkaStreamCdrProcessor {
                 .option("subscribe", "cdr_topic")
                 .option("startingOffsets", "earliest") // From starting
                 .load().toDF();
-//        df.selectExpr("CAST(key AS STRING)", "CAST(value AS STRING)");
+        df.selectExpr("CAST(key AS STRING)", "CAST(value AS STRING)");
         df.printSchema();
 //        df.show();
 
 //        Dataset<Row> str = df.selectExpr("CAST(value AS STRING)");
 //        str.show();
-//        df.writeStream().start();
+        df.writeStream()
+                .format("console")
+                .outputMode("append")
+                .trigger(Trigger.ProcessingTime("20 seconds"))
+                .start();
 
 //        Dataset<Row> df = spark
 //                .read()
