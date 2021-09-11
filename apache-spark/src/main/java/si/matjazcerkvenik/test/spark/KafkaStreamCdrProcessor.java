@@ -18,7 +18,8 @@ public class KafkaStreamCdrProcessor {
         Dataset<Row> df = spark
                 .readStream()
                 .format("kafka")
-                .option("kafka.bootstrap.servers", "mcrk-docker-1:9092")
+//                .option("kafka.bootstrap.servers", "mcrk-docker-1:9092")
+                .option("kafka.bootstrap.servers", "centosvm:9092")
                 .option("subscribe", "cdr_topic")
                 .option("startingOffsets", "earliest") // From starting
                 .load().toDF();
@@ -32,7 +33,8 @@ public class KafkaStreamCdrProcessor {
                 .format("console")
                 .outputMode("append")
                 .trigger(Trigger.ProcessingTime("20 seconds"))
-                .start();
+                .start()
+                .awaitTermination();
 
 //        Dataset<Row> df = spark
 //                .read()
