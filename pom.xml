@@ -48,6 +48,7 @@
         <module>kafka213</module>
         <module>apache-spark</module>
         <module>minio</module>
+        <module>mongodb</module>
     </modules>
 
 	<properties>
