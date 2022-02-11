@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Test container</title>
+	<style type="text/css">
+		body {
+			background-color: #eeeeee;
+			line-height: 1.6em;
+			margin: 0;
+		}
+		.clear {
+			clear: both;
+		}
+		h1 {
+			color: blue;
+		}
+		.container {
+			width: 80%;
+			margin: auto;
+		}
+		.box-1 {
+			background-color: salmon;
+			color: navy;
+			border-right: 10px red solid;
+		}
+		.categories {
+			border: 2px blue solid;
+			padding: 10px;
+			border-radius: 15px;
+		}
+		.categories h1 {
+			text-align: center;
+		}
+		.categories ul {
+			padding: 0;
+			list-style: none;
+		}
+		.categories li {
+			padding-bottom: 8px;
+			border-bottom: 2px dotted #333;
+		}
+		.categories li:first-child {
+			background-color: olive;
+		}
+		.categories li:last-child {
+			background-color: olive;
+		}
+		.categories li:nth-child(3) {
+			background-color: gold;
+		}
+		.categories li:nth-child(even) {
+			background-color: grey;
+		}
+		.my-form {
+			padding: 20px;
+		}
+		.my-form .form-group {
+			padding-bottom: 15px;
+		}
+		.my-form label {
+			display: block;
+		}
+		.my-form input[type="text"], .my-form textarea {
+			padding: 8px;
+			width: 100%;
+		}
+		.my-form input[type="submit"] {
+			background-color: #444;
+			color: #fff;
+			padding: 10px 15px;
+			border: none;
+		}
+		.button {
+			background-color: #444;
+			color: #fff;
+			padding: 10px 15px;
+			border: none;
+		}
+		.button:hover {
+			background-color: red;
+			color: white;
+		}
+		.block {
+			float: left;
+			width: 33.3%;
+			border: 1px solid #496263;
+			padding: 10px;
+			box-sizing: border-box;
+		}
+		#main-block {
+			float: left;
+			width: 70%;
+		}
+		#sidebar {
+			float: right;
+			width: 30%;
+			background-color: #345;
+			color: white;
+			padding: 15px;
+			box-sizing: border-box;
+		}
+		.p-box {
+			width: 800px;
+			height: 500px;
+			border: 1px solid blue;
+			position: relative;
+		}
+		.p-box h1 {
+			position: absolute;
+			top: 100px;
+			left: 200px;
+		}
+		.fix-me {
+			position: fixed;
+			top: 400px;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="box-1">
+			<h1>Hello World</h1>
+			<p>Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. </p>
+		</div>
+
+		<div class="categories">
+			<h1>Categories</h1>
+			<ul>
+				<li>Category 1</li>
+				<li>Category 2</li>
+				<li>Category 3</li>
+				<li>Category 4</li>
+				<li>Category 5</li>
+				<li>Category 6</li>
+				<li>Category 7</li>
+				<li>Category 8</li>
+			</ul>
+		</div>
+
+		<form class="my-form">
+			<div class="form-group">
+				<label>Name:</label>
+				<input type="text" name="name">
+			</div>
+			<div class="form-group">
+				<label>Email:</label>
+				<input type="text" name="email">
+			</div>
+			<div class="form-group">
+				<label>Message:</label>
+				<textarea name="message"></textarea>
+			</div>
+			<input class="button" type="submit" value="Submit">
+		</form>
+
+		<div class="block">
+			<h1>Hello World</h1>
+			<p>Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. </p>
+		</div>
+		<div class="block">
+			<h1>Hello World</h1>
+			<p>Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. </p>
+		</div>
+		<div class="block">
+			<h1>Hello World</h1>
+			<p>Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. </p>
+		</div>
+		
+		<div class="clear"></div>
+
+		<div id="main-block">
+			<h1>Hello World</h1>
+			<p>Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. </p>
+		</div>
+		<div id="sidebar">
+			<p>Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. </p>
+		</div>
+
+		<div class="clear"></div>
+
+		<div class="p-box">
+			<h1>Hello</h1>
+			<h2>Goodbye</h2>
+		</div>
+
+	</div><!-- container -->
+
+	<a class="fix-me button" href="">Click me</a>
+</body>
+</html>

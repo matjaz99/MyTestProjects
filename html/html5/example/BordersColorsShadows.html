@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Borders, shadows, colors, opacity</title>
+    <style>
+        div {
+            font-family: verdana, sans-serif;
+            font-size: small;
+            padding: 10px;
+            width: 400px;
+            height: 50px;
+            background-color: red;
+        }
+        .border1 {
+            border-radius: 20px;
+        }
+        .border2 {
+            border-radius: 10px 50px 10px 0px;
+        }
+        .shadow1 {
+            box-shadow: -10px -10px orange;
+        }
+        .shadow2 {
+            box-shadow: 10px 10px orange;
+        }
+        .shadow3 {
+            box-shadow: 10px 10px 20px orange;
+        }
+        .shadow4 {
+            box-shadow: 10px 10px 20px 10px orange;
+        }
+        .shadow5 {
+            box-shadow: 10px 10px 20px orange inset;
+        }
+        .color1 {
+            background-color: rgba(255, 0, 0, 0.1);
+        }
+        .color2 {
+            background-color: rgba(0%, 100%, 0%, 0.1);
+        }
+        .color3 {
+            background-color: hsl(240, 100%, 90%);
+        }
+        .color4 {
+            background-color: hsla(240, 100%, 90%, 0.25);
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="border1">
+    Same border on all edges.<br/>
+    border-radius: 20px;
+</div>
+
+<br/><br/>
+
+<div class="border2">
+    Different borders on each corner.<br/>
+    border-radius: tl tr bl br;
+</div>
+
+<br/><br/>
+
+<div class="shadow1">
+    Shadow on upper-left.<br/>
+    box-shadow: -10px -10px orange;
+</div>
+
+<br/><br/>
+
+<div class="shadow2">
+    Shadow on lower-right.<br/>
+    box-shadow: 10px 10px orange;
+</div>
+
+<br/><br/>
+
+<div class="shadow3">
+    Blurred edges.<br/>
+    box-shadow: 10px 10px 20px orange;
+</div>
+
+<br/><br/>
+
+<div class="shadow4">
+    Spread-out shadow.<br/>
+    box-shadow: 10px 10px 20px 10px orange;
+</div>
+
+<br/><br/>
+
+<div class="shadow5">
+    Inset shadow.<br/>
+    box-shadow: 10px 10px 20px orange inset;
+</div>
+
+<br/><br/>
+
+<div class="color1">
+    RGBA color expressed using numbers.<br/>
+    background-color: rgba(255, 0, 0, 0.1);
+</div>
+
+<br/><br/>
+
+<div class="color2">
+    RGBA color expressed using percentages.<br/>
+    background-color: rgba(0%, 100%, 0%, 0.1);
+</div>
+
+<br/><br/>
+
+<div class="color3">
+    HSL color.<br/>
+    background-color: hsl(240, 100%, 90%);
+</div>
+
+<br/><br/>
+
+<div class="color4">
+    HSLA color.<br/>
+    background-color: hsla(240, 100%, 90%, 0.25);
+</div>
+
+<br/><br/>
+
+<div style="background-color: white;">
+    <div style="background-color: orange; opacity: 0.0;">opacity: 0.0</div>
+    <div style="background-color: orange; opacity: 0.2;">opacity: 0.2</div>
+    <div style="background-color: orange; opacity: 0.4;">opacity: 0.4</div>
+    <div style="background-color: orange; opacity: 0.6;">opacity: 0.6</div>
+    <div style="background-color: orange; opacity: 0.8;">opacity: 0.8</div>
+    <div style="background-color: orange; opacity: 1.0;">opacity: 1.0</div>
+</div>
+
+</body>
+</html>

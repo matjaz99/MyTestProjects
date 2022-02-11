@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Page Title</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script>
+$(document).ready(function(){
+  $("button").click(function(){
+    $("p").hide();
+  });
+  $("#redButton").click(function(){
+    $("#red").hide();
+  });
+});
+
+</script>
+</head>
+
+<body>
+    
+    <h3>This example shows how jquery selectors work.</h3>
+
+<p>This is paragraph</p>
+<p id="red">This text is red.</p>
+
+<button>Click to hide paragraphs</button>
+<button id="redButton">Click to hide red text</button>
+
+</body>
+</html>

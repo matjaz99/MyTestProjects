@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Input Control Attributes</title>
+    <style>
+        body {
+            font-family: arial, sans-serif;
+        }
+        label {
+            float: left;
+            width: 150px;
+        }
+        input {
+            width: 200px;
+        }
+    </style>
+    <script>
+        function onSubmit() {
+            
+            // Basic input types
+            
+            var myNameElem = document.getElementById("myName");
+            alert("Name: " + myNameElem.value);
+            
+            var myHouseNumberElem = document.getElementById("myHouseNumber");
+            alert("House number: " + myHouseNumberElem.value);
+            
+            var myPostCodeElem = document.getElementById("myPostCode");
+            alert("Post code: " + myPostCodeElem.value);
+            
+            var myBirthPlaceElem = document.getElementById("myBirthPlace");
+            alert("Birth place: " + myBirthPlaceElem.value);
+            
+            var myPicsElem = document.getElementById("myPics");
+            numPics = myPicsElem.files.length;
+            for (var i = 0; i < numPics; i++) {
+                var thisPic = myPicsElem.files[i];
+                alert("File " + i + " of " + numPics + ": "
+                      + thisPic.fileName + " ["
+                      + thisPic.fileSize + " bytes]")
+            }
+            
+            // Date and time
+            
+            var myDateElem = document.getElementById("myDate");
+            alert("Date: " + myDateElem.value);
+            
+            var myTimeElem = document.getElementById("myTime");
+            alert("Time: " + myTimeElem.value);
+            
+            var myDateTimeElem = document.getElementById("myDateTime");
+            alert("Date and time: " + myDateTimeElem.value);
+            
+            var myMonthElem = document.getElementById("myMonth");
+            alert("Month: " + myMonthElem.value);
+            
+            var myWeekElem = document.getElementById("myWeek");
+            alert("Week: " + myWeekElem.value);
+            
+            // Other input types
+            
+            var myNumberElem = document.getElementById("myNumber");
+            alert("Ideal salary: " + myNumberElem.value);
+            
+            var myRangeElem = document.getElementById("myRange");
+            alert("Current happiness: " + myRangeElem.value);
+            
+            var myTelElem = document.getElementById("myTel");
+            alert("Telephone number: " + myTelElem.value);
+            
+            var myEmailElem = document.getElementById("myEmail");
+            alert("Email address: " + myEmailElem.value);
+            
+            var myUrlElem = document.getElementById("myUrl");
+            alert("URL: " + myUrlElem.value);
+            
+            var myColorElem = document.getElementById("myColor");
+            alert("Color: " + myColorElem.value);
+            
+            var mySearchElem = document.getElementById("mySearch");
+            alert("Search string: " + mySearchElem.value);
+            
+            return false;
+        }
+    </script>
+</head>
+
+<body>
+
+<h3>Input Control Attributes</h3>
+<form onsubmit="return onSubmit()">
+    
+    <label>Name:</label>
+    <input type="text" id="myName" autofocus="true" autocomplete="off" placeholder="Enter your name" required="true" /><br/>
+    
+    <label>House number:</label>
+    <input type="text" id="myHouseNumber" placeholder="Enter your house number" /><br/>
+    
+    <label>UK Post code:</label>
+    <input type="text" id="myPostCode" pattern="[a-zA-Z]{1,2}\d{1,2}\s\d[a-zA-Z]{2}" placeholder="Enter UK post code" /><br/>
+    
+    <label>Place of birth:</label>
+    <input list="places" id="myBirthPlace" placeholder="Select place of birth" /><br/>
+    
+    <label>Pictures:</label>
+    <input type="file" id="myPics" multiple /><br/>
+    
+    <hr/>
+    
+    <label>Date:</label>
+    <input type="date" id="myDate" placeholder="Enter a date" /><br/>
+    
+    <label>Time:</label>
+    <input type="time" id="myTime" placeholder="Enter a time" /><br/>
+    
+    <label>Date and time:</label>
+    <input type="datetime" id="myDateTime" placeholder="Enter a date and time" /><br/>
+    
+    <label>Month:</label>
+    <input type="month" id="myMonth" placeholder="Enter a month" /><br/>
+    
+    <label>Week:</label>
+    <input type="week" id="myWeek" placeholder="Enter a week" /><br/>
+    
+    <hr/>
+    
+    <label>Ideal salary:</label>
+    <input type="number" id="myNumber" min="10000" max="50000" value="25000" step="1000" /><br/>
+    
+    <label>Current happiness:</label>
+    <input type="range" id="myRange" min="1" max="10" value="5" /><br/>
+    
+    <label>Telephone number:</label>
+    <input type="tel" id="myTel" placeholder="Enter a telephone number" /><br/>
+    
+    <label>Email address:</label>
+    <input type="email" id="myDate" placeholder="Enter an email address" /><br/>
+    
+    <label>Home page URL:</label>
+    <input type="url" id="myUrl" placeholder="Enter a URL" /><br/>
+    
+    <label>Favorite color:</label>
+    <input type="color" id="myColor" placeholder="Choose a color" value="red" /><br/>
+    
+    <label>Search string:</label>
+    <input type="search" id="mySearch" placeholder="Enter search string" results="3" autosave="mySearch" /><br/>
+    
+    <button>Submit</button>
+    
+</form>
+
+<datalist id="places">
+    <option value="New York"></option>
+    <option value="London"></option>
+    <option value="Paris"></option>
+    <option value="Moscow"></option>
+</datalist>
+
+</body>
+</html>

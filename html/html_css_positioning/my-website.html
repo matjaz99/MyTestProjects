@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>My website</title>
+	<style type="text/css">
+		body {
+			background-color: "f4f4f4";
+			color: #555;
+			line-height: 1.6em;
+			margin: 0;
+		}
+		.container {
+			width: 80%;
+			margin: auto;
+			overflow: hidden;
+		}
+		#main-header {
+			background-color: coral;
+			color: #fff;
+		}
+		#navbar {
+			background-color: darkblue;
+			color: #eee;
+		}
+		#navbar ul {
+			padding: 0;
+			list-style: none;
+		}
+		#navbar li {
+			display: inline;
+		}
+		#showcase {
+			background-color: #a2c7e9;
+			min-height: 300px;
+			margin-bottom: 30px;
+			text-align: center;
+		}
+		#showcase h1 {
+			color: #fff;
+			font-size: 50px;
+			line-height: 1.6em;
+			padding-top: 30px;
+		}
+		#main {
+			float: left;
+			width: 70%;
+			padding: 0 30px;
+			box-sizing: border-box;
+		}
+		#sidebar {
+			float: right;
+			width: 30%;
+			background-color: paleturquoise;
+			color: black;
+			padding: 10px;
+			box-sizing: border-box;
+		}
+		#main-footer {
+			background-color: paleturquoise;
+			color: black;
+			text-align: center;
+			padding: 10px;
+			margin-top: 40px;
+		}
+		@media(max-width: 600px) {
+			#main {
+				width: 100%;
+				float: none;
+			}
+		}
+	</style>
+</head>
+<body>
+	<header id="main-header">
+		<div class="container">
+			<h1>My website</h1>
+		</div>
+	</header>
+
+	<nav id="navbar">
+		<div class="container">
+			<ul>
+				<li>Category 1</li>
+				<li>Category 2</li>
+				<li>Category 3</li>
+				<li>Category 4</li>
+				<li>Category 5</li>
+				<li>Category 6</li>
+				<li>Category 7</li>
+				<li>Category 8</li>
+			</ul>
+		</div>
+	</nav>
+
+	<section id="showcase">
+		<div class="container">
+			<h1>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+			tempor incididunt ut labore et dolore magna aliqua</h1>
+
+		</div>
+	</section>
+
+	<div class="container">
+	<section id="main">
+		<h1>Welcome</h1>
+		<p>Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. </p>
+	</section>
+
+	<aside id="sidebar">
+		<p>Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. Some long text. </p>
+	</aside>
+	</div>
+
+	<footer id="main-footer">Copyright</footer>
+
+</body>
+</html>

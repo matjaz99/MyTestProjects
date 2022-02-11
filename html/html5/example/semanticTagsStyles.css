@@ -1,0 +1,132 @@
+body {
+    background-color: #DDDDDD;
+    font-family: Century Gothic, Tahoma, Arial, Verdana, Helvetica, sans-serif;
+    margin: 0px auto;
+    max-width: 1000px;
+    /*border: solid;
+    border-color: #DDDDDD;*/
+}
+
+img {
+    width: 100px;
+    height: 100px;
+}
+
+#mainContainer {
+    background-color: #AAAAFF;
+}
+
+header {
+    background-color: LightBlue;
+    display: block;
+    color: Yellow;
+    text-align: center;
+    margin: 0px;
+    padding: 10px;
+}
+
+header h2 {
+    margin: 0px;
+}
+
+h1 {
+    font-size: 50px;
+    margin: 0px;
+}
+
+h2 {
+    color: White;
+    font-size: 20px;
+    margin: 0px;
+}
+
+h3 {
+    font-size: 15px;
+    text-align: center;
+    color: Navy;
+    margin: 0px;
+}
+
+footer {
+    clear: both;
+    display: block;
+    background-color: LightBlue;
+    color: Yellow;
+    text-align: center;
+    padding: 15px;
+}
+
+footer h2 { /* kje je ta uporabljen */
+    font-size: 14px;
+    color: White;
+}
+
+nav {
+    display: block;
+    width: 25%;
+    float: left;
+}
+
+nav a:link {
+    color: Navy;
+    display: block;
+    border-bottom: 1px solid Yellow;
+    padding: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    margin: 2px;
+}
+
+nav a:hover {
+    color: Orange;
+    background-color: White;
+}
+
+section {
+    display: block;
+    width: 50%;
+    float: left;
+}
+
+article {
+    background-color: #eee;
+    display: block;
+    margin: 10px;
+    padding: 10px;
+}
+
+article header {
+    padding: 5px;
+}
+
+article footer {
+    padding: 5px;
+}
+
+article h1 {
+    font-size: 18px;
+}
+
+aside {
+    display: block;
+    width: 25%;
+    float: left;
+}
+
+aside h3 {
+    margin: 15px;
+    color: Yellow;
+}
+
+aside p {
+    margin: 15px;
+    color: White;
+    font-size: 15px;
+    font-style: italic;
+}
+
+figcaption {
+    text-align: center;
+    color: blue;
+    font-size: 10px;
+}

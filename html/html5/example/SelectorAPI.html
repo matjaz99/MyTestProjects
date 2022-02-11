@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Page Title</title>
+</head>
+
+<body>
+
+<input type="text" id="textbox1" class="required"/>
+<input type="text" id="textbox2" class="required"/>
+<input type="text" id="textbox3"/>
+
+<span class="warrningClass" />
+<div class="errorClass" />
+<p class="otherClass" />
+
+<script type="text/javascript">
+    var firstRequiredInput = document.querySelector("input.required");
+    var allRequiredInputs = document.querySelectorAll("input.required");
+    var allErrorsAndWarnings = document.querySelectorAll(".warningClass", ".errorClass");
+    var someXYProductsInRow = document.querySelectorAll("#products td");
+</script>
+
+</body>
+</html>

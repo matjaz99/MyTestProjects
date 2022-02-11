@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>File handling API</title>
+    <style>
+        body {
+            font-family: arial, sans-serif;
+        }
+        label {
+            float: left;
+            width: 120px;
+        }
+        #textFileSection {
+            float: left;
+            width: 400px;
+        }
+    </style>
+    <script>
+        function onLoadTextFile() {
+            var theFileElem = document.getElementById("theTextFile");
+            alert("type: " + theFileElem.files[0].type);
+            if (theFileElem.files.length != 0 && theFileElem.files[0].type.match("text.*/")) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    var theMessageAreaElem = document.getElementById("theMessageArea");
+                    theMessageAreaElem.value = e.target.result;
+                };
+                reader.onerror = function(e) {
+                    alert("Cannot load text file");
+                };
+                reader.readAsText(theFileElem.files[0], "ISO-8859-1");
+            } else {
+                alert("Please select text file");
+            }
+        }
+        
+        function onLoadBinaryFile() {
+            var theFileElem = document.getElementById("theBinaryFile");
+            if (theFileElem.files.length != 0 && theFileElem.files[0].type.match("image.*/")) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    var theImgElem = document.getElementById("theImg");
+                    theImgElem.src = e.target.result;
+                };
+                reader.onerror = function(e) {
+                    alert("Cannot load text file");
+                };
+                reader.readAsDataURL(theFileElem.files[0]);
+            } else {
+                alert("Please select a binary file");
+            }
+        }
+    </script>
+</head>
+
+<body>
+
+    <h1>File Handling API example</h1>
+    
+    <section id="textFileSection">
+        <label>Load text file:</label>
+        <input type="file" id="theTextFile" onchange="onLoadTextFile()" /><br/>
+        <textarea id="theMessageArea" rows="30" cols="40"></textarea><br/><br/>
+    </section>
+    
+    <section id="binaryFileSection">
+        <label>Load binary file:</label>
+        <input type="file" id="theBinaryFile" onchange="onLoadBinaryFile()" /><br/>
+        <img id="theImg"></img>
+    </section>
+
+</body>
+</html>

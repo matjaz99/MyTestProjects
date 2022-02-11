@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Aria Keyboard Navigation</title>
+    <style>
+        body {
+            font-family: verdana, sans-serif;
+        }
+        div {
+            padding: 5px;
+            margin: 10px 0px 10px 0px;
+            background-color: lightblue;
+        }
+        button {
+            background-color: yellow;
+            color: orange;
+            font-weight: bold;
+            width: 140px;
+            height: 30px;
+        }
+    </style>
+    <script>
+        function assignProgrammaticFocus() {
+            var programmaticTabElem = document.getElementById("programmaticTab");
+            programmaticTabElem.focus();
+        }
+    </script>
+</head>
+
+<body>
+
+    <h1>Aria keyboard navigation example</h1>
+    
+    <div tabindex="1">This div has tabindex 1.</div>
+    
+    <div tabindex="2">This div has tabindex 2.</div>
+    
+    <div id="programmaticTab" tabindex="-1">This div has tabindex -1.</div>
+    
+    <button tabindex="3" onclick="assignProgrammaticFocus()" >Programmatic tab</button>
+
+</body>
+</html>
