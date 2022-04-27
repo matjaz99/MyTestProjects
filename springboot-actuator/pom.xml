@@ -9,7 +9,7 @@
 	<artifactId>springboot-actuator</artifactId>
 
 	<properties>
-		<spring.version>1.5.9.RELEASE</spring.version>
+		<spring.version>2.5.12</spring.version>
 		<!--<spring.version>2.1.1.RELEASE</spring.version> -->
 	</properties>
 
