@@ -49,6 +49,7 @@
         <module>apache-spark</module>
         <module>minio</module>
         <module>mongodb</module>
+        <module>timescaledb</module>
     </modules>
 
 	<properties>
